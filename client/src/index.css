@@ -406,3 +406,95 @@ button:focus-visible, a:focus-visible { outline: 3px solid #72e0b8; outline-offs
   .back-button span { display: none; }
   .lesson-top-stats > span { padding: 6px 5px; }
 }
+
+
+/* Quest-first progression and the original HackDuo shield buddy */
+.shield-buddy { width: 104px; height: 112px; overflow: visible; filter: drop-shadow(0 9px 9px rgba(32,111,78,.12)); animation: buddy-float 3.6s ease-in-out infinite; }
+@keyframes buddy-float { 0%,100% { transform: translateY(0) rotate(1deg); } 50% { transform: translateY(-5px) rotate(-1deg); } }
+.unit-banner { display: flex; align-items: center; gap: 11px; margin: 0 0 14px 36px; padding: 13px 15px; border: 1px solid #d7eee1; border-radius: 16px; background: linear-gradient(100deg,#eaf8ef,#f8fcf8); }
+.unit-mark { display: grid; flex: 0 0 auto; width: 38px; height: 38px; place-items: center; border: 1px solid #d0ebda; border-radius: 13px; background: #fff; color: #26a676; }
+.unit-banner > div:nth-child(2) { display: flex; flex: 1; flex-direction: column; gap: 3px; }
+.unit-banner > div:nth-child(2) span { color: #79a08b; font-size: 8px; font-weight: 750; }
+.unit-banner > div:nth-child(2) strong { color: #2b6048; font-size: 12px; font-weight: 850; }
+.unit-duration { padding: 5px 8px; border: 1px solid #dceee3; border-radius: 999px; background: rgba(255,255,255,.8); color: #7e9b88; font-size: 8px; font-weight: 750; }
+.quest-locked { border-color: #e8eeea; background: #fbfcfb; box-shadow: none; }
+.quest-locked .quest-icon { filter: grayscale(.72); opacity: .67; }
+.quest-locked .quest-details h3 { color: #829189; }
+.quest-locked .quest-details > p { color: #a1ada6; }
+.quest-locked .quest-index { border-color: #e5ece7; background: #f7f9f7; color: #9caaa2; }
+.quest-action:disabled { border-color: #e8eeea; background: #f8faf8; color: #a7b3ac; cursor: not-allowed; }
+.quest-action:disabled:hover { transform: none; }
+.locked-label { display: inline-flex; align-items: center; gap: 3px; color: #9aa69f; }
+.daily-goal-card, .achievement-card { padding: 16px; border: 1px solid #e4ece7; border-radius: 19px; background: #fff; box-shadow: 0 5px 15px rgba(39,78,60,.03); }
+.daily-goal-card { border-color: #d9ecdf; background: linear-gradient(145deg,#f1fbf4,#fff 75%); }
+.daily-goal-top { display: flex; align-items: center; gap: 9px; }
+.daily-target-icon { display: grid; flex: 0 0 auto; width: 35px; height: 35px; place-items: center; border: 1px solid #d8edde; border-radius: 12px; background: #fff; color: #37ad7a; }
+.daily-goal-top > div:nth-child(2) { display: flex; flex: 1; flex-direction: column; gap: 3px; }
+.daily-goal-top > div:nth-child(2) span { color: #87a08f; font-size: 8px; font-weight: 750; }
+.daily-goal-top > div:nth-child(2) strong { color: #315b47; font-size: 11px; font-weight: 850; }
+.goal-status { padding: 5px 8px; border: 1px solid #e3ebe5; border-radius: 999px; background: #fff; color: #82968a; font-size: 8px; font-weight: 850; }
+.goal-status-done { border-color: #bfe8cf; background: #e7f8ed; color: #25875d; }
+.daily-goal-line { display: flex; justify-content: space-between; margin-top: 15px; color: #82968a; font-size: 9px; }
+.daily-goal-line strong { color: #3e7558; font-size: 9px; }
+.daily-goal-track { height: 7px; overflow: hidden; margin-top: 7px; border-radius: 999px; background: #eaf1ec; }
+.daily-goal-track i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg,#42c88d,#80ddb1); transition: width .4s ease; }
+.daily-goal-card > p { margin: 9px 0 0; color: #8b9d91; font-size: 8px; line-height: 1.55; }
+.achievement-heading { display: flex; align-items: center; justify-content: space-between; }
+.achievement-heading > div > .section-kicker { margin-bottom: 4px; }
+.achievement-heading h2 { margin: 0; color: #254b3b; font-size: 15px; font-weight: 850; }
+.achievement-heading > span { padding: 5px 8px; border-radius: 999px; background: #f2f6f3; color: #789082; font-size: 8px; font-weight: 850; }
+.achievement-list { display: flex; flex-direction: column; gap: 8px; margin-top: 13px; }
+.achievement-item { display: flex; min-height: 47px; align-items: center; gap: 9px; padding: 7px 8px; border: 1px solid #edf1ee; border-radius: 13px; background: #fcfdfc; opacity: .68; }
+.achievement-earned { border-color: #e0eee5; background: #f8fcf9; opacity: 1; }
+.achievement-medal { display: grid; flex: 0 0 auto; width: 31px; height: 31px; place-items: center; border-radius: 10px; background: #edf5ef; color: #9aaa9e; }
+.achievement-mint.achievement-earned .achievement-medal { background: #e1f7eb; color: #2fa775; }
+.achievement-peach.achievement-earned .achievement-medal { background: #fff0e2; color: #df8d4b; }
+.achievement-gold.achievement-earned .achievement-medal { background: #fff6df; color: #c59e3b; }
+.achievement-copy { display: flex; flex: 1; flex-direction: column; gap: 3px; }
+.achievement-copy strong { color: #476456; font-size: 9px; font-weight: 850; }
+.achievement-copy small { color: #98a59d; font-size: 8px; }
+.achievement-check { color: #38b17e; }
+.achievement-lock { color: #a7b2aa; }
+.heart-counter { display: flex; flex: 0 0 auto; align-items: center; gap: 2px; color: #ee857e; }
+.heart-counter svg { stroke-width: 2.3; }
+.hearts-low { color: #dc6d68; }
+.lesson-learning-note { display: flex; align-items: center; gap: 7px; margin-top: 15px; padding-top: 12px; border-top: 1px solid #edf2ee; color: #89a094; font-size: 9px; line-height: 1.5; }
+.lesson-learning-note svg { flex: 0 0 auto; color: #46b783; }
+.hearts-empty-note { margin-top: 10px; color: #a17759; font-size: 9px; line-height: 1.55; }
+.locked-main { width: min(410px, calc(100% - 40px)); margin: 76px auto 0; text-align: center; }
+.locked-medallion { display: grid; width: 78px; height: 78px; place-items: center; margin: 0 auto 16px; border: 1px solid #e0eae4; border-radius: 27px; background: #f1f5f2; color: #97a89e; }
+.locked-main h1 { margin: 8px 0; color: #254b3c; font-size: 26px; font-weight: 850; letter-spacing: -.8px; }
+.locked-main > p { margin: 0 0 22px; color: #7c8f83; font-size: 12px; line-height: 1.7; }
+.locked-main > p strong { color: #39845f; }
+.plain-home-button { display: block; margin: 12px auto 0; padding: 8px 12px; border: 0; background: transparent; color: #789084; font-size: 10px; font-weight: 750; cursor: pointer; }
+.plain-home-button:hover { color: #328861; }
+.perfect-bonus { display: inline-flex; align-items: center; gap: 5px; margin-top: 11px; padding: 6px 9px; border: 1px solid #f0e4c7; border-radius: 999px; background: #fff9e9; color: #a58437; font-size: 8px; font-weight: 800; }
+
+@media (max-width: 920px) {
+  .unit-banner { margin-left: 29px; }
+}
+@media (max-width: 700px) {
+  .unit-banner { margin-left: 29px; padding: 11px; }
+  .unit-mark { width: 33px; height: 33px; }
+  .unit-banner > div:nth-child(2) strong { font-size: 10px; }
+  .unit-duration { font-size: 7px; }
+  .daily-goal-card, .progress-card, .achievement-card { grid-column: 1 / -1; }
+  .daily-goal-card, .achievement-card { padding: 13px; }
+  .achievement-list { display: grid; grid-template-columns: 1fr; }
+  .achievement-item { min-height: 44px; }
+  .lesson-meter { gap: 7px; }
+  .meter-track { gap: 3px; }
+  .meter-label { font-size: 9px; }
+  .heart-counter { gap: 0; }
+  .heart-counter svg { width: 12px; height: 12px; }
+  .lesson-learning-note { font-size: 8px; }
+  .locked-main { margin-top: 54px; }
+}
+@media (max-width: 390px) {
+  .unit-banner { margin-left: 28px; gap: 7px; }
+  .unit-banner > div:nth-child(2) strong { font-size: 9px; }
+  .unit-duration { padding: 4px 6px; }
+  .heart-counter svg { width: 10px; height: 10px; }
+  .quiz-overline { gap: 5px; font-size: 9px; }
+  .quiz-reward { font-size: 8px; }
+}

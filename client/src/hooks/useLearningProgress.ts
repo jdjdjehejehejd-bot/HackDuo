@@ -7,6 +7,8 @@ type LearningProgress = {
   xp: number;
   streak: number;
   lastActiveDate: string | null;
+  dailyActivityDate: string | null;
+  dailyLessonCount: number;
 };
 
 const EMPTY_PROGRESS: LearningProgress = {
@@ -14,6 +16,8 @@ const EMPTY_PROGRESS: LearningProgress = {
   xp: 0,
   streak: 0,
   lastActiveDate: null,
+  dailyActivityDate: null,
+  dailyLessonCount: 0,
 };
 
 function dateKey(date: Date) {
@@ -41,6 +45,8 @@ function readProgress(): LearningProgress {
       xp: Number.isFinite(saved.xp) ? Math.max(0, Number(saved.xp)) : 0,
       streak: Number.isFinite(saved.streak) ? Math.max(0, Number(saved.streak)) : 0,
       lastActiveDate: typeof saved.lastActiveDate === "string" ? saved.lastActiveDate : null,
+      dailyActivityDate: typeof saved.dailyActivityDate === "string" ? saved.dailyActivityDate : null,
+      dailyLessonCount: Number.isFinite(saved.dailyLessonCount) ? Math.max(0, Number(saved.dailyLessonCount)) : 0,
     };
   } catch {
     return EMPTY_PROGRESS;
@@ -60,9 +66,8 @@ export function useLearningProgress() {
 
   const completeLesson = useCallback((lessonId: string, xpReward: number) => {
     setProgress((current) => {
-      if (current.completedLessonIds.includes(lessonId)) return current;
-
       const today = dateKey(new Date());
+      const isNewLesson = !current.completedLessonIds.includes(lessonId);
       const previous = current.lastActiveDate;
       const difference = previous ? dayNumber(today) - dayNumber(previous) : null;
       const streak = previous === today
@@ -70,12 +75,15 @@ export function useLearningProgress() {
         : difference === 1
           ? current.streak + 1
           : 1;
+      const isSameActivityDay = current.dailyActivityDate === today;
 
       return {
-        completedLessonIds: [...current.completedLessonIds, lessonId],
-        xp: current.xp + xpReward,
+        completedLessonIds: isNewLesson ? [...current.completedLessonIds, lessonId] : current.completedLessonIds,
+        xp: current.xp + (isNewLesson ? Math.max(0, xpReward) : 0),
         streak,
         lastActiveDate: today,
+        dailyActivityDate: today,
+        dailyLessonCount: (isSameActivityDay ? current.dailyLessonCount : 0) + 1,
       };
     });
   }, []);
@@ -86,7 +94,7 @@ export function useLearningProgress() {
 export function getCurrentStreak(lastActiveDate: string | null, streak: number) {
   if (!lastActiveDate || streak <= 0) return 0;
   const daysSinceActivity = dayNumber(dateKey(new Date())) - dayNumber(lastActiveDate);
-  return daysSinceActivity <= 1 ? streak : 0;
+  return daysSinceActivity >= 0 && daysSinceActivity <= 1 ? streak : 0;
 }
 
 export function getWeekStreakDates(lastActiveDate: string | null, streak: number) {
