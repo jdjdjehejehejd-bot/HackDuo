@@ -5,12 +5,13 @@ import {
 } from "lucide-react";
 import { useLocation } from "wouter";
 import BrandMark from "@/components/BrandMark";
-import { lessons } from "@/data/lessons";
+import { lessonStages, lessons } from "@/data/lessons";
 import { getCurrentStreak, getLevelNumber, getLevelProgress, getWeekStreakDates, useLearningProgress } from "@/hooks/useLearningProgress";
 
 const lessonIcons = {
   phishing: MailWarning, account: KeyRound, privacy: UserRound,
   web: Code2, network: Network, incident: ShieldCheck,
+  "security-basics": ShieldCheck, "threat-model": Target, cryptography: LockKeyhole,
 } as const;
 const weekdayNames = ["월", "화", "수", "목", "금", "토", "일"];
 
@@ -116,20 +117,32 @@ export default function Home() {
             </section>
 
             <section className="course-section" aria-labelledby="course-title">
-              <div className="section-heading course-heading"><div><span className="section-kicker">THE FIELD GUIDE</span><h2 id="course-title">보안 감각 필드 가이드</h2><p>단서를 모으고, 내 판단으로 마무리해요.</p></div><span className="course-progress-pill"><BadgeCheck size={14} /> {completedCount}/{lessons.length}</span></div>
-              <div className="course-grid">
-                {lessons.map((lesson, index) => {
-                  const completed = completedIds.has(lesson.id);
-                  const unlocked = completed || index === 0 || completedIds.has(lessons[index - 1].id);
-                  const current = !completed && index === nextLessonIndex;
-                  const Icon = lessonIcons[lesson.id as keyof typeof lessonIcons] ?? ShieldCheck;
+              <div className="section-heading course-heading"><div><span className="section-kicker">THE FIELD GUIDE · 3 CHAPTERS</span><h2 id="course-title">보안의 기초부터 차근차근</h2><p>대학 정보보안의 기초를 세 단계 이야기로 쉽게 배워요.</p></div><span className="course-progress-pill"><BadgeCheck size={14} /> {completedCount}/{lessons.length}</span></div>
+              <div className="curriculum-stages">
+                {lessonStages.map((stage) => {
+                  const stageLessons = lessons.filter((lesson) => lesson.stageId === stage.id);
+                  const stageCompleted = stageLessons.filter((lesson) => completedIds.has(lesson.id)).length;
                   return (
-                    <article className={`course-card${completed ? " course-card-done" : ""}${current ? " course-card-current" : ""}${!unlocked ? " course-card-locked" : ""}`} key={lesson.id}>
-                      <button className={`course-cover cover-${lesson.id}`} onClick={() => unlocked && setLocation(`/lesson/${lesson.id}`)} disabled={!unlocked} aria-label={`${lesson.title} ${unlocked ? "열기" : "잠김"}`}>
-                        <span className="cover-episode">FIELD NOTE {String(index + 1).padStart(2, "0")}</span><Icon size={32} strokeWidth={1.7} /><span className="cover-open">{completed ? <Check size={15} /> : !unlocked ? <LockKeyhole size={14} /> : <ArrowRight size={15} />}</span>
-                      </button>
-                      <div className="course-card-body"><div className="course-card-meta"><span>{lesson.category}</span>{completed ? <span className="meta-state state-done">완료</span> : current ? <span className="meta-state state-current">이어 학습</span> : !unlocked ? <span className="meta-state">잠김</span> : null}</div><h3>{lesson.shortTitle}</h3><p>{lesson.summary}</p><div className="course-card-foot"><span><Clock3 size={12} />{lesson.duration}</span><span><Zap size={12} />{lesson.xp + 5} XP</span></div></div>
-                    </article>
+                    <section className={`curriculum-stage curriculum-stage-${stage.number}`} key={stage.id} aria-labelledby={`stage-title-${stage.number}`}>
+                      <header className="curriculum-stage-heading"><span className="stage-number">0{stage.number}</span><div><span className="stage-kicker">CHAPTER 0{stage.number} · {stageCompleted}/{stageLessons.length} 완료</span><h3 id={`stage-title-${stage.number}`}>{stage.title}</h3><p>{stage.subtitle}</p></div></header>
+                      <div className="course-grid">
+                        {stageLessons.map((lesson) => {
+                          const index = lessons.findIndex((item) => item.id === lesson.id);
+                          const completed = completedIds.has(lesson.id);
+                          const unlocked = completed || index === 0 || completedIds.has(lessons[index - 1].id);
+                          const current = !completed && index === nextLessonIndex;
+                          const Icon = lessonIcons[lesson.id as keyof typeof lessonIcons] ?? ShieldCheck;
+                          return (
+                            <article className={`course-card${completed ? " course-card-done" : ""}${current ? " course-card-current" : ""}${!unlocked ? " course-card-locked" : ""}`} key={lesson.id}>
+                              <button className={`course-cover cover-${lesson.id}`} onClick={() => unlocked && setLocation(`/lesson/${lesson.id}`)} disabled={!unlocked} aria-label={`${lesson.title} ${unlocked ? "열기" : "잠김"}`}>
+                                <span className="cover-episode">EPISODE {String(index + 1).padStart(2, "0")}</span><Icon size={32} strokeWidth={1.7} /><span className="cover-open">{completed ? <Check size={15} /> : !unlocked ? <LockKeyhole size={14} /> : <ArrowRight size={15} />}</span>
+                              </button>
+                              <div className="course-card-body"><div className="course-card-meta"><span>{lesson.category}</span>{completed ? <span className="meta-state state-done">완료</span> : current ? <span className="meta-state state-current">이어 학습</span> : !unlocked ? <span className="meta-state">잠김</span> : null}</div><h3>{lesson.shortTitle}</h3><p>{lesson.summary}</p><div className="course-card-foot"><span><Clock3 size={12} />{lesson.duration}</span><span><Zap size={12} />{lesson.xp + 5} XP</span></div></div>
+                            </article>
+                          );
+                        })}
+                      </div>
+                    </section>
                   );
                 })}
               </div>

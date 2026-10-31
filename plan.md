@@ -75,3 +75,17 @@
 ## 제약과 의존성
 
 기존 React·Vite·Wouter 구조를 유지하고 새 런타임·서버 의존성을 추가하지 않는다. 학습 진행은 기존처럼 현재 브라우저의 `localStorage`에 저장한다. 실습 데이터는 합성된 예시만 사용하고 네트워크 요청·외부 시스템 연결·실행 가능한 취약 페이로드는 제공하지 않는다. 기존 저장소 접근 범위와 배포 설정을 변경하지 않는다.
+
+
+## 커리큘럼 개편
+
+기존 생활 보안 팁의 평면적인 목록을 연속적인 캠퍼스 보안 사건을 따라가는 초보자용 정보보안 입문 과정으로 바꾼다. 한 사건의 신호를 다음 편에서 다른 개념으로 다시 해석하도록 서사를 연결한다. 매 편은 현실적인 장면, 학습자가 풀 작은 임무, 전문 개념을 쉬운 문장으로 설명하는 단서 카드, 적용형 확인 문제와 정답 해설로 구성한다. 이야기는 개념을 기억하게 하는 장치이며 사실·정의·한계 설명을 대체하지 않는다.
+
+9개 편은 3단계로 진행한다. 1단계 '무엇을 지킬까?'는 정보보안의 기밀성·무결성·가용성과 자산·위협 모델·위험을 소개한다. 2단계 '어떻게 설계할까?'는 암호학의 암호화·해시·전자서명, 디지털 신원·인증·인가·최소 권한, 네트워크 경계와 웹 앱 안전 기초를 순서대로 연결한다. 3단계 '어떻게 지키고 대응할까?'는 데이터 보호·개인정보, 사회공학·피싱, 탐지·대응·복구를 다룬다. 이 순서는 MIT OpenCourseWare의 컴퓨터 시스템 보안 강의에서 다루는 위협 모델, 시스템 보안, 네트워크와 웹 애플리케이션 주제, NIST CSF 2.0의 위험 관리 및 Govern·Identify·Protect·Detect·Respond·Recover 구조, OWASP Top 10 2025의 애플리케이션 위험을 참고하되 대학원 수준 전제 지식과 실습은 포함하지 않고 입문자에게 맞춰 설명한다.
+
+학습 진도 보존을 위해 기존 6개 lesson ID와 완료 기록을 건드리지 않고, '보안의 기본 약속', '위협 모델', '암호학 첫걸음' 세 편에 새 ID를 추가한다. 기존 주제를 잇는 ID는 기존 완료 데이터와 호환되게 유지한다. 각 편을 3개 개념 단서와 4개 사례형 확인 문제로 구성한다. 홈은 3단계 학습 경로를 명확히 구분하고 현재 진행할 다음 편을 강조한다. 레슨 화면은 연속 에피소드, 임무 목표와 상황 증거를 개념 설명에 연결하고, 근거가 있는 기초 자료로 이어지는 추가 학습 링크를 제공한다.
+
+참고 자료:
+- MIT OpenCourseWare, [6.858 Computer Systems Security](https://ocw.mit.edu/courses/6-858-computer-systems-security-fall-2014/) 및 [Lecture 1: Introduction, Threat Models](https://ocw.mit.edu/courses/6-858-computer-systems-security-fall-2014/resources/lecture-1-introduction-threat-models/)
+- NIST, [Cybersecurity Framework 2.0](https://www.nist.gov/cyberframework) 및 [NIST CSWP 29 원문](https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf)
+- OWASP, [Top 10:2025](https://top10.owasp.org/2025/en/) 및 [A05:2025 Injection](https://top10.owasp.org/2025/en/A05_2025-Injection/)

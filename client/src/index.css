@@ -258,3 +258,64 @@ button:focus-visible, a:focus-visible { outline: 3px solid #cf77e9; outline-offs
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* Ordered university-foundations learning path */
+.curriculum-stages { display: flex; flex-direction: column; gap: 13px; }
+.curriculum-stage { overflow: hidden; padding: 13px 12px 12px; border: 1px solid #ebe5ef; border-radius: 17px; background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(250,247,252,.96)); }
+.curriculum-stage-2 { background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(246,247,253,.96)); }
+.curriculum-stage-3 { background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(247,251,248,.96)); }
+.curriculum-stage-heading { display: flex; align-items: center; gap: 10px; margin: 0 1px 11px; }
+.stage-number { display: grid; width: 34px; height: 34px; flex: 0 0 auto; place-items: center; border-radius: 12px; background: #f5e9fa; color: #a042c0; font-size: 11px; font-weight: 950; }
+.curriculum-stage-2 .stage-number { background: #eeedfa; color: #6656b5; }
+.curriculum-stage-3 .stage-number { background: #eaf5ee; color: #43896a; }
+.curriculum-stage-heading > div { min-width: 0; flex: 1; }
+.stage-kicker { display: block; margin-bottom: 2px; color: #a093a7; font-size: 7px; font-weight: 900; letter-spacing: .12em; }
+.curriculum-stage-heading h3 { margin: 0; color: #392b44; font-size: 13px; font-weight: 880; letter-spacing: -.35px; }
+.curriculum-stage-heading p { margin: 3px 0 0; color: #978c9e; font-size: 8px; }
+.curriculum-stage .course-grid { gap: 9px; }
+.course-card-current { border-color: #dfb4eb; box-shadow: 0 0 0 2px rgba(186, 77, 211, .07), 0 5px 17px rgba(98, 45, 113, .06); }
+.cover-security-basics { background: linear-gradient(135deg, #c54de2, #8661d5); }
+.cover-threat-model { background: linear-gradient(135deg, #6f66d2, #477fb7); }
+.cover-cryptography { background: linear-gradient(135deg, #6655b9, #a14ec8); }
+.story-inner.story-security-basics { color: #9c45c5; }
+.story-inner.story-threat-model { color: #5173b7; }
+.story-inner.story-cryptography { color: #8056c0; }
+
+.lesson-episode-label { display: inline-flex; align-items: center; justify-content: center; margin-top: 6px; padding: 5px 8px; border: 1px solid #ede3f1; border-radius: 999px; background: rgba(255,255,255,.8); color: #92789c; font-size: 8px; font-weight: 800; letter-spacing: .025em; }
+.lesson-mission { display: flex; width: fit-content; max-width: 100%; align-items: flex-start; gap: 8px; margin: 11px auto 0; padding: 8px 11px; border: 1px solid #eddef3; border-radius: 12px; background: linear-gradient(100deg, #fcf5fe, #fffafd); color: #9c45b9; text-align: left; }
+.lesson-mission > svg { flex: 0 0 auto; margin-top: 1px; }
+.lesson-mission > span { display: flex; flex-direction: column; gap: 2px; }
+.lesson-mission small { color: #a68bab; font-size: 7px; font-weight: 800; }
+.lesson-mission strong { color: #60486a; font-size: 9px; font-weight: 850; line-height: 1.5; }
+.case-evidence { display: flex; align-items: flex-start; gap: 8px; margin: 14px 0 3px; padding: 10px 11px; border: 1px solid #f0e6d8; border-radius: 12px; background: linear-gradient(105deg, #fffaf1, #fff); }
+.case-evidence > span { flex: 0 0 auto; padding: 3px 6px; border-radius: 999px; background: #fbefd9; color: #a27a38; font-size: 7px; font-weight: 900; white-space: nowrap; }
+.case-evidence > p { margin: 0; color: #736677; font-size: 9px; font-weight: 650; line-height: 1.65; }
+.concept-card-top { align-items: center; }
+.concept-type { max-width: calc(100% - 45px); color: #9840b8; font-size: 8px; font-weight: 900; letter-spacing: .015em; }
+.lesson-references { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px; margin: 10px auto 0; padding: 8px 0 2px; border-top: 1px solid #f1ecf3; }
+.lesson-references > span { margin-right: 2px; color: #a39aa8; font-size: 7px; font-weight: 750; }
+.lesson-references a { display: inline-flex; align-items: center; gap: 4px; padding: 4px 7px; border: 1px solid #eee6f1; border-radius: 999px; background: #fff; color: #866293; font-size: 7px; font-weight: 750; text-decoration: none; }
+.lesson-references a:hover { border-color: #dcbce8; color: #8f35ae; }
+.lesson-references a:focus-visible { outline: 2px solid #cf77e9; outline-offset: 2px; }
+
+@media (max-width: 640px) {
+  .curriculum-stages { gap: 10px; }
+  .curriculum-stage { padding: 10px 9px 9px; border-radius: 14px; }
+  .curriculum-stage-heading { gap: 8px; margin-bottom: 8px; }
+  .stage-number { width: 30px; height: 30px; border-radius: 10px; font-size: 10px; }
+  .curriculum-stage-heading h3 { font-size: 11px; }
+  .curriculum-stage-heading p { font-size: 7px; }
+  .stage-kicker { font-size: 6px; }
+  .curriculum-stage .course-grid { gap: 7px; }
+  .lesson-episode-label { margin-top: 5px; font-size: 7px; }
+  .lesson-mission { gap: 6px; margin-top: 9px; padding: 7px 8px; }
+  .lesson-mission > svg { width: 13px; height: 13px; }
+  .lesson-mission strong { font-size: 8px; }
+  .case-evidence { gap: 6px; margin-top: 11px; padding: 8px; }
+  .case-evidence > span { font-size: 6px; }
+  .case-evidence > p { font-size: 8px; }
+  .concept-type { font-size: 7px; }
+  .lesson-references { justify-content: flex-start; margin-top: 8px; }
+  .lesson-references > span { width: 100%; }
+  .lesson-references a { font-size: 6px; }
+}
