@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { lessonStoryboards } from "./animatedStoryboards";
 import { getCompletedLessonNotes, lessonStages, lessons } from "./lessons";
 
 describe("TEUM beginner security curriculum", () => {
@@ -35,6 +36,19 @@ describe("TEUM beginner security curriculum", () => {
   it("preserves IDs used by learners' existing local progress", () => {
     const previousIds = ["phishing", "account", "privacy", "web", "network", "incident"];
     expect(lessons.map((lesson) => lesson.id)).toEqual(expect.arrayContaining(previousIds));
+  });
+
+  it("provides a three-part instructional animation for every lesson concept", () => {
+    expect(Object.keys(lessonStoryboards).sort()).toEqual(lessons.map((lesson) => lesson.id).sort());
+
+    for (const lesson of lessons) {
+      const storyboard = lessonStoryboards[lesson.id];
+      expect(storyboard.flows, lesson.id).toHaveLength(lesson.sections.length);
+      for (const flow of storyboard.flows) {
+        expect(flow, lesson.id).toHaveLength(3);
+        expect(flow.every((label) => label.trim().length > 2), lesson.id).toBe(true);
+      }
+    }
   });
 
   it("builds newest-first notebook entries from saved completions and ignores stale or duplicate IDs", () => {

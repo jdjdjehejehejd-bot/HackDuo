@@ -463,3 +463,85 @@ button:focus-visible, a:focus-visible { outline: 3px solid #cf77e9; outline-offs
 @media (prefers-reduced-motion: reduce) {
   .case-evidence::after, .concept-illustration, .story-ring-current, .completion-glow span { animation: none !important; }
 }
+
+
+/* The animated illustration is the lesson, not a decorative page transition. */
+.animated-lesson { --motion-accent: #a642c5; --motion-soft: #f8effb; margin: 17px 0 17px; overflow: hidden; padding: 13px; border: 1px solid #e9deee; border-radius: 17px; background: linear-gradient(150deg, #fff, #fdf9fe); }
+.animated-theme-security-basics { --motion-accent: #9c42c2; --motion-soft: #f7effb; }
+.animated-theme-threat-model { --motion-accent: #526fbc; --motion-soft: #f0f3fc; }
+.animated-theme-account { --motion-accent: #417ca9; --motion-soft: #eef6fb; }
+.animated-theme-cryptography { --motion-accent: #7960ba; --motion-soft: #f4f0fb; }
+.animated-theme-network { --motion-accent: #41899a; --motion-soft: #edf7f8; }
+.animated-theme-web { --motion-accent: #548d66; --motion-soft: #eff8f1; }
+.animated-theme-privacy { --motion-accent: #b25c9b; --motion-soft: #fcf1f8; }
+.animated-theme-phishing { --motion-accent: #cc795a; --motion-soft: #fff5ee; }
+.animated-theme-incident { --motion-accent: #438b6e; --motion-soft: #eff8f2; }
+.animated-lesson-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 9px; }
+.animated-lesson-heading > div { display: flex; min-width: 0; flex-direction: column; gap: 3px; }
+.animated-lesson-kicker { color: var(--motion-accent); font-size: 8px; font-weight: 900; letter-spacing: .07em; }
+.animated-lesson-heading strong { overflow: hidden; color: #403149; font-size: 11px; font-weight: 900; text-overflow: ellipsis; white-space: nowrap; }
+.animated-lesson-duration { padding: 5px 7px; border: 1px solid color-mix(in srgb, var(--motion-accent) 17%, white); border-radius: 999px; background: var(--motion-soft); color: var(--motion-accent); font-size: 7px; font-weight: 850; white-space: nowrap; }
+.animated-board { position: relative; overflow: hidden; padding: 10px 11px 9px; border: 1px solid color-mix(in srgb, var(--motion-accent) 15%, white); border-radius: 13px; background: radial-gradient(ellipse at 49% 5%, color-mix(in srgb, var(--motion-soft) 90%, white), white 71%); }
+.animated-board::before { position: absolute; top: -70px; right: -25px; width: 170px; height: 170px; border: 1px solid color-mix(in srgb, var(--motion-accent) 8%, transparent); border-radius: 50%; box-shadow: 0 0 0 18px color-mix(in srgb, var(--motion-accent) 2%, transparent), 0 0 0 39px color-mix(in srgb, var(--motion-accent) 2%, transparent); content: ""; pointer-events: none; }
+.animated-board-top { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; color: #95889d; font-size: 6px; font-weight: 900; letter-spacing: .1em; }
+.animated-board-top > span { display: inline-flex; align-items: center; gap: 5px; }
+.animated-board-top i { width: 5px; height: 5px; border-radius: 50%; background: var(--motion-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--motion-accent) 12%, white); }
+.animated-board-top small { max-width: 50%; overflow: hidden; color: var(--motion-accent); font-size: 7px; letter-spacing: 0; text-overflow: ellipsis; white-space: nowrap; }
+.animated-flow { position: relative; display: grid; min-height: 93px; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: center; gap: 8px; padding: 14px 0 5px; }
+.animated-flow-rail { position: absolute; top: 47px; right: 16.6%; left: 16.6%; z-index: 0; height: 2px; border-radius: 3px; background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--motion-accent) 20%, white) 0 5px, transparent 5px 9px); }
+.animated-flow-rail::after { position: absolute; top: -2px; right: -2px; width: 6px; height: 6px; border-top: 2px solid color-mix(in srgb, var(--motion-accent) 40%, white); border-right: 2px solid color-mix(in srgb, var(--motion-accent) 40%, white); content: ""; transform: rotate(45deg); }
+.animated-traveler { position: absolute; top: -14px; left: 0; z-index: 3; display: grid; min-width: 33px; height: 18px; place-items: center; padding: 0 5px; border: 1px solid color-mix(in srgb, var(--motion-accent) 22%, white); border-radius: 999px; background: #fff; color: var(--motion-accent); box-shadow: 0 2px 8px color-mix(in srgb, var(--motion-accent) 19%, transparent); font-size: 6px; font-weight: 950; white-space: nowrap; transition: left .8s cubic-bezier(.18,.75,.26,1); transform: translateX(-50%); }
+.traveler-0 { left: 0%; }.traveler-1 { left: 50%; }.traveler-2 { left: 100%; }
+.animated-flow-node { position: relative; z-index: 1; display: flex; min-width: 0; min-height: 69px; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 8px 5px 6px; border: 1px solid #eee8f1; border-radius: 12px; background: rgba(255,255,255,.94); text-align: center; transition: border-color .35s ease, background .35s ease, box-shadow .35s ease, opacity .35s ease, transform .35s ease; }
+.animated-flow-node > small { color: #b5aaba; font-size: 6px; font-weight: 900; letter-spacing: .1em; }
+.animated-node-glyph { display: grid; min-width: 27px; height: 23px; place-items: center; margin-bottom: 1px; padding: 0 4px; border-radius: 8px; background: #f5f1f7; color: #96869c; font-size: 8px; font-weight: 950; white-space: nowrap; transition: transform .45s cubic-bezier(.2,.8,.2,1), background .35s ease, color .35s ease; }
+.animated-flow-node > strong { display: block; width: 100%; color: #75697d; font-size: 7px; font-weight: 820; line-height: 1.35; overflow-wrap: anywhere; }
+.animated-flow-node.is-upcoming { opacity: .59; }
+.animated-flow-node.is-past { border-color: color-mix(in srgb, var(--motion-accent) 15%, white); background: color-mix(in srgb, var(--motion-soft) 46%, white); }
+.animated-flow-node.is-current { z-index: 2; border-color: color-mix(in srgb, var(--motion-accent) 43%, white); background: linear-gradient(150deg, #fff, var(--motion-soft)); box-shadow: 0 4px 14px color-mix(in srgb, var(--motion-accent) 13%, transparent); transform: translateY(-2px); }
+.animated-flow-node.is-current .animated-node-glyph { background: var(--motion-accent); color: #fff; transform: scale(1.08) rotate(-2deg); }
+.animated-board.beat-0 .animated-flow-node:nth-child(2) { --node-index: 0; }
+.animated-board.beat-1 .animated-flow-node:nth-child(3) { --node-index: 1; }
+.animated-board.beat-2 .animated-flow-node:nth-child(4) { --node-index: 2; }
+.animated-board.is-playing .animated-flow-node.is-current .animated-node-glyph { animation: teaching-glyph-pulse 1.5s ease-in-out infinite; }
+.animated-board-foot { position: relative; z-index: 1; display: flex; align-items: center; gap: 6px; padding-top: 7px; border-top: 1px solid color-mix(in srgb, var(--motion-accent) 9%, white); color: #8d8195; font-size: 7px; line-height: 1.45; }
+.animated-board-foot > span { min-width: 0; flex: 1; }
+.animated-board-foot > svg { flex: 0 0 auto; color: var(--motion-accent); }
+.animated-board-foot > strong { color: var(--motion-accent); font-size: 7px; font-weight: 900; text-align: right; }
+.animated-caption { min-height: 67px; margin: 9px 0 7px; padding: 9px 10px; border-left: 3px solid var(--motion-accent); border-radius: 0 11px 11px 0; background: var(--motion-soft); }
+.animated-caption > span { display: block; margin-bottom: 4px; color: var(--motion-accent); font-size: 7px; font-weight: 900; letter-spacing: .04em; }
+.animated-caption > p { margin: 0; color: #51445a; font-size: 9px; font-weight: 650; line-height: 1.65; }
+.animated-caption > * { animation: animated-caption-enter .35s ease both; }
+.animated-controls { display: flex; align-items: center; gap: 7px; }
+.animated-play-button { display: inline-flex; min-width: 82px; min-height: 31px; align-items: center; justify-content: center; gap: 5px; padding: 0 9px; border: 1px solid color-mix(in srgb, var(--motion-accent) 23%, white); border-radius: 9px; background: #fff; color: var(--motion-accent); font-size: 8px; font-weight: 900; cursor: pointer; transition: transform .16s ease, background .16s ease; }
+.animated-play-button:hover { transform: translateY(-1px); background: var(--motion-soft); }
+.animated-play-button:focus-visible, .animated-beat-picker button:focus-visible { outline: 2px solid var(--motion-accent); outline-offset: 2px; }
+.animated-beat-picker { display: inline-flex; align-items: center; gap: 3px; }
+.animated-beat-picker button { display: grid; width: 23px; height: 23px; place-items: center; border: 1px solid #eee7f0; border-radius: 50%; background: #fff; color: #93869a; font-size: 7px; font-weight: 900; cursor: pointer; }
+.animated-beat-picker button.beat-picker-active { border-color: var(--motion-accent); background: var(--motion-accent); color: #fff; box-shadow: 0 2px 8px color-mix(in srgb, var(--motion-accent) 23%, transparent); }
+.animated-caption-hint { min-width: 0; margin-left: auto; color: #a197a7; font-size: 6px; text-align: right; }
+@keyframes teaching-glyph-pulse { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--motion-accent) 0%, transparent); } 50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--motion-accent) 11%, transparent); } }
+@keyframes animated-caption-enter { from { opacity: .2; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 640px) {
+  .animated-lesson { margin: 13px 0; padding: 10px; border-radius: 14px; }
+  .animated-lesson-heading { margin-bottom: 7px; }
+  .animated-lesson-kicker { font-size: 7px; }
+  .animated-lesson-heading strong { font-size: 9px; }
+  .animated-board { padding: 9px 7px 7px; }
+  .animated-flow { min-height: 91px; gap: 5px; padding-top: 13px; }
+  .animated-flow-node { min-height: 66px; padding: 7px 3px 5px; }
+  .animated-node-glyph { min-width: 23px; height: 21px; font-size: 7px; }
+  .animated-flow-node > strong { font-size: 6px; }
+  .animated-board-foot { align-items: flex-start; font-size: 6px; }
+  .animated-board-foot > strong { max-width: 34%; font-size: 6px; }
+  .animated-caption { min-height: 76px; padding: 8px; }
+  .animated-caption > p { font-size: 8px; line-height: 1.65; }
+  .animated-controls { gap: 5px; }
+  .animated-play-button { min-width: 75px; min-height: 29px; padding: 0 7px; font-size: 7px; }
+  .animated-beat-picker { gap: 2px; }
+  .animated-beat-picker button { width: 21px; height: 21px; }
+  .animated-caption-hint { max-width: 90px; font-size: 5px; line-height: 1.4; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .animated-flow-node, .animated-node-glyph, .animated-traveler, .animated-caption > *, .animated-play-button { transition: none !important; animation: none !important; }
+}

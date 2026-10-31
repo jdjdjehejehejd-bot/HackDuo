@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { useLocation, useRoute } from "wouter";
 import BrandMark from "@/components/BrandMark";
+import AnimatedLesson from "@/components/AnimatedLesson";
 import { lessons } from "@/data/lessons";
 import { getCurrentStreak, getLevelNumber, useLearningProgress } from "@/hooks/useLearningProgress";
 import NotFound from "@/pages/NotFound";
@@ -138,7 +139,7 @@ export default function LessonPage() {
               <div className="case-file-line"><span className="case-tag"><Sparkles size={13} /> 사건 기록 · {String(lessonIndex + 1).padStart(2, "0")}</span><span className="concept-number">단서 {phase + 1} / {sectionCount}</span></div>
               {phase === 0 && <blockquote className="lesson-hook">“{lesson.hook}”</blockquote>}
               <div className="case-evidence"><span>현장 기록</span><p>{lesson.sections[phase].scene}</p></div>
-              <div className="concept-card-top"><span className="concept-type">핵심 개념 · {lesson.sections[phase].concept}</span><span className="concept-illustration"><LockKeyhole size={18} /></span></div>
+              <AnimatedLesson lessonId={lesson.id} sectionIndex={phase} section={lesson.sections[phase]} />
               <h2>{lesson.sections[phase].title}</h2><p>{lesson.sections[phase].body}</p>
               <div className="takeaway"><span><Sparkles size={14} /></span><div><small>기억해 두기</small><strong>{lesson.sections[phase].takeaway}</strong></div></div>
               <div className="lesson-learning-note"><BadgeCheck size={14} /><span>실제 일상에서 비슷한 장면을 만나면 떠올려 봐요.</span></div>
