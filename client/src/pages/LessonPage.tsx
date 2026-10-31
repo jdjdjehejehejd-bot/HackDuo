@@ -22,6 +22,7 @@ import {
 import { useLocation, useRoute } from "wouter";
 import BrandMark from "@/components/BrandMark";
 import AnimatedLesson from "@/components/AnimatedLesson";
+import LessonStoryIntro from "@/components/LessonStoryIntro";
 import { lessons } from "@/data/lessons";
 import { getCurrentStreak, getLevelNumber, useLearningProgress } from "@/hooks/useLearningProgress";
 import NotFound from "@/pages/NotFound";
@@ -43,6 +44,7 @@ export default function LessonPage() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [firstTryResults, setFirstTryResults] = useState<Record<number, boolean>>({});
   const [earnedXp, setEarnedXp] = useState(0);
+  const [storyIntroDismissedFor, setStoryIntroDismissedFor] = useState<string | null>(null);
 
   useEffect(() => {
     if (!lesson || lesson.id === enteredLessonId) return;
@@ -122,6 +124,18 @@ export default function LessonPage() {
         <header className="lesson-topbar"><button className="back-button" onClick={() => setLocation("/")}><ArrowLeft size={18} /><span>피드</span></button><BrandMark /><span /></header>
         <main className="locked-main"><div className="locked-medallion"><LockKeyhole size={30} /></div><span className="completion-eyebrow"><ShieldCheck size={14} /> 다음 스토리</span><h1>단서를 하나씩 모아봐요.</h1><p><strong>{previousLesson?.shortTitle}</strong> 단원을 마치면 이 스토리가 열려요.</p><button className="button-primary completion-home" onClick={() => setLocation(`/lesson/${previousLesson?.id}`)}>이전 단원 이어서 보기 <ArrowRight size={17} /></button><button className="plain-home-button" onClick={() => setLocation("/")}>피드로 돌아가기</button></main>
       </div>
+    );
+  }
+
+  if (storyIntroDismissedFor !== lesson.id) {
+    return (
+      <LessonStoryIntro
+        key={lesson.id}
+        lesson={lesson}
+        lessonNumber={lessonIndex + 1}
+        onStart={() => setStoryIntroDismissedFor(lesson.id)}
+        onExit={() => setLocation("/")}
+      />
     );
   }
 
