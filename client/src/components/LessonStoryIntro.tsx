@@ -140,7 +140,7 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
           ))}
         </div>
         <div className="anime-opening-control-row">
-          <span className="anime-opening-hint">{reducedMotion ? "모션 감소 · 장면을 직접 넘겨 보세요" : isPlaying ? "새빛대학교 축제 · 제{lessonNumber}화" : finished ? "이야기가 이어질 준비가 됐어요" : "오프닝 재생을 조절할 수 있어요"}</span>
+          <span className="anime-opening-hint">{reducedMotion ? "모션 감소 · 장면을 직접 넘겨 보세요" : isPlaying ? lesson.episode : finished ? "이야기가 이어질 준비가 됐어요" : "오프닝 재생을 조절할 수 있어요"}</span>
           <button className="anime-opening-play" onClick={togglePlayback} aria-pressed={isPlaying}>
             {reducedMotion ? <Play size={15} /> : isPlaying ? <Pause size={15} /> : finished ? <RotateCcw size={15} /> : <Play size={15} />}
             {reducedMotion ? act === sceneLabels.length - 1 ? "처음부터" : "다음 장면" : isPlaying ? "일시정지" : finished ? "다시 보기" : "이어서 보기"}
