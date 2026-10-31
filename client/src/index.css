@@ -717,3 +717,129 @@ button:focus-visible, a:focus-visible { outline: 3px solid #cf77e9; outline-offs
 @media (prefers-reduced-motion: reduce) {
   .story-opening-stage *, .story-opening-stage::before, .story-opening-stage::after, .story-opening-prop, .story-opening-dialogue { animation: none !important; transition: none !important; }
 }
+
+
+/* Full-bleed original anime opening: the illustrated scene fills the device, with only cinematic subtitles and controls over it. */
+.anime-opening { position: fixed; z-index: 1100; inset: 0; width: 100vw; height: 100vh; height: 100dvh; overflow: hidden; isolation: isolate; background: #080a16; color: #fff; }
+.anime-opening-background, .anime-opening-color-grade, .anime-opening-vignette, .anime-opening-light-leak, .anime-opening-grain { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.anime-opening-background { z-index: -5; object-fit: cover; object-position: center 48%; opacity: .98; transform: scale(1.08); will-change: transform, filter; }
+.anime-opening-act-0 .anime-opening-background { transform: scale(1.06) translate3d(0,0,0); }
+.anime-opening-act-1 .anime-opening-background { transform: scale(1.2) translate3d(0,-1%,0); }
+.anime-opening-act-2 .anime-opening-background { transform: scale(1.08) translate3d(0,0,0); }
+.anime-opening-color-grade { z-index: -4; background: linear-gradient(180deg, rgba(6,8,18,.63) 0%, rgba(8,10,20,.1) 23%, rgba(9,9,19,.12) 51%, rgba(7,8,16,.44) 69%, rgba(5,6,13,.92) 100%), linear-gradient(90deg, rgba(8,9,20,.49), transparent 57%, rgba(7,8,17,.12)); }
+.anime-opening-vignette { z-index: -3; background: radial-gradient(ellipse at 50% 42%, transparent 35%, rgba(4,5,12,.48) 100%); }
+.anime-opening-light-leak { z-index: -2; opacity: .18; background: linear-gradient(118deg, transparent 27%, rgba(255,209,151,.28) 49%, transparent 61%); mix-blend-mode: screen; transform: translateX(-70%); }
+.anime-opening-grain { z-index: -1; opacity: .06; background-image: repeating-radial-gradient(circle at 18% 23%, #fff 0 1px, transparent 1px 4px); background-size: 9px 9px; mix-blend-mode: soft-light; }
+.anime-opening-playing .anime-opening-background { animation: anime-camera-drift 2.4s cubic-bezier(.2,.8,.2,1) both; }
+.anime-opening-playing.anime-opening-act-0 .anime-opening-background { animation-name: anime-camera-establish; }
+.anime-opening-playing.anime-opening-act-1 .anime-opening-background { animation-name: anime-camera-discover; }
+.anime-opening-playing.anime-opening-act-2 .anime-opening-background { animation-name: anime-camera-resolve; }
+.anime-opening-playing .anime-opening-light-leak { animation: anime-light-sweep 2.4s ease-out both; }
+.anime-opening-header { position: absolute; z-index: 8; top: max(14px, env(safe-area-inset-top)); right: max(18px, env(safe-area-inset-right)); left: max(18px, env(safe-area-inset-left)); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
+.anime-opening-exit, .anime-opening-skip { display: inline-flex; width: fit-content; min-height: 38px; align-items: center; justify-content: center; gap: 7px; padding: 0 12px; border: 1px solid rgba(255,255,255,.25); border-radius: 999px; background: rgba(8,10,18,.24); color: #fff; font-size: 10px; font-weight: 850; text-decoration: none; backdrop-filter: blur(10px); cursor: pointer; transition: background .2s ease, border-color .2s ease; }
+.anime-opening-skip { justify-self: end; background: rgba(8,10,18,.42); }
+.anime-opening-exit:hover, .anime-opening-skip:hover { border-color: rgba(255,255,255,.7); background: rgba(8,10,18,.65); }
+.anime-opening-exit:focus-visible, .anime-opening-skip:focus-visible, .anime-opening-progress button:focus-visible, .anime-opening-play:focus-visible, .anime-opening-start:focus-visible { outline: 3px solid rgba(255,255,255,.9); outline-offset: 3px; }
+.anime-opening-brand { display: inline-flex; align-items: center; gap: 8px; color: rgba(255,255,255,.88); }
+.anime-opening-brand .brand-symbol { width: 29px; height: 29px; border: 1px solid rgba(255,255,255,.5); border-radius: 9px; background: rgba(255,255,255,.12); color: #fff; }
+.anime-opening-brand .brand-symbol svg { width: 19px; height: 19px; }
+.anime-opening-brand > span:last-child { font-size: 8px; font-weight: 850; letter-spacing: .18em; }
+.anime-opening-title-card { position: absolute; z-index: 3; top: 24%; left: clamp(28px, 9vw, 134px); width: min(760px, 78vw); opacity: 0; transform: translate3d(0,14px,0); transition: opacity .6s ease, transform .75s cubic-bezier(.18,.78,.25,1); pointer-events: none; }
+.anime-opening-title-visible { opacity: 1; transform: translate3d(0,0,0); }
+.anime-opening-title-card > span { display: inline-flex; align-items: center; gap: 8px; color: #ffe1a5; font-size: 10px; font-weight: 900; letter-spacing: .21em; text-shadow: 0 2px 12px rgba(0,0,0,.6); }
+.anime-opening-title-card h1 { max-width: 760px; margin: 13px 0 9px; color: #fff; font-size: clamp(35px, 6vw, 76px); font-weight: 950; letter-spacing: -.065em; line-height: 1.14; text-wrap: balance; text-shadow: 0 3px 0 rgba(29,20,35,.22), 0 10px 34px rgba(0,0,0,.58); }
+.anime-opening-title-card p { margin: 0; color: rgba(255,255,255,.82); font-size: clamp(11px, 1.4vw, 15px); font-weight: 770; letter-spacing: .07em; text-shadow: 0 2px 12px rgba(0,0,0,.8); }
+.anime-opening-scene { position: absolute; z-index: 2; inset: 0; overflow: hidden; pointer-events: none; }
+.anime-opening-sun-glow { position: absolute; right: 7%; bottom: 19%; width: min(36vw, 490px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(255,205,148,.24) 0%, rgba(255,143,133,.1) 31%, transparent 70%); filter: blur(14px); opacity: .72; transition: transform 1s ease, opacity .8s ease; }
+.anime-opening-act-1 .anime-opening-sun-glow { transform: translate(-6vw,-6vh) scale(.8); opacity: .5; }
+.anime-opening-act-2 .anime-opening-sun-glow { transform: translate(-3vw,-4vh) scale(1.23); opacity: .95; }
+.anime-opening-spark { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #ffe5ac; box-shadow: 0 0 13px 5px rgba(255,210,139,.54); opacity: 0; }
+.anime-opening-spark-one { top: 33%; right: 22%; }
+.anime-opening-spark-two { top: 48%; left: 39%; width: 3px; height: 3px; }
+.anime-opening-playing.anime-opening-act-1 .anime-opening-spark-one { animation: anime-spark-flare 1.3s .2s ease-out both; }
+.anime-opening-playing.anime-opening-act-2 .anime-opening-spark-two { animation: anime-spark-flare 1.4s .2s ease-out both; }
+.anime-opening-character { position: absolute; bottom: clamp(94px, 13vh, 148px); object-fit: contain; object-position: center bottom; filter: drop-shadow(0 12px 24px rgba(4,7,17,.38)); will-change: transform, opacity; transition: left .8s cubic-bezier(.2,.8,.2,1), right .8s cubic-bezier(.2,.8,.2,1), bottom .8s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1); }
+.anime-opening-minji { left: clamp(15px, 8vw, 116px); width: clamp(170px, 25vw, 390px); height: clamp(270px, 42vh, 540px); transform-origin: 50% 100%; }
+.anime-opening-ttumi { right: clamp(15px, 13vw, 185px); width: clamp(112px, 18vw, 268px); height: clamp(112px, 26vh, 310px); transform-origin: 50% 80%; }
+.anime-opening-minji-1 { left: clamp(25px, 14vw, 205px); }
+.anime-opening-ttumi-1 { right: clamp(30px, 23vw, 330px); bottom: clamp(115px, 18vh, 200px); }
+.anime-opening-minji-2 { left: clamp(65px, 20vw, 290px); transform: rotate(2deg); }
+.anime-opening-ttumi-2 { right: clamp(36px, 18vw, 260px); bottom: clamp(126px, 17vh, 190px); transform: rotate(8deg) scale(1.05); }
+.anime-opening-playing .anime-opening-minji-0 { animation: anime-minji-arrive 2.4s cubic-bezier(.2,.8,.2,1) both; }
+.anime-opening-playing .anime-opening-ttumi-0 { animation: anime-ttumi-arrive 2.1s cubic-bezier(.2,.8,.2,1) both, anime-hover 1.5s 1.2s ease-in-out infinite; }
+.anime-opening-playing .anime-opening-minji-1 { animation: anime-minji-react 2.4s cubic-bezier(.2,.8,.2,1) both; }
+.anime-opening-playing .anime-opening-ttumi-1 { animation: anime-ttumi-point 2.4s cubic-bezier(.2,.8,.2,1) both; }
+.anime-opening-playing .anime-opening-minji-2 { animation: anime-minji-solve 2.4s cubic-bezier(.2,.8,.2,1) both; }
+.anime-opening-playing .anime-opening-ttumi-2 { animation: anime-ttumi-celebrate 2.2s ease-in-out both; }
+.anime-opening-action-line { position: absolute; z-index: 4; top: 46%; left: clamp(28px, 9vw, 134px); display: flex; max-width: min(620px, 78vw); flex-direction: column; gap: 8px; padding-left: 15px; border-left: 2px solid #ffe0a1; opacity: 0; transform: translate3d(-12px,0,0); transition: opacity .5s ease, transform .6s cubic-bezier(.2,.8,.2,1); pointer-events: none; }
+.anime-opening-act-1 .anime-opening-action-line-1, .anime-opening-act-2 .anime-opening-action-line-2 { opacity: 1; transform: translate3d(0,0,0); }
+.anime-opening-action-line > span { color: #ffe1a5; font-size: 9px; font-weight: 950; letter-spacing: .18em; text-shadow: 0 2px 12px rgba(0,0,0,.7); }
+.anime-opening-action-line > strong { color: #fff; font-size: clamp(16px,2.5vw,27px); font-weight: 900; line-height: 1.42; text-shadow: 0 3px 20px rgba(0,0,0,.75); }
+.anime-opening-subtitle { position: absolute; z-index: 6; right: 0; bottom: max(76px, calc(env(safe-area-inset-bottom) + 82px)); left: 0; width: min(1040px, calc(100% - 64px)); margin: 0 auto; padding: 17px 26px 19px; border-left: 2px solid rgba(255,225,165,.9); background: linear-gradient(90deg, rgba(6,7,14,.68), rgba(6,7,14,.32) 78%, transparent); animation: anime-subtitle-arrive .5s cubic-bezier(.2,.8,.2,1) both; pointer-events: none; }
+.anime-opening-subtitle > span { display: block; margin-bottom: 4px; color: #ffe1a5; font-size: 10px; font-weight: 950; letter-spacing: .09em; text-shadow: 0 2px 10px rgba(0,0,0,.8); }
+.anime-opening-subtitle > p { margin: 0; color: #fff; font-size: clamp(15px, 2.2vw, 23px); font-weight: 760; line-height: 1.56; text-shadow: 0 2px 12px rgba(0,0,0,.95), 0 1px 2px #000; }
+.anime-opening-controls { position: absolute; z-index: 9; right: max(18px, env(safe-area-inset-right)); bottom: max(11px, env(safe-area-inset-bottom)); left: max(18px, env(safe-area-inset-left)); width: min(1120px, calc(100% - 36px)); margin: 0 auto; }
+.anime-opening-progress { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(9px, 2vw, 24px); margin-bottom: 9px; }
+.anime-opening-progress button { display: flex; min-width: 0; flex-direction: column; gap: 5px; padding: 2px 0; border: 0; background: transparent; color: rgba(255,255,255,.56); font-size: 9px; font-weight: 800; text-align: left; text-shadow: 0 2px 7px #000; cursor: pointer; }
+.anime-opening-progress-track { display: block; width: 100%; height: 2px; overflow: hidden; background: rgba(255,255,255,.38); }
+.anime-opening-progress-track > i { display: block; width: 0; height: 100%; background: #fff0cf; box-shadow: 0 0 10px rgba(255,226,170,.75); }
+.anime-opening-step-active .anime-opening-progress-track > i { width: 100%; transition: width 2.4s linear; }
+.anime-opening-step-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.anime-opening-step-active .anime-opening-step-label { color: #fff; }
+.anime-opening-control-row { display: flex; min-height: 39px; align-items: center; justify-content: space-between; gap: 12px; }
+.anime-opening-hint { overflow: hidden; color: rgba(255,255,255,.65); font-size: 9px; font-weight: 720; text-overflow: ellipsis; text-shadow: 0 2px 8px #000; white-space: nowrap; }
+.anime-opening-play, .anime-opening-start { display: inline-flex; min-height: 37px; flex: 0 0 auto; align-items: center; justify-content: center; gap: 7px; padding: 0 13px; border: 1px solid rgba(255,255,255,.4); border-radius: 999px; background: rgba(10,12,22,.38); color: #fff; font-size: 9px; font-weight: 900; backdrop-filter: blur(8px); cursor: pointer; }
+.anime-opening-start { border-color: rgba(255,234,193,.92); background: rgba(255,232,190,.94); color: #29202c; box-shadow: 0 0 25px rgba(255,222,159,.3); }
+@keyframes anime-camera-establish { from { transform: scale(1.12) translate3d(-1.8%,1.2%,0); filter: brightness(.8) saturate(.88); } to { transform: scale(1.06) translate3d(0,0,0); filter: brightness(1) saturate(1); } }
+@keyframes anime-camera-discover { from { transform: scale(1.1) translate3d(2%,1%,0); filter: brightness(.86); } 55% { filter: brightness(.78) saturate(.92); } to { transform: scale(1.23) translate3d(-1%,-1.5%,0); filter: brightness(1.04) saturate(1.08); } }
+@keyframes anime-camera-resolve { from { transform: scale(1.17) translate3d(1%,0,0); filter: brightness(.85) saturate(.85); } to { transform: scale(1.07) translate3d(-.5%,0,0); filter: brightness(1.13) saturate(1.12); } }
+@keyframes anime-light-sweep { from { transform: translateX(-85%); opacity: 0; } 35% { opacity: .27; } to { transform: translateX(80%); opacity: .04; } }
+@keyframes anime-spark-flare { 0% { opacity: 0; transform: scale(.3); } 22% { opacity: 1; transform: scale(1.6); } 100% { opacity: .25; transform: scale(.8) translateY(-22px); } }
+@keyframes anime-minji-arrive { 0% { opacity: 0; transform: translate3d(-70px,14px,0) scale(.98); } 62% { opacity: 1; transform: translate3d(6px,-5px,0) scale(1.02); } 100% { opacity: 1; transform: translate3d(0,0,0) scale(1); } }
+@keyframes anime-ttumi-arrive { 0% { opacity: 0; transform: translate3d(60px,-45px,0) scale(.78); } 70% { opacity: 1; transform: translate3d(-6px,5px,0) scale(1.06); } 100% { opacity: 1; transform: translate3d(0,0,0) scale(1); } }
+@keyframes anime-hover { 0%,100% { translate: 0 0; rotate: -2deg; } 50% { translate: 0 -9px; rotate: 3deg; } }
+@keyframes anime-minji-react { 0% { transform: translate3d(0,0,0) rotate(0); } 22% { transform: translate3d(15px,-3px,0) rotate(-4deg); } 48% { transform: translate3d(-2px,0,0) rotate(2deg); } 100% { transform: translate3d(0,0,0) rotate(0); } }
+@keyframes anime-ttumi-point { 0% { transform: translate3d(25px,-25px,0) scale(.88); } 36% { transform: translate3d(-8px,0,0) scale(1.08) rotate(-8deg); } 70% { transform: translate3d(3px,-6px,0) scale(1.02) rotate(5deg); } 100% { transform: translate3d(0,0,0) scale(1) rotate(0); } }
+@keyframes anime-minji-solve { 0% { transform: translate3d(-15px,8px,0) scale(.97); } 40% { transform: translate3d(5px,-11px,0) scale(1.02); } 76% { transform: translate3d(0,0,0) rotate(-3deg); } 100% { transform: translate3d(0,0,0) rotate(0); } }
+@keyframes anime-ttumi-celebrate { 0% { transform: translateY(15px) scale(.8) rotate(-12deg); opacity: .5; } 45% { transform: translateY(-12px) scale(1.13) rotate(8deg); opacity: 1; } 100% { transform: translateY(0) scale(1.04) rotate(0); opacity: 1; } }
+@keyframes anime-subtitle-arrive { from { opacity: 0; transform: translate3d(-50%,12px,0); } to { opacity: 1; transform: translate3d(-50%,0,0); } }
+@media (max-width: 640px) {
+  .anime-opening-header { top: max(10px, env(safe-area-inset-top)); right: max(10px, env(safe-area-inset-right)); left: max(10px, env(safe-area-inset-left)); grid-template-columns: auto 1fr auto; gap: 8px; }
+  .anime-opening-brand { justify-self: center; gap: 5px; }
+  .anime-opening-brand .brand-symbol { width: 25px; height: 25px; border-radius: 8px; }
+  .anime-opening-brand .brand-symbol svg { width: 16px; height: 16px; }
+  .anime-opening-brand > span:last-child { font-size: 6px; letter-spacing: .09em; }
+  .anime-opening-exit, .anime-opening-skip { min-height: 32px; gap: 4px; padding: 0 8px; font-size: 8px; }
+  .anime-opening-title-card { top: 23%; left: 7%; width: 86%; }
+  .anime-opening-title-card > span { font-size: 8px; }
+  .anime-opening-title-card h1 { max-width: 95%; margin: 9px 0 6px; font-size: clamp(30px, 8.5vw, 48px); }
+  .anime-opening-title-card p { font-size: 9px; }
+  .anime-opening-background { object-position: center 46%; }
+  .anime-opening-character { bottom: clamp(112px, 17vh, 170px); }
+  .anime-opening-minji { left: -3%; width: clamp(155px, 47vw, 230px); height: clamp(245px, 37vh, 330px); }
+  .anime-opening-ttumi { right: 1%; width: clamp(95px, 28vw, 138px); height: clamp(95px, 16vh, 145px); }
+  .anime-opening-minji-1 { left: 2%; }
+  .anime-opening-ttumi-1 { right: 10%; bottom: clamp(143px, 20vh, 190px); }
+  .anime-opening-minji-2 { left: 7%; }
+  .anime-opening-ttumi-2 { right: 7%; bottom: clamp(145px, 20vh, 188px); }
+  .anime-opening-action-line { top: 43%; left: 7%; max-width: 84vw; gap: 5px; padding-left: 10px; }
+  .anime-opening-action-line > span { font-size: 7px; }
+  .anime-opening-action-line > strong { font-size: clamp(14px,4vw,18px); }
+  .anime-opening-subtitle { bottom: max(77px, calc(env(safe-area-inset-bottom) + 82px)); width: calc(100% - 24px); padding: 12px 14px 13px; }
+  .anime-opening-subtitle > span { margin-bottom: 3px; font-size: 8px; }
+  .anime-opening-subtitle > p { font-size: clamp(13px,3.65vw,16px); line-height: 1.5; }
+  .anime-opening-controls { right: max(12px, env(safe-area-inset-right)); bottom: max(8px, env(safe-area-inset-bottom)); left: max(12px, env(safe-area-inset-left)); width: calc(100% - 24px); }
+  .anime-opening-progress { gap: 8px; margin-bottom: 7px; }
+  .anime-opening-progress button { gap: 4px; font-size: 7px; }
+  .anime-opening-control-row { min-height: 35px; gap: 5px; }
+  .anime-opening-hint { max-width: 53%; font-size: 7px; }
+  .anime-opening-play, .anime-opening-start { min-height: 32px; gap: 4px; padding: 0 9px; font-size: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .anime-opening *, .anime-opening::before, .anime-opening::after { animation: none !important; scroll-behavior: auto !important; transition: none !important; }
+}
+
+.anime-opening-subtitle { transform: none; animation: none; }
+.anime-opening-subtitle > p { animation: anime-dialogue-change .42s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes anime-subtitle-arrive { from { opacity: 0; transform: translate3d(0,12px,0); } to { opacity: 1; transform: translate3d(0,0,0); } }
+@keyframes anime-dialogue-change { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
