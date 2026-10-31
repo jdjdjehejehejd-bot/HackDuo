@@ -3,9 +3,7 @@
   "buildCommand": "pnpm build:static",
   "outputDirectory": "dist/public",
   "rewrites": [
-    {
-      "source": "/lesson/:lessonId",
-      "destination": "/"
-    }
+    { "source": "/lesson/:lessonId", "destination": "/" },
+    { "source": "/lab", "destination": "/" }
   ]
 }

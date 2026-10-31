@@ -1,1 +1,1 @@
-{"routes":[{"path":"/","title":"학습 지도"},{"path":"/lesson/:lessonId","title":"보안 퀘스트"},{"path":"/404","title":"페이지를 찾을 수 없어요"}]}
+{"routes":[{"path":"/","title":"TEUM 학습 피드"},{"path":"/lesson/:lessonId","title":"보안 스토리"},{"path":"/lab","title":"안전한 모의 실습"},{"path":"/404","title":"페이지를 찾을 수 없어요"}]}

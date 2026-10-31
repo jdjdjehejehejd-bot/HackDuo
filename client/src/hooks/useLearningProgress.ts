@@ -1,9 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 
+// Keep the original key so existing learners retain their saved progress.
 const STORAGE_KEY = "hackduo.learning-progress.v1";
+export const LEVEL_XP = 50;
+export const LAB_XP_REWARD = 10;
 
 type LearningProgress = {
   completedLessonIds: string[];
+  completedLabIds: string[];
   xp: number;
   streak: number;
   lastActiveDate: string | null;
@@ -13,6 +17,7 @@ type LearningProgress = {
 
 const EMPTY_PROGRESS: LearningProgress = {
   completedLessonIds: [],
+  completedLabIds: [],
   xp: 0,
   streak: 0,
   lastActiveDate: null,
@@ -32,6 +37,23 @@ function dayNumber(key: string) {
   return Date.UTC(year, month - 1, day) / 86_400_000;
 }
 
+function activityStats(current: LearningProgress, today: string) {
+  const difference = current.lastActiveDate ? dayNumber(today) - dayNumber(current.lastActiveDate) : null;
+  const streak = current.lastActiveDate === today
+    ? Math.max(current.streak, 1)
+    : difference === 1
+      ? current.streak + 1
+      : 1;
+  const isSameActivityDay = current.dailyActivityDate === today;
+
+  return {
+    streak,
+    lastActiveDate: today,
+    dailyActivityDate: today,
+    dailyLessonCount: (isSameActivityDay ? current.dailyLessonCount : 0) + 1,
+  };
+}
+
 function readProgress(): LearningProgress {
   if (typeof window === "undefined") return EMPTY_PROGRESS;
   try {
@@ -42,6 +64,9 @@ function readProgress(): LearningProgress {
       completedLessonIds: Array.isArray(saved.completedLessonIds)
         ? saved.completedLessonIds.filter((id): id is string => typeof id === "string")
         : [],
+      completedLabIds: Array.isArray(saved.completedLabIds)
+        ? saved.completedLabIds.filter((id): id is string => typeof id === "string")
+        : [],
       xp: Number.isFinite(saved.xp) ? Math.max(0, Number(saved.xp)) : 0,
       streak: Number.isFinite(saved.streak) ? Math.max(0, Number(saved.streak)) : 0,
       lastActiveDate: typeof saved.lastActiveDate === "string" ? saved.lastActiveDate : null,
@@ -51,6 +76,14 @@ function readProgress(): LearningProgress {
   } catch {
     return EMPTY_PROGRESS;
   }
+}
+
+export function getLevelNumber(xp: number) {
+  return Math.floor(Math.max(0, xp) / LEVEL_XP) + 1;
+}
+
+export function getLevelProgress(xp: number) {
+  return Math.max(0, xp) % LEVEL_XP;
 }
 
 export function useLearningProgress() {
@@ -66,29 +99,30 @@ export function useLearningProgress() {
 
   const completeLesson = useCallback((lessonId: string, xpReward: number) => {
     setProgress((current) => {
-      const today = dateKey(new Date());
       const isNewLesson = !current.completedLessonIds.includes(lessonId);
-      const previous = current.lastActiveDate;
-      const difference = previous ? dayNumber(today) - dayNumber(previous) : null;
-      const streak = previous === today
-        ? Math.max(current.streak, 1)
-        : difference === 1
-          ? current.streak + 1
-          : 1;
-      const isSameActivityDay = current.dailyActivityDate === today;
-
+      if (!isNewLesson) return { ...current, ...activityStats(current, dateKey(new Date())) };
       return {
-        completedLessonIds: isNewLesson ? [...current.completedLessonIds, lessonId] : current.completedLessonIds,
-        xp: current.xp + (isNewLesson ? Math.max(0, xpReward) : 0),
-        streak,
-        lastActiveDate: today,
-        dailyActivityDate: today,
-        dailyLessonCount: (isSameActivityDay ? current.dailyLessonCount : 0) + 1,
+        ...current,
+        ...activityStats(current, dateKey(new Date())),
+        completedLessonIds: [...current.completedLessonIds, lessonId],
+        xp: current.xp + Math.max(0, xpReward),
       };
     });
   }, []);
 
-  return { progress, completeLesson };
+  const completeLab = useCallback((labId: string) => {
+    setProgress((current) => {
+      if (current.completedLabIds.includes(labId)) return current;
+      return {
+        ...current,
+        ...activityStats(current, dateKey(new Date())),
+        completedLabIds: [...current.completedLabIds, labId],
+        xp: current.xp + LAB_XP_REWARD,
+      };
+    });
+  }, []);
+
+  return { progress, completeLesson, completeLab };
 }
 
 export function getCurrentStreak(lastActiveDate: string | null, streak: number) {
@@ -102,7 +136,6 @@ export function getWeekStreakDates(lastActiveDate: string | null, streak: number
   if (!lastActiveDate || streak <= 0) return activeDates;
 
   const lastActive = new Date(`${lastActiveDate}T12:00:00`);
-
   for (let offset = 0; offset < Math.min(streak, 7); offset += 1) {
     const activeDay = new Date(lastActive);
     activeDay.setDate(activeDay.getDate() - offset);
