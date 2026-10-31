@@ -1,110 +1,110 @@
-export type LessonStoryboard = {
+export type CartoonStoryboard = {
   badge: string;
-  sourceGlyph: string;
-  mechanismGlyph: string;
-  resultGlyph: string;
-  flows: [string, string, string][];
+  location: string;
+  propGlyph: string;
+  propName: string;
+  steps: [string, string, string][];
 };
 
-/** The instructional diagrams for all nine animated lessons, three concepts each. */
-export const lessonStoryboards: Record<string, LessonStoryboard> = {
+/** Scene props and beats for the cartoon stories; these are not flowchart nodes. */
+export const lessonStoryboards: Record<string, CartoonStoryboard> = {
   "security-basics": {
-    badge: "축제 앱",
-    sourceGlyph: "표",
-    mechanismGlyph: "CIA",
-    resultGlyph: "OK",
-    flows: [
+    badge: "제1화 · 축제 예매소",
+    location: "새빛대학교 축제 현장",
+    propGlyph: "표",
+    propName: "예매 명단",
+    steps: [
       ["예매자 명단", "권한을 확인", "허가된 사람만 보기"],
-      ["공연 시간", "승인·변경 기록", "정확한 시간표"],
-      ["입장 직전 요청", "여유·복구 준비", "끊김 없는 접속"],
+      ["공연 시간표", "승인 내역을 비교", "정확한 시간으로 안내"],
+      ["입장 직전 요청", "여유·복구를 준비", "끊김 없이 입장"],
     ],
   },
   "threat-model": {
-    badge: "위험 지도",
-    sourceGlyph: "자산",
-    mechanismGlyph: "경로",
-    resultGlyph: "우선",
-    flows: [
-      ["예매 데이터", "중요도 살피기", "먼저 지킬 자산"],
-      ["사용자·연결", "경계·입력 찾기", "위협 모델"],
-      ["가능성·영향", "맥락과 함께 비교", "위험 우선순위"],
+    badge: "제2화 · 캠퍼스 지도",
+    location: "축제 시스템 관제실",
+    propGlyph: "지도",
+    propName: "시스템 지도",
+    steps: [
+      ["예매 데이터", "중요도를 따져", "먼저 지킬 자산"],
+      ["사용자와 연결", "경계·입력 지점을 살펴", "위협 모델을 그려"],
+      ["가능성과 영향", "상황을 함께 검토해", "위험 대응 순서를 정해"],
     ],
   },
   account: {
-    badge: "계정 관문",
-    sourceGlyph: "민서",
-    mechanismGlyph: "ID?",
-    resultGlyph: "허용",
-    flows: [
-      ["민서의 로그인", "증거로 확인", "확인된 신원"],
-      ["확인된 사용자", "역할·권한 검사", "필요한 기능만"],
-      ["봉사 업무 종료", "권한을 회수", "접근 종료"],
+    badge: "제3화 · 운영실 출입문",
+    location: "학생회 운영실",
+    propGlyph: "ID",
+    propName: "출입 카드",
+    steps: [
+      ["민지의 로그인", "증거로 신원을 확인해", "본인 계정으로 접속"],
+      ["확인된 사용자", "역할과 권한을 살펴", "필요한 기능만 허용"],
+      ["봉사 업무 종료", "남은 권한을 회수해", "안전하게 출입 종료"],
     ],
   },
   cryptography: {
-    badge: "암호 도구",
-    sourceGlyph: "원문",
-    mechanismGlyph: "키 + 해시",
-    resultGlyph: "검증",
-    flows: [
-      ["비밀 쪽지", "키로 암호화", "허가자만 읽기"],
-      ["포스터 파일", "해시·전자서명", "변경·출처 확인"],
-      ["비밀번호", "salt + 전용 해시", "복원 없이 검증"],
+    badge: "제4화 · 비밀 쪽지",
+    location: "축제 홍보실",
+    propGlyph: "키",
+    propName: "비밀 쪽지",
+    steps: [
+      ["공연 취소 쪽지", "키로 내용을 잠가", "허가자만 읽기"],
+      ["포스터 파일", "해시·서명을 확인해", "변경과 출처 확인"],
+      ["로그인 비밀번호", "salt와 전용 해시로", "복원 없이 안전하게 검증"],
     ],
   },
   network: {
-    badge: "연결 경계",
-    sourceGlyph: "기기",
-    mechanismGlyph: "경계",
-    resultGlyph: "서버",
-    flows: [
-      ["사이트 이름", "DNS가 주소 조회", "서버를 찾아 연결"],
-      ["방문객 와이파이", "방화벽·구역 분리", "회계망은 차단"],
-      ["대시보드 요청", "TLS로 보호", "전송 중 기밀성"],
+    badge: "제5화 · 네트워크 문지기",
+    location: "축제 네트워크실",
+    propGlyph: "망",
+    propName: "연결 지도",
+    steps: [
+      ["웹사이트 이름", "DNS가 주소를 찾아", "서버와 연결"],
+      ["방문객 와이파이", "방화벽으로 구역을 나눠", "회계망은 접근 차단"],
+      ["대시보드 요청", "TLS가 연결을 감싸", "전송 정보를 보호"],
     ],
   },
   web: {
-    badge: "게시판 요청",
-    sourceGlyph: "입력",
-    mechanismGlyph: "검사",
-    resultGlyph: "출력",
-    flows: [
-      ["댓글 입력", "서버가 검증", "허용된 형식"],
-      ["댓글 데이터", "질의와 분리", "명령 아닌 데이터"],
-      ["게시글 표시", "문맥에 맞게 인코딩", "문자 그대로 표시"],
+    badge: "제6화 · 축제 게시판",
+    location: "새빛대학교 게시판 개발실",
+    propGlyph: "웹",
+    propName: "댓글 미리보기",
+    steps: [
+      ["새 댓글 입력", "서버가 허용 범위를 확인해", "올바른 댓글만 접수"],
+      ["댓글과 데이터베이스", "질의와 입력을 분리해", "문자열은 명령이 아닌 데이터"],
+      ["저장한 글 다시 보기", "문맥에 맞게 표시해", "글자가 코드처럼 실행되지 않게"],
     ],
   },
   privacy: {
-    badge: "데이터 흐름",
-    sourceGlyph: "자료",
-    mechanismGlyph: "목적",
-    resultGlyph: "최소",
-    flows: [
-      ["사진·연락처", "민감도 분류", "필요한 만큼만"],
-      ["공유 요청", "목적·동의 확인", "허용된 범위만"],
-      ["보관 중 자료", "기한을 점검", "불필요한 정보 삭제"],
+    badge: "제7화 · 공유하기 전",
+    location: "축제 기록 보관실",
+    propGlyph: "자료",
+    propName: "사진과 참가자 정보",
+    steps: [
+      ["사진과 연락처", "민감도와 목적을 구분해", "필요한 자료만 선택"],
+      ["공유 요청", "동의와 범위를 확인해", "허용된 항목만 공유"],
+      ["보관 기한이 지난 파일", "필요 여부를 다시 살펴", "불필요한 정보는 삭제"],
     ],
   },
   phishing: {
-    badge: "받은 편지함",
-    sourceGlyph: "메일",
-    mechanismGlyph: "단서",
-    resultGlyph: "신고",
-    flows: [
-      ["긴급 계정 알림", "주소·표현 점검", "링크 클릭 보류"],
-      ["낯선 발신자", "공식 경로 대조", "안전하게 확인"],
-      ["의심 메시지", "신고·공유 중단", "다른 피해 예방"],
+    badge: "제8화 · 수상한 메일",
+    location: "민지의 학생회 받은 편지함",
+    propGlyph: "메일",
+    propName: "계정 경고 메일",
+    steps: [
+      ["급한 계정 경고", "주소와 표현을 살펴", "링크 클릭을 잠깐 보류"],
+      ["낯선 발신자", "공식 사이트와 대조해", "확인된 경로로 로그인"],
+      ["의심스러운 메시지", "신고하고 공유를 멈춰", "친구들의 피해도 예방"],
     ],
   },
   incident: {
-    badge: "대응 타임라인",
-    sourceGlyph: "경보",
-    mechanismGlyph: "대응",
-    resultGlyph: "복구",
-    flows: [
-      ["로그인 경보", "공식 기록 확인", "사실부터 기록"],
-      ["의심 계정", "보고·세션 억제", "확산 범위 축소"],
-      ["안전한 백업", "검증 후 복구", "배운 점 반영"],
+    badge: "제9화 · 이상 징후 발견",
+    location: "학생회 보안 대응실",
+    propGlyph: "경보",
+    propName: "로그인 알림",
+    steps: [
+      ["이상 로그인 알림", "공식 기록을 확인해", "확인된 사실부터 기록"],
+      ["의심 계정", "담당자에게 알리고 세션을 끝내", "확산을 먼저 제한"],
+      ["검증한 백업", "안전성을 확인한 뒤 복구해", "배운 점을 다음 대응에 반영"],
     ],
   },
 };

@@ -545,3 +545,83 @@ button:focus-visible, a:focus-visible { outline: 3px solid #cf77e9; outline-offs
 @media (prefers-reduced-motion: reduce) {
   .animated-flow-node, .animated-node-glyph, .animated-traveler, .animated-caption > *, .animated-play-button { transition: none !important; animation: none !important; }
 }
+
+
+/* Narrative cartoon lesson: the two characters act out each concept instead of a node-flow infographic. */
+.cartoon-lesson { padding: 13px; }
+.cartoon-lesson .animated-lesson-kicker { letter-spacing: .02em; }
+.cartoon-stage { --cartoon-paper: #fff8e8; --cartoon-accent: #b356d3; --cartoon-shadow: #493258; position: relative; height: 292px; overflow: hidden; isolation: isolate; border: 2px solid #fff; border-radius: 18px; background: var(--cartoon-paper); box-shadow: 0 5px 0 color-mix(in srgb, var(--cartoon-accent) 22%, white), 0 10px 22px rgba(56, 37, 69, .08); }
+.cartoon-set-security-basics { --cartoon-paper: #fff4da; --cartoon-accent: #d17e4e; }
+.cartoon-set-threat-model { --cartoon-paper: #eef0ff; --cartoon-accent: #6269bd; }
+.cartoon-set-account { --cartoon-paper: #eff7ff; --cartoon-accent: #4188b5; }
+.cartoon-set-cryptography { --cartoon-paper: #f5efff; --cartoon-accent: #8060b6; }
+.cartoon-set-network { --cartoon-paper: #eaf9f6; --cartoon-accent: #398e89; }
+.cartoon-set-web { --cartoon-paper: #edf5ff; --cartoon-accent: #547dba; }
+.cartoon-set-privacy { --cartoon-paper: #fff0f6; --cartoon-accent: #b45f91; }
+.cartoon-set-phishing { --cartoon-paper: #fff0ec; --cartoon-accent: #ca6658; }
+.cartoon-set-incident { --cartoon-paper: #eef8ec; --cartoon-accent: #56875a; }
+.cartoon-set-window { position: absolute; z-index: 0; inset: 0; overflow: hidden; background: radial-gradient(ellipse at 50% 38%, rgba(255,255,255,.88), transparent 53%), var(--cartoon-paper); }
+.cartoon-set-window::before { position: absolute; top: 29px; right: -45px; width: 190px; height: 130px; border: 10px solid rgba(255,255,255,.48); border-radius: 48% 52% 38% 62%; background: color-mix(in srgb, var(--cartoon-accent) 10%, transparent); content: ""; transform: rotate(-8deg); }
+.cartoon-set-window::after { position: absolute; right: -5%; bottom: -34px; left: -5%; height: 100px; border-top: 3px solid rgba(255,255,255,.7); border-radius: 50% 50% 0 0; background: linear-gradient(180deg, rgba(255,255,255,.45), rgba(255,255,255,.1)); content: ""; }
+.cartoon-episode-tag { position: absolute; top: 10px; right: 10px; z-index: 7; display: inline-flex; align-items: center; gap: 4px; padding: 5px 8px; border: 1px solid rgba(255,255,255,.82); border-radius: 999px; background: rgba(255,255,255,.83); color: var(--cartoon-accent); font-size: 7px; font-weight: 950; box-shadow: 0 2px 8px rgba(48,34,56,.06); }
+.cartoon-set-window > span { position: absolute; bottom: 10px; left: 11px; z-index: 4; color: color-mix(in srgb, var(--cartoon-accent) 64%, #55475c); font-size: 7px; font-weight: 850; letter-spacing: .02em; }
+.cartoon-set-window > i { position: absolute; z-index: 0; display: block; width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.82); box-shadow: 0 0 0 5px rgba(255,255,255,.25); }
+.cartoon-set-window > i:nth-child(1) { top: 43%; left: 21%; }.cartoon-set-window > i:nth-child(2) { top: 34%; right: 24%; width: 5px; height: 5px; }.cartoon-set-window > i:nth-child(3) { top: 69%; right: 17%; width: 9px; height: 9px; }
+.cartoon-prop-card { position: absolute; top: 150px; left: 50%; z-index: 3; display: grid; width: min(290px, 57%); min-height: 72px; grid-template-columns: 42px 1fr 9px; align-items: center; gap: 8px; padding: 8px 10px; border: 2px solid rgba(255,255,255,.95); border-radius: 15px; background: rgba(255,255,255,.95); box-shadow: 0 5px 14px rgba(55,39,67,.14); transform: translateX(-50%) rotate(-1deg); transition: border-color .5s ease, background .5s ease, transform .5s cubic-bezier(.2,.85,.2,1); }
+.cartoon-prop-phase-0 { border-color: #f0c5aa; background: #fffaf5; transform: translateX(-50%) rotate(-2deg); }
+.cartoon-prop-phase-1 { border-color: color-mix(in srgb, var(--cartoon-accent) 39%, white); transform: translateX(-50%) rotate(1deg) scale(1.035); }
+.cartoon-prop-phase-2 { border-color: #9bcfae; background: #f5fff7; transform: translateX(-50%) rotate(-1deg) scale(1.04); }
+.cartoon-prop-stamp { display: grid; width: 40px; height: 40px; place-items: center; border: 2px solid color-mix(in srgb, var(--cartoon-accent) 35%, white); border-radius: 13px; background: color-mix(in srgb, var(--cartoon-accent) 12%, white); color: var(--cartoon-accent); font-size: 12px; font-weight: 950; letter-spacing: -.06em; }
+.cartoon-prop-copy { display: flex; min-width: 0; flex-direction: column; gap: 4px; }
+.cartoon-prop-copy > small { overflow: hidden; color: #93869b; font-size: 7px; font-weight: 850; text-overflow: ellipsis; white-space: nowrap; }
+.cartoon-prop-copy > strong { color: #4a3c53; font-size: 10px; font-weight: 900; line-height: 1.35; overflow-wrap: anywhere; }
+.cartoon-prop-status { width: 9px; height: 9px; border: 2px solid var(--cartoon-accent); border-radius: 50%; background: #fff; }
+.cartoon-prop-phase-1 .cartoon-prop-status { background: #ffd874; box-shadow: 0 0 0 4px rgba(255,216,116,.26); }
+.cartoon-prop-phase-2 .cartoon-prop-status { border-color: #55a870; background: #55a870; box-shadow: 0 0 0 4px rgba(85,168,112,.17); }
+.cartoon-character { position: absolute; z-index: 4; bottom: -5px; display: block; object-fit: contain; object-position: center bottom; pointer-events: none; user-select: none; filter: drop-shadow(0 4px 2px rgba(48,36,57,.12)); transition: left .65s cubic-bezier(.2,.85,.2,1), right .65s cubic-bezier(.2,.85,.2,1), bottom .5s cubic-bezier(.2,.85,.2,1), transform .65s cubic-bezier(.2,.85,.2,1); }
+.cartoon-minji { left: 3%; width: 109px; height: 165px; transform-origin: 50% 100%; }
+.cartoon-ttumi { right: 4%; width: 89px; height: 102px; transform-origin: 50% 80%; }
+.cartoon-beat-1 .cartoon-minji { left: 7%; bottom: -7px; transform: rotate(-3deg); }
+.cartoon-beat-1 .cartoon-ttumi { right: 15%; bottom: 8px; transform: rotate(-7deg) scale(1.1); }
+.cartoon-beat-2 .cartoon-minji { left: 14%; bottom: -1px; transform: rotate(4deg); }
+.cartoon-beat-2 .cartoon-ttumi { right: 18%; bottom: 15px; transform: rotate(8deg) scale(1.07); }
+.cartoon-playing .cartoon-pose-0.cartoon-minji { animation: minji-question 1.5s ease-in-out infinite; }
+.cartoon-playing .cartoon-pose-1.cartoon-ttumi { animation: ttumi-explain 1.25s ease-in-out infinite; }
+.cartoon-playing .cartoon-pose-2.cartoon-minji { animation: minji-solve 1.2s ease-in-out infinite; }
+.cartoon-playing .cartoon-pose-2.cartoon-ttumi { animation: ttumi-celebrate 1s ease-in-out infinite; }
+.cartoon-dialogue { position: absolute; top: 46px; left: 50%; z-index: 6; width: min(490px, calc(100% - 36px)); padding: 8px 11px 9px; border: 2px solid var(--cartoon-shadow); border-radius: 16px 16px 16px 4px; background: #fff; box-shadow: 3px 4px 0 rgba(73,50,88,.14); transform: translateX(-50%); }
+.cartoon-dialogue::after { position: absolute; bottom: -10px; left: 27px; width: 15px; height: 15px; border-right: 2px solid var(--cartoon-shadow); border-bottom: 2px solid var(--cartoon-shadow); background: #fff; content: ""; transform: skewY(35deg) rotate(28deg); }
+.cartoon-dialogue-1 { border-color: var(--cartoon-accent); border-radius: 16px 16px 4px 16px; }
+.cartoon-dialogue-1::after { right: 27px; left: auto; border-color: var(--cartoon-accent); transform: skewY(-35deg) rotate(-28deg); }
+.cartoon-dialogue > span { display: block; margin-bottom: 4px; color: var(--cartoon-accent); font-size: 9px; font-weight: 950; letter-spacing: .03em; }
+.cartoon-dialogue > p { margin: 0; color: #51445b; font-size: 11px; font-weight: 720; line-height: 1.55; }
+.cartoon-scene-counter { position: absolute; right: 9px; bottom: 9px; z-index: 7; padding: 4px 7px; border: 1px solid rgba(255,255,255,.9); border-radius: 999px; background: rgba(255,255,255,.76); color: #75677d; font-size: 8px; font-weight: 900; }
+.cartoon-controls { margin-top: 8px; }
+.cartoon-controls .animated-play-button { min-width: 104px; }
+.cartoon-controls .animated-beat-picker button { border-radius: 9px; }
+@keyframes minji-question { 0%,100% { transform: rotate(-1deg) translateY(0); } 50% { transform: rotate(3deg) translateY(-4px); } }
+@keyframes ttumi-explain { 0%,100% { transform: rotate(-6deg) translateY(0) scale(1.08); } 50% { transform: rotate(5deg) translateY(-6px) scale(1.1); } }
+@keyframes minji-solve { 0%,100% { transform: rotate(2deg) translateY(0); } 50% { transform: rotate(-3deg) translateY(-8px); } }
+@keyframes ttumi-celebrate { 0%,100% { transform: rotate(8deg) translateY(0) scale(1.05); } 50% { transform: rotate(-8deg) translateY(-8px) scale(1.11); } }
+@media (max-width: 640px) {
+  .cartoon-lesson { padding: 10px; }
+  .cartoon-stage { height: 274px; border-radius: 15px; }
+  .cartoon-dialogue { top: 43px; width: calc(100% - 20px); padding: 7px 9px 8px; }
+  .cartoon-dialogue > p { font-size: 10px; line-height: 1.5; }
+  .cartoon-dialogue > span { font-size: 8px; }
+  .cartoon-prop-card { top: 147px; width: 59%; min-height: 68px; grid-template-columns: 34px 1fr 7px; gap: 5px; padding: 7px; }
+  .cartoon-prop-stamp { width: 33px; height: 35px; border-radius: 10px; font-size: 10px; }
+  .cartoon-prop-copy > strong { font-size: 9px; }
+  .cartoon-minji { left: 1%; width: 93px; height: 145px; }
+  .cartoon-ttumi { right: 1%; width: 74px; height: 86px; }
+  .cartoon-beat-1 .cartoon-ttumi { right: 11%; bottom: 5px; }
+  .cartoon-beat-2 .cartoon-minji { left: 8%; }
+  .cartoon-beat-2 .cartoon-ttumi { right: 13%; bottom: 12px; }
+  .cartoon-set-window > span { max-width: 54%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cartoon-controls { gap: 5px; }
+  .cartoon-controls .animated-play-button { min-width: 89px; padding: 0 6px; font-size: 7px; }
+  .cartoon-controls .animated-caption-hint { max-width: 85px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cartoon-character, .cartoon-prop-card, .cartoon-playing .cartoon-character { transition: none !important; animation: none !important; }
+}

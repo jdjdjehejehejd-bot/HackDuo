@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { ArrowRight, Pause, Play, RotateCcw } from "lucide-react";
+import { Pause, Play, RotateCcw, Sparkles } from "lucide-react";
 import type { LessonSection } from "@/data/lessons";
 import { lessonStoryboards } from "@/data/animatedStoryboards";
 
-const beatLabels = ["상황을 만나다", "보안 원리를 보다", "안전한 결과를 만들다"] as const;
+const beatLabels = ["문제 발견", "원리 설명", "함께 해결"] as const;
 
-function firstTwoSentences(text: string) {
-  const sentences = text.match(/[^.!?]+[.!?]?/gu)?.map((sentence) => sentence.trim()).filter(Boolean) ?? [text];
-  return sentences.slice(0, 2).join(" ");
+function firstSentence(text: string) {
+  const sentence = text.match(/[^.!?]+[.!?]?/u)?.[0]?.trim();
+  return sentence || text;
 }
 
 type AnimatedLessonProps = {
@@ -18,7 +18,7 @@ type AnimatedLessonProps = {
 
 export default function AnimatedLesson({ lessonId, sectionIndex, section }: AnimatedLessonProps) {
   const board = lessonStoryboards[lessonId] ?? lessonStoryboards["security-basics"];
-  const flow = board.flows[sectionIndex] ?? board.flows[0];
+  const steps = board.steps[sectionIndex] ?? board.steps[0];
   const [beatIndex, setBeatIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -41,11 +41,12 @@ export default function AnimatedLesson({ lessonId, sectionIndex, section }: Anim
     const timer = window.setTimeout(() => {
       if (beatIndex >= beatLabels.length - 1) setIsPlaying(false);
       else setBeatIndex((current) => current + 1);
-    }, 3100);
+    }, 3800);
     return () => window.clearTimeout(timer);
   }, [beatIndex, isPlaying, reducedMotion]);
 
-  const narration = [section.scene, firstTwoSentences(section.body), section.takeaway];
+  const dialog = [section.scene, firstSentence(section.body), section.takeaway];
+  const speaker = beatIndex === 1 ? "틈이 · 보안 도우미" : "민지 · 새빛대 학생";
   const isFinished = beatIndex === beatLabels.length - 1 && !isPlaying;
 
   function activatePlayback() {
@@ -62,53 +63,49 @@ export default function AnimatedLesson({ lessonId, sectionIndex, section }: Anim
   }
 
   return (
-    <section className={`animated-lesson animated-theme-${lessonId}`} aria-label={`애니메이션 수업: ${section.concept}`}>
+    <section className={`animated-lesson animated-theme-${lessonId} cartoon-lesson`} aria-label={`카툰 강의: ${section.concept}`}>
       <div className="animated-lesson-heading">
-        <div><span className="animated-lesson-kicker">움직이는 개념 수업</span><strong>{section.concept}</strong></div>
-        <span className="animated-lesson-duration">3장면 설명</span>
+        <div><span className="animated-lesson-kicker">이야기로 배우는 정보보안</span><strong>{section.concept}</strong></div>
+        <span className="animated-lesson-duration">카툰 3장면</span>
       </div>
 
-      <div className={`animated-board beat-${beatIndex}${isPlaying ? " is-playing" : ""}`}>
-        <div className="animated-board-top"><span><i /> TEUM MOTION CLASS</span><small>{board.badge}</small></div>
-        <div className="animated-flow" aria-hidden="true">
-          <div className="animated-flow-rail"><span className={`animated-traveler traveler-${beatIndex}`}>{board.mechanismGlyph}</span></div>
-          {flow.map((label, index) => {
-            const glyph = [board.sourceGlyph, board.mechanismGlyph, board.resultGlyph][index];
-            const state = index < beatIndex ? " is-past" : index === beatIndex ? " is-current" : " is-upcoming";
-            return (
-              <div className={`animated-flow-node${state}`} key={`${label}-${index}`}>
-                <span className="animated-node-glyph">{glyph}</span>
-                <small>0{index + 1}</small>
-                <strong>{label}</strong>
-              </div>
-            );
-          })}
+      <div className={`cartoon-stage cartoon-set-${lessonId} cartoon-beat-${beatIndex}${isPlaying ? " cartoon-playing" : ""}`} data-beat={beatIndex}>
+        <div className="cartoon-set-window" aria-hidden="true"><i /><i /><i /><span>{board.location}</span></div>
+        <div className="cartoon-episode-tag"><Sparkles size={11} /> {board.badge}</div>
+
+        <div className={`cartoon-prop-card cartoon-prop-phase-${beatIndex}`} aria-hidden="true">
+          <span className="cartoon-prop-stamp">{board.propGlyph}</span>
+          <span className="cartoon-prop-copy"><small>{board.propName}</small><strong>{steps[beatIndex]}</strong></span>
+          <i className="cartoon-prop-status" />
         </div>
-        <div className="animated-board-foot" aria-hidden="true"><span>{section.scene}</span><ArrowRight size={14} /><strong>{flow[2]}</strong></div>
+
+        <img className={`cartoon-character cartoon-minji cartoon-pose-${beatIndex}`} src="/cartoon/minji-student.webp" alt="" aria-hidden="true" draggable={false} />
+        <img className={`cartoon-character cartoon-ttumi cartoon-pose-${beatIndex}`} src="/cartoon/ttumi-security-bot.webp" alt="" aria-hidden="true" draggable={false} />
+
+        <div className={`cartoon-dialogue cartoon-dialogue-${beatIndex}`} aria-live="polite" aria-atomic="true">
+          <span>{speaker}</span>
+          <p>“{dialog[beatIndex]}”</p>
+        </div>
+        <span className="cartoon-scene-counter">장면 {beatIndex + 1} / 3</span>
       </div>
 
-      <div key={beatIndex} className="animated-caption" aria-live="polite" aria-atomic="true">
-        <span>장면 0{beatIndex + 1} · {beatLabels[beatIndex]}</span>
-        <p>{narration[beatIndex]}</p>
-      </div>
-
-      <div className="animated-controls" aria-label="애니메이션 수업 조작">
+      <div className="animated-controls cartoon-controls" aria-label="카툰 강의 조작">
         {reducedMotion ? (
-          <button className="animated-play-button" onClick={activatePlayback} aria-label={beatIndex === beatLabels.length - 1 ? "애니메이션 수업 처음부터 보기" : "애니메이션 수업 다음 장면 보기"}>
-            <ArrowRight size={14} /> {beatIndex === beatLabels.length - 1 ? "처음부터 장면 보기" : "다음 장면"}
+          <button className="animated-play-button" onClick={activatePlayback} aria-label={beatIndex === beatLabels.length - 1 ? "카툰 강의 처음 장면으로 돌아가기" : "카툰 강의 다음 장면 보기"}>
+            <Play size={14} /> {beatIndex === beatLabels.length - 1 ? "처음 장면" : "다음 장면"}
           </button>
         ) : (
           <button className="animated-play-button" onClick={activatePlayback} aria-pressed={isPlaying}>
             {isPlaying ? <Pause size={14} /> : isFinished ? <RotateCcw size={14} /> : <Play size={14} />}
-            {isPlaying ? "일시정지" : isFinished ? "다시 보기" : beatIndex > 0 ? "이어서 보기" : "재생"}
+            {isPlaying ? "잠깐 멈추기" : isFinished ? "다시 보기" : beatIndex > 0 ? "이어서 보기" : "카툰 재생"}
           </button>
         )}
-        <div className="animated-beat-picker" role="group" aria-label="강의 장면 선택">
+        <div className="animated-beat-picker cartoon-beat-picker" role="group" aria-label="카툰 장면 선택">
           {beatLabels.map((label, index) => (
             <button key={label} className={beatIndex === index ? "beat-picker-active" : ""} onClick={() => { setBeatIndex(index); setIsPlaying(false); }} aria-label={`장면 ${index + 1}: ${label}`} aria-pressed={beatIndex === index}>{index + 1}</button>
           ))}
         </div>
-        <span className="animated-caption-hint">{reducedMotion ? "모션 감소 설정 · 버튼으로 장면을 넘겨요" : isPlaying ? "자막과 함께 수업이 재생 중이에요" : "자막을 읽고 장면을 다시 볼 수 있어요"}</span>
+        <span className="animated-caption-hint">{reducedMotion ? "모션 감소 설정 · 장면을 직접 넘겨요" : isPlaying ? "민지와 틈이의 이야기가 재생 중이에요" : "장면을 선택해 다시 볼 수 있어요"}</span>
       </div>
     </section>
   );

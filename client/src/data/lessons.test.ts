@@ -38,15 +38,17 @@ describe("TEUM beginner security curriculum", () => {
     expect(lessons.map((lesson) => lesson.id)).toEqual(expect.arrayContaining(previousIds));
   });
 
-  it("provides a three-part instructional animation for every lesson concept", () => {
+  it("provides a recurring cartoon story and three acted beats for every lesson concept", () => {
     expect(Object.keys(lessonStoryboards).sort()).toEqual(lessons.map((lesson) => lesson.id).sort());
 
     for (const lesson of lessons) {
       const storyboard = lessonStoryboards[lesson.id];
-      expect(storyboard.flows, lesson.id).toHaveLength(lesson.sections.length);
-      for (const flow of storyboard.flows) {
-        expect(flow, lesson.id).toHaveLength(3);
-        expect(flow.every((label) => label.trim().length > 2), lesson.id).toBe(true);
+      expect(storyboard.location.length, lesson.id).toBeGreaterThan(2);
+      expect(storyboard.propName.length, lesson.id).toBeGreaterThan(2);
+      expect(storyboard.steps, lesson.id).toHaveLength(lesson.sections.length);
+      for (const scene of storyboard.steps) {
+        expect(scene, lesson.id).toHaveLength(3);
+        expect(scene.every((line) => line.trim().length > 2), lesson.id).toBe(true);
       }
     }
   });
