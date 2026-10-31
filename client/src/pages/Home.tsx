@@ -59,12 +59,12 @@ export default function Home() {
           <nav className="desktop-nav" aria-label="주 메뉴">
             <a className="nav-link nav-link-active" href="/">피드</a>
             <button className="nav-link" onClick={() => setLocation("/lab")}>실습실</button>
-            <a className="nav-link" href="#my-progress">내 기록</a>
+            <button className="nav-link" onClick={() => setLocation("/my")}>My 노트</button>
           </nav>
           <div className="topbar-right">
             <div className="top-stat streak-chip" aria-label={`연속 학습 ${currentStreak}일`}><Flame size={16} fill="currentColor" /><span>{currentStreak}</span><small>일</small></div>
             <div className="top-stat xp-chip" aria-label={`누적 ${progress.xp} XP`}><Zap size={15} fill="currentColor" /><span>{progress.xp.toLocaleString("ko-KR")}</span><small>XP</small></div>
-            <button className="profile-avatar" aria-label={`레벨 ${level} 내 학습 기록`} onClick={() => document.getElementById("my-progress")?.scrollIntoView({ behavior: "smooth" })}>T</button>
+            <button className="profile-avatar" aria-label={`레벨 ${level} 내 노트 열기`} onClick={() => setLocation("/my")}>T</button>
           </div>
         </div>
       </header>
@@ -170,8 +170,8 @@ export default function Home() {
         </div>
       </main>
 
-      <nav className="mobile-dock" aria-label="모바일 메뉴"><a className="dock-active" href="/"><BookOpen size={18} /><span>피드</span></a><button onClick={() => setLocation("/lab")}><Code2 size={18} /><span>실습</span></button><a href="#my-progress"><UserRound size={18} /><span>내 기록</span></a></nav>
-      <footer className="site-footer"><BrandMark compact /><span>TEUM · 안전하게 알고, 작게 실천하기.</span><a href="#my-progress">내 기록 <ArrowRight size={12} /></a></footer>
+      <nav className="mobile-dock" aria-label="모바일 메뉴"><a className="dock-active" href="/"><BookOpen size={18} /><span>피드</span></a><button onClick={() => setLocation("/lab")}><Code2 size={18} /><span>실습</span></button><button onClick={() => setLocation("/my")}><UserRound size={18} /><span>My</span></button></nav>
+      <footer className="site-footer"><BrandMark compact /><span>TEUM · 안전하게 알고, 작게 실천하기.</span><button type="button" onClick={() => setLocation("/my")}>My 노트 <ArrowRight size={12} /></button></footer>
     </div>
   );
 }

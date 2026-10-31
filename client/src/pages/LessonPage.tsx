@@ -12,6 +12,7 @@ import {
   Flame,
   Heart,
   LockKeyhole,
+  NotebookPen,
   ShieldCheck,
   Sparkles,
   Trophy,
@@ -133,7 +134,7 @@ export default function LessonPage() {
           <div className="lesson-meter"><button className="meter-back" onClick={goBack} aria-label="이전 단계"><ArrowLeft size={16} /></button><div className="meter-track" role="progressbar" aria-label="스토리 진행률" aria-valuemin={1} aria-valuemax={totalSteps} aria-valuenow={phase + 1} aria-valuetext={`${totalSteps}단계 중 ${phase + 1}단계`}>{Array.from({ length: totalSteps }, (_, index) => <i className={phase >= index ? "meter-filled" : ""} key={index} />)}</div><span className="meter-label">{phase + 1}<small> / {totalSteps}</small></span><span className={`heart-counter${hearts <= 2 ? " hearts-low" : ""}`} aria-label={`남은 하트 ${hearts}개`}>{Array.from({ length: STARTING_HEARTS }, (_, index) => <Heart key={index} size={14} fill={index < hearts ? "currentColor" : "none"} />)}</span></div>
 
           {isConcept ? (
-            <section className="concept-card" aria-live="polite">
+            <section key={`concept-${lesson.id}-${phase}`} className="concept-card" aria-live="polite">
               <div className="case-file-line"><span className="case-tag"><Sparkles size={13} /> 사건 기록 · {String(lessonIndex + 1).padStart(2, "0")}</span><span className="concept-number">단서 {phase + 1} / {sectionCount}</span></div>
               {phase === 0 && <blockquote className="lesson-hook">“{lesson.hook}”</blockquote>}
               <div className="case-evidence"><span>현장 기록</span><p>{lesson.sections[phase].scene}</p></div>
@@ -143,11 +144,11 @@ export default function LessonPage() {
               <div className="lesson-learning-note"><BadgeCheck size={14} /><span>실제 일상에서 비슷한 장면을 만나면 떠올려 봐요.</span></div>
             </section>
           ) : currentQuestion ? (
-            <section className="quiz-card" aria-live="polite">
+            <section key={`quiz-${lesson.id}-${quizIndex}`} className="quiz-card" aria-live="polite">
               <div className="quiz-overline"><span className="quiz-icon"><CircleHelp size={17} /></span><span>단서 확인 {quizIndex + 1} / {questionCount}</span><span className="quiz-reward"><Zap size={12} fill="currentColor" /> 정답 XP</span></div>
               <h2>{currentQuestion.question}</h2>
               <div className="answer-list" role="group" aria-label="정답 선택지">{currentQuestion.choices.map((choice, index) => { const isSelected = selectedAnswer === index; const isRight = showFeedback && index === currentQuestion.answerIndex; const isWrong = showFeedback && isSelected && !quizIsCorrect; return <button className={`answer-option${isSelected ? " answer-selected" : ""}${isRight ? " answer-correct" : ""}${isWrong ? " answer-wrong" : ""}`} key={choice} onClick={() => { if (!showFeedback) setSelectedAnswer(index); }} disabled={showFeedback} aria-pressed={isSelected}><span className="answer-letter">{String.fromCharCode(65 + index)}</span><span className="answer-text">{choice}</span><span className="answer-check">{isRight ? <Check size={16} /> : isSelected ? <span className="answer-radio-dot" /> : null}</span></button>; })}</div>
-              {showFeedback && <div className={`answer-feedback${quizIsCorrect ? " feedback-correct" : " feedback-try-again"}`}><span className="feedback-symbol">{quizIsCorrect ? <CheckCircle2 size={19} /> : <Heart size={17} />}</span><div><strong>{quizIsCorrect ? "정확해요. 단서를 찾았어요." : "괜찮아요. 이유를 확인해 봐요."}</strong><p>{currentQuestion.explanation}</p></div></div>}
+              {showFeedback && <div className={`answer-feedback answer-feedback-enter${quizIsCorrect ? " feedback-correct" : " feedback-try-again"}`}><span className="feedback-symbol">{quizIsCorrect ? <CheckCircle2 size={19} /> : <Heart size={17} />}</span><div><strong>{quizIsCorrect ? "정확해요. 단서를 찾았어요." : "괜찮아요. 이유를 확인해 봐요."}</strong><p>{currentQuestion.explanation}</p></div></div>}
               {showFeedback && hearts === 0 && <div className="hearts-empty-note">하트를 모두 써도 스토리는 계속돼요. 해설을 읽고 다음 단계로 가요.</div>}
             </section>
           ) : null}
@@ -157,13 +158,15 @@ export default function LessonPage() {
         </main>
       ) : (
         <main className="completion-main">
-          <div className="completion-glow" aria-hidden="true"><span /><span /><span /></div><div className="completion-medallion"><CheckCircle2 size={43} strokeWidth={1.8} /></div><span className="completion-eyebrow"><Sparkles size={13} /> STORY COMPLETE</span>
+          <div className="completion-glow" aria-hidden="true"><span /><span /><span /></div><div className="completion-medallion completion-medallion-pop"><CheckCircle2 size={43} strokeWidth={1.8} /></div><span className="completion-eyebrow"><Sparkles size={13} /> STORY COMPLETE</span>
           <h1>{completedBefore ? "다시 보니 더 선명해요." : correctFirstTryCount === questionCount ? "단서를 모두 찾았어요!" : "보안 감각이 한 뼘 자랐어요."}</h1>
           <p className="completion-copy">{lesson.shortTitle} 스토리를 마쳤어요.<br />첫 시도 정답 {correctFirstTryCount}/{questionCount}개 · 배운 내용을 안전한 습관으로 이어가요.</p>
           <div className="earned-card"><div className="earned-icon"><Zap size={20} fill="currentColor" /></div><div><span>{earnedXp > 0 ? "이번에 얻은 경험치" : "다시 학습 완료"}</span><strong>{earnedXp > 0 ? `+${earnedXp} XP` : "좋은 습관을 다시 확인했어요"}</strong></div>{earnedXp > 0 && <span className="earned-spark"><Sparkles size={16} /></span>}</div>
+          <div className="note-added-toast"><NotebookPen size={15} /><span>{completedBefore ? "이 편의 핵심은 My 노트에 담겨 있어요." : "클리어! 핵심 개념 3개를 My 노트에 담았어요."}</span><Check size={14} /></div>
           {correctFirstTryCount === questionCount && !completedBefore && <div className="perfect-bonus"><Trophy size={14} /> 완벽 보너스 +5 XP 포함</div>}
           <div className="completion-stats"><span><Flame size={15} fill="currentColor" /> 연속 학습 <strong>{progress.streak || 1}일</strong></span><span><Trophy size={15} /> 보안 감각 <strong>레벨 {level}</strong></span></div>
-          {nextLesson && nextLesson.id !== lesson.id ? <button className="button-primary completion-home" onClick={() => setLocation(`/lesson/${nextLesson.id}`)}>다음 스토리 <ArrowRight size={16} /></button> : <button className="button-primary completion-home" onClick={() => setLocation("/lab")}>실습실 둘러보기 <ArrowRight size={16} /></button>}
+          {nextLesson && nextLesson.id !== lesson.id ? <button className="button-primary completion-home" onClick={() => setLocation(`/lesson/${nextLesson.id}`)}>다음 스토리 <ArrowRight size={16} /></button> : level >= 3 ? <button className="button-primary completion-home" onClick={() => setLocation("/lab")}>실습실 둘러보기 <ArrowRight size={16} /></button> : <button className="button-primary completion-home" onClick={() => setLocation("/my")}>내 노트 확인하기 <ArrowRight size={16} /></button>}
+          <button className="plain-home-button completion-notes-link" onClick={() => setLocation("/my")}>My 노트에서 핵심 복습하기 <ArrowRight size={14} /></button>
           <button className="plain-home-button" onClick={() => setLocation("/")}>피드로 돌아가기</button><div className="completion-footnote"><ShieldCheck size={13} /> 이 기기에 학습 기록이 저장돼요.</div>
         </main>
       )}

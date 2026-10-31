@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { lessonStages, lessons } from "./lessons";
+import { getCompletedLessonNotes, lessonStages, lessons } from "./lessons";
 
 describe("TEUM beginner security curriculum", () => {
   it("orders foundation, design, and response topics from prerequisites to application", () => {
@@ -35,6 +35,26 @@ describe("TEUM beginner security curriculum", () => {
   it("preserves IDs used by learners' existing local progress", () => {
     const previousIds = ["phishing", "account", "privacy", "web", "network", "incident"];
     expect(lessons.map((lesson) => lesson.id)).toEqual(expect.arrayContaining(previousIds));
+  });
+
+  it("builds newest-first notebook entries from saved completions and ignores stale or duplicate IDs", () => {
+    const notes = getCompletedLessonNotes([
+      "phishing",
+      "account",
+      "security-basics",
+      "legacy-deleted-lesson",
+      "account",
+    ]);
+
+    expect(notes.map((lesson) => lesson.id)).toEqual([
+      "account",
+      "security-basics",
+      "phishing",
+    ]);
+    expect(notes[0]?.sections.map((section) => section.takeaway)).toEqual(
+      lessons.find((lesson) => lesson.id === "account")?.sections.map((section) => section.takeaway),
+    );
+    expect(getCompletedLessonNotes([])).toEqual([]);
   });
 
   it("gives every episode a scene, a mission, three concept clues, four questions, and references", () => {

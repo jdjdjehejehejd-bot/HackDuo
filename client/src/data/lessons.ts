@@ -281,3 +281,16 @@ export const lessons: Lesson[] = [
     references: [{ label: "NIST 사이버보안 프레임워크 2.0", url: NIST_CSF }, { label: "NIST CSWP 29 · 공식 프레임워크", url: NIST_CSF_PDF }],
   },
 ];
+
+
+/** Turn the existing local completion record into newest-first My notebook entries. */
+export function getCompletedLessonNotes(completedLessonIds: string[]) {
+  const lessonById = new Map(lessons.map((lesson) => [lesson.id, lesson]));
+  const seen = new Set<string>();
+  return [...completedLessonIds].reverse().flatMap((id) => {
+    if (seen.has(id)) return [];
+    seen.add(id);
+    const lesson = lessonById.get(id);
+    return lesson ? [lesson] : [];
+  });
+}

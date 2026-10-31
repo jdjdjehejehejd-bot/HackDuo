@@ -4,6 +4,7 @@
   "outputDirectory": "dist/public",
   "rewrites": [
     { "source": "/lesson/:lessonId", "destination": "/" },
-    { "source": "/lab", "destination": "/" }
+    { "source": "/lab", "destination": "/" },
+    { "source": "/my", "destination": "/" }
   ]
 }

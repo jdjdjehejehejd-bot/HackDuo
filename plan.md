@@ -89,3 +89,10 @@
 - MIT OpenCourseWare, [6.858 Computer Systems Security](https://ocw.mit.edu/courses/6-858-computer-systems-security-fall-2014/) 및 [Lecture 1: Introduction, Threat Models](https://ocw.mit.edu/courses/6-858-computer-systems-security-fall-2014/resources/lecture-1-introduction-threat-models/)
 - NIST, [Cybersecurity Framework 2.0](https://www.nist.gov/cyberframework) 및 [NIST CSWP 29 원문](https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf)
 - OWASP, [Top 10:2025](https://top10.owasp.org/2025/en/) 및 [A05:2025 Injection](https://top10.owasp.org/2025/en/A05_2025-Injection/)
+
+
+## 에피소드 애니메이션과 My 노트
+
+강좌의 각 새 장면과 퀴즈를 짧은 진입·전환 애니메이션으로 표현하고, 장면 증거와 완료 보상이 차례로 드러나게 한다. 긴 영상이나 자동 재생은 사용하지 않으며, 기존 `prefers-reduced-motion` 설정에서 동작을 줄인다. 완료 화면은 이번 편 요점이 My 노트에 쌓였음을 알려주고 바로 노트로 갈 수 있게 한다.
+
+`/my` 화면은 기존 `completedLessonIds`를 단일 기준 데이터로 사용한다. 완료한 레슨의 `sections[].concept`와 `sections[].takeaway`로 복습 노트를 만든다. 별도 저장 모델이나 서버는 추가하지 않아 기존 브라우저 로컬 저장과 완료 진도에 즉시 연동되고, 기록이 있는 기존 학습자에게도 노트가 생성된다. 각 노트에서 원래 레슨으로 돌아가 복습할 수 있다. 헤더·프로필·모바일 탭의 My 진입점과 라우트 매니페스트, 정적 새로고침 경로를 모두 `/my`에 맞춘다.
