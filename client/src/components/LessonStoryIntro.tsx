@@ -31,6 +31,7 @@ type LessonStoryIntroProps = {
 
 export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit }: LessonStoryIntroProps) {
   const episodeDialogue = storyDialogues[lesson.id] ?? storyDialogues["security-basics"];
+  const isFirstEpisode = lesson.id === "security-basics";
   const [reducedMotion, setReducedMotion] = useState(prefersReducedMotion);
   const [act, setAct] = useState(0);
   const [isPlaying, setIsPlaying] = useState(() => !prefersReducedMotion());
@@ -106,6 +107,7 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
         <span><Sparkles size={13} /> EPISODE {String(lessonNumber).padStart(2, "0")}</span>
         <h1 id="anime-opening-title">{lesson.title}</h1>
         <p>{lesson.episode}</p>
+        {isFirstEpisode && <div className="anime-opening-context"><b>새빛대학교 축제, 사흘 전</b><p>보안 동아리 신입 민지는 축제 예매 앱을 처음 점검하게 됩니다. 곁에는 말이 많지만 눈치 빠른 보안 도우미 틈이가 있어요.</p><div><span><strong>민지</strong> 현장을 기록하고 질문하는 신입 탐정</span><span><strong>틈이</strong> 이상한 흔적을 찾아내는 보안 도우미</span></div></div>}
       </div>
 
         <div className={`anime-opening-scene anime-opening-scene-${visualAct}`} aria-hidden="true">
