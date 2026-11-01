@@ -970,3 +970,27 @@ button:focus-visible, a:focus-visible { outline: 3px solid #cf77e9; outline-offs
 .teacher-status-pending { background: #f3eff5; color: #9b8da1; }
 @media (max-width: 720px) { .teacher-container { width: min(100% - 28px, 600px); padding-top: 28px; } .teacher-heading { align-items: flex-start; flex-direction: column; } .teacher-student-chip { width: 100%; } .teacher-metrics { grid-template-columns: repeat(2, 1fr); } .teacher-grid { grid-template-columns: 1fr; } .teacher-top-label { display: none; } }
 @media (max-width: 430px) { .teacher-metrics strong { font-size: 22px; } .teacher-stage-row { grid-template-columns: 1fr 88px 28px; } }
+
+.classroom-panel { margin: 15px 0 12px; padding: 18px; border: 1px solid #e4d9eb; border-radius: 16px; background: linear-gradient(135deg, #fff, #faf6fc); }
+.classroom-panel-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.classroom-panel h2 { margin: 5px 0 3px; color: #44314e; font-size: 16px; font-weight: 900; }
+.classroom-panel p { margin: 0; color: #9a8e9f; font-size: 9px; }
+.classroom-invite { display: inline-flex; align-items: center; gap: 6px; padding: 7px 9px; border-radius: 8px; background: #f4e8f8; color: #98729f; font-size: 8px; white-space: nowrap; }
+.classroom-invite strong { color: #873aa1; font-size: 10px; letter-spacing: .06em; }
+.classroom-create-form, .classroom-student-form { display: flex; gap: 7px; margin-top: 15px; }
+.classroom-create-form input, .classroom-student-form input { min-height: 34px; min-width: 0; flex: 1; padding: 0 10px; border: 1px solid #e4d9e8; border-radius: 8px; background: #fff; color: #55405d; font: inherit; font-size: 10px; }
+.classroom-create-form button, .classroom-student-form button { flex: 0 0 auto; padding: 0 11px; border: 0; border-radius: 8px; background: #9842b5; color: #fff; font-size: 9px; font-weight: 850; cursor: pointer; }
+.classroom-student-form input:nth-child(2) { max-width: 125px; }
+.classroom-empty { display: flex; align-items: center; gap: 7px; margin-top: 14px; padding: 12px; border-radius: 9px; background: #f6f1f8; color: #a294a8; font-size: 9px; line-height: 1.45; }
+.classroom-empty svg { flex: 0 0 auto; color: #a449bf; }
+.classroom-student-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
+.classroom-student-list > div { display: flex; min-width: 0; align-items: center; gap: 7px; padding: 8px; border: 1px solid #eee6f1; border-radius: 10px; background: #fff; }
+.classroom-student-avatar { display: grid; width: 26px; height: 26px; flex: 0 0 auto; place-items: center; border-radius: 8px; background: #f3dff8; color: #9541ae; font-size: 10px; font-weight: 900; }
+.classroom-student-list > div > span:nth-child(2) { min-width: 0; flex: 1; }
+.classroom-student-list strong, .classroom-student-list small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.classroom-student-list strong { color: #5b4564; font-size: 9px; }
+.classroom-student-list small { margin-top: 2px; color: #a69aa9; font-size: 8px; }
+.classroom-student-list button { padding: 3px 5px; border: 0; background: transparent; color: #b39eae; font-size: 8px; cursor: pointer; }
+.classroom-student-list button:hover { color: #bd536b; }
+@media (max-width: 650px) { .classroom-student-list { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 430px) { .classroom-panel-heading { flex-direction: column; } .classroom-invite { align-self: stretch; justify-content: space-between; } .classroom-student-form { flex-wrap: wrap; } .classroom-student-form input { min-width: calc(50% - 4px); } .classroom-student-form input:nth-child(2) { max-width: none; } .classroom-student-form button { min-height: 34px; flex: 1; } }
