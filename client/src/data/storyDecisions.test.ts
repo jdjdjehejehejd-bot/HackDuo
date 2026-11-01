@@ -29,4 +29,10 @@ describe("story decision checkpoints", () => {
       expect(storyDialogues[lesson.id].every((scene) => scene.line.length > 10 && scene.speaker.length > 0), lesson.id).toBe(true);
     }
   });
+
+  it("starts the first episode in-scene without a narrator", () => {
+    expect(storyDialogues["security-basics"][0].speaker).toContain("민지");
+    expect(storyDialogues["security-basics"][0].line).toContain("축제");
+    expect(storyDialogues["security-basics"][1].speaker).toContain("틈이");
+  });
 });

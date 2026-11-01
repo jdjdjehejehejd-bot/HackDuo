@@ -2,9 +2,9 @@ export type StoryDialogue = { label: string; speaker: string; line: string; focu
 
 export const storyDialogues: Record<string, StoryDialogue[]> = {
   "security-basics": [
-    { label: "첫 장면", speaker: "내레이션", line: "“새빛대학교 축제까지 사흘. 보안 동아리 신입 민지는 처음 맡은 예매 앱 점검을 앞두고 있었다.”", focus: "축제를 앞둔 새빛대학교" },
-    { label: "만남", speaker: "틈이", line: "“안녕, 민지. 나는 틈이야. 어려운 보안 문제를 같이 풀어 주는 도우미지. 그런데… 저 검색 결과, 조금 이상하지 않아?”", focus: "민지와 틈이의 첫 만남" },
-    { label: "첫 사건", speaker: "민지", line: "“잠깐만… 예매자 이름이 그대로 떠. 축제 준비보다 먼저 이걸 확인해야겠어.”", focus: "처음 발견한 개인정보 노출" },
+    { label: "축제 부스", speaker: "민지 · 보안 동아리 신입", line: "“축제 D-3, 예매 앱 첫 점검. 좋아, 일단 검색부터… 어? 이 이름들은 왜 그대로 보이지?”", focus: "예매 부스에서 시작된 첫 점검" },
+    { label: "낯선 목소리", speaker: "틈이 · 보안 도우미", line: "“처음부터 꽤 큰 걸 찾았네. 나는 틈이야. 네 화면 옆에서 같이 볼게—일단 아무것도 지우진 말고.”", focus: "화면 속에 나타난 보안 도우미" },
+    { label: "첫 사건", speaker: "민지 · 보안 동아리 신입", line: "“잠깐만… 예매자 이름뿐 아니라 좌석도 보여. 이거, 축제 운영팀만 봐야 하는 정보잖아.”", focus: "처음 발견한 개인정보 노출" },
     { label: "함께 정리하기", speaker: "틈이", line: "“비밀로 지키는 것, 정확하게 남기는 것, 필요할 때 쓰는 것. 셋 다 안전의 일부야.”", focus: "안전하다는 말의 세 가지 약속" },
     { label: "다음 단서", speaker: "민지", line: "“그럼 다음은… 이 기록에 누가 들어올 수 있었는지부터 찾아보자.”", focus: "접근 경계를 그리는 다음 장면" },
   ],
