@@ -19,6 +19,7 @@ describe("TEUM beginner security curriculum", () => {
       "privacy",
       "phishing",
       "incident",
+      "white-hat",
     ]);
     expect(lessons.map((lesson) => lesson.stageId)).toEqual([
       "foundations",
@@ -27,6 +28,7 @@ describe("TEUM beginner security curriculum", () => {
       "design",
       "design",
       "design",
+      "response",
       "response",
       "response",
       "response",

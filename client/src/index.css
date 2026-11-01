@@ -843,3 +843,13 @@ button:focus-visible, a:focus-visible { outline: 3px solid #cf77e9; outline-offs
 .anime-opening-subtitle > p { animation: anime-dialogue-change .42s cubic-bezier(.2,.8,.2,1) both; }
 @keyframes anime-subtitle-arrive { from { opacity: 0; transform: translate3d(0,12px,0); } to { opacity: 1; transform: translate3d(0,0,0); } }
 @keyframes anime-dialogue-change { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+
+.profile-name-edit { margin-top: 14px; padding: 7px 11px; border: 1px solid #ead9ef; border-radius: 999px; background: #fff; color: #8d3faf; font-size: 10px; font-weight: 850; cursor: pointer; }
+.profile-name-edit:hover { border-color: #c978df; background: #fcf5fe; }
+.profile-name-form { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: 14px; }
+.profile-name-form label { width: 100%; color: #8c7b92; font-size: 10px; font-weight: 800; }
+.profile-name-form input { min-height: 34px; width: 170px; padding: 0 10px; border: 1px solid #e3d5e8; border-radius: 9px; background: #fff; color: #3e2d49; font: inherit; font-size: 12px; }
+.profile-name-form input:focus { border-color: #bd48dd; outline: 3px solid rgba(189, 72, 221, .16); }
+.profile-name-form button { min-height: 34px; padding: 0 10px; border: 0; border-radius: 9px; background: #a938dc; color: #fff; font-size: 10px; font-weight: 850; cursor: pointer; }
+.profile-name-form button[type="button"] { background: #f1edf5; color: #6e6077; }
+@media (max-width: 540px) { .profile-name-form input { flex: 1; min-width: 130px; } }

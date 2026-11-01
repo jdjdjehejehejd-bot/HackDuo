@@ -10,6 +10,7 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
+import { useState } from "react";
 import { useLocation } from "wouter";
 import BrandMark from "@/components/BrandMark";
 import { getCompletedLessonNotes, lessons } from "@/data/lessons";
@@ -17,7 +18,9 @@ import { getCurrentStreak, getLevelNumber, useLearningProgress } from "@/hooks/u
 
 export default function MyPage() {
   const [, setLocation] = useLocation();
-  const { progress } = useLearningProgress();
+  const { progress, setDisplayName } = useLearningProgress();
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [draftName, setDraftName] = useState(progress.displayName);
   const completedIds = new Set(progress.completedLessonIds);
   const notes = getCompletedLessonNotes(progress.completedLessonIds);
   const nextLesson = lessons.find((lesson) => !completedIds.has(lesson.id));
@@ -47,8 +50,18 @@ export default function MyPage() {
         <section className="notebook-hero" aria-labelledby="notebook-title">
           <div className="notebook-hero-copy">
             <span className="eyebrow"><span className="live-dot" /> MY FIELD NOTES</span>
-            <h1 id="notebook-title">배운 단서가<br /><span>내 노트가 돼요.</span></h1>
+            <h1 id="notebook-title">{progress.displayName}님의 단서가<br /><span>내 노트가 돼요.</span></h1>
             <p>스토리를 클리어할 때마다 핵심 개념과 기억할 점을 여기에 모아둘게요.</p>
+            {isEditingName ? (
+              <form className="profile-name-form" onSubmit={(event) => { event.preventDefault(); setDisplayName(draftName); setIsEditingName(false); }}>
+                <label htmlFor="profile-name">표시 이름</label>
+                <input id="profile-name" value={draftName} maxLength={24} onChange={(event) => setDraftName(event.target.value)} autoFocus />
+                <button type="submit">저장</button>
+                <button type="button" onClick={() => { setDraftName(progress.displayName); setIsEditingName(false); }}>취소</button>
+              </form>
+            ) : (
+              <button className="profile-name-edit" onClick={() => setIsEditingName(true)}>학습자 이름 바꾸기</button>
+            )}
           </div>
           <div className="notebook-stamp" aria-label={`${notes.length}개 단원 노트`}><NotebookPen size={24} /><strong>{String(notes.length).padStart(2, "0")}</strong><span>NOTES</span><i className="notebook-stamp-spark">✦</i></div>
         </section>

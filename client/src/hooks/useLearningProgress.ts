@@ -6,6 +6,7 @@ export const LEVEL_XP = 50;
 export const LAB_XP_REWARD = 10;
 
 type LearningProgress = {
+  displayName: string;
   completedLessonIds: string[];
   completedLabIds: string[];
   xp: number;
@@ -16,6 +17,7 @@ type LearningProgress = {
 };
 
 const EMPTY_PROGRESS: LearningProgress = {
+  displayName: "학습자",
   completedLessonIds: [],
   completedLabIds: [],
   xp: 0,
@@ -61,6 +63,9 @@ function readProgress(): LearningProgress {
     if (!raw) return EMPTY_PROGRESS;
     const saved = JSON.parse(raw) as Partial<LearningProgress>;
     return {
+      displayName: typeof saved.displayName === "string" && saved.displayName.trim().length > 0
+        ? saved.displayName.trim().slice(0, 24)
+        : EMPTY_PROGRESS.displayName,
       completedLessonIds: Array.isArray(saved.completedLessonIds)
         ? saved.completedLessonIds.filter((id): id is string => typeof id === "string")
         : [],
@@ -122,7 +127,14 @@ export function useLearningProgress() {
     });
   }, []);
 
-  return { progress, completeLesson, completeLab };
+  const setDisplayName = useCallback((displayName: string) => {
+    setProgress((current) => ({
+      ...current,
+      displayName: displayName.trim().slice(0, 24) || EMPTY_PROGRESS.displayName,
+    }));
+  }, []);
+
+  return { progress, completeLesson, completeLab, setDisplayName };
 }
 
 export function getCurrentStreak(lastActiveDate: string | null, streak: number) {

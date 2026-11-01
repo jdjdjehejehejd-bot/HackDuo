@@ -44,6 +44,8 @@ const NIST_CSF_PDF = "https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf";
 const NIST_IAM = "https://www.nist.gov/identity-and-access-management";
 const OWASP_TOP10 = "https://top10.owasp.org/2025/en/";
 const OWASP_INJECTION = "https://top10.owasp.org/2025/en/A05_2025-Injection/";
+const STANFORD_INFOSEC = "https://online.stanford.edu/courses/xacs101-foundations-information-security";
+const IUP_CYBERSECURITY = "https://www.iup.edu/cybersecurity/courses/index.html";
 
 export const lessons: Lesson[] = [
   {
@@ -279,6 +281,32 @@ export const lessons: Lesson[] = [
       { question: "서비스를 복구한 뒤에도 해야 할 중요한 일은?", choices: ["원인과 대응 과정을 검토해 절차를 개선한다", "백업과 권한을 점검하지 않는다", "사고 경험을 숨겨 기록을 남기지 않는다"], answerIndex: 0, explanation: "복구 뒤 배운 점을 반영하면 다음 사고의 가능성과 영향을 줄이는 데 도움이 돼요." },
     ],
     references: [{ label: "NIST 사이버보안 프레임워크 2.0", url: NIST_CSF }, { label: "NIST CSWP 29 · 공식 프레임워크", url: NIST_CSF_PDF }],
+  },
+  {
+    id: "white-hat",
+    stageId: "response",
+    stageNumber: 3,
+    title: "화이트해커의 첫 약속",
+    shortTitle: "허가된 보안 점검",
+    category: "화이트해커 입문",
+    episode: "새빛대학교 축제 · 번외편",
+    duration: "8분",
+    xp: 35,
+    summary: "도구보다 먼저 허가·범위·기록을 확인하는 안전한 보안 점검의 출발점을 배워요.",
+    mission: "가상 점검 요청의 범위와 안전한 다음 행동을 골라라.",
+    hook: "축제 운영팀이 보안 점검을 부탁했어요. 선배는 곧바로 스캔 버튼을 누르지 않고, 먼저 ‘누가 허가했고, 무엇을 언제까지 확인해도 되나요?’라고 묻습니다.",
+    sections: [
+      { title: "허가와 범위를 먼저 확인해요", scene: "점검 요청서에는 대상 도메인, 시간대, 금지된 테스트와 연락 담당자가 적혀 있습니다.", concept: "허가된 범위 · Authorization & Scope", body: "화이트해커의 첫 단계는 기술 시연이 아니라 명시적인 허가와 범위를 확인하는 일이에요. 대상, 시간, 허용된 방법, 중단 조건과 보고 채널이 분명하지 않다면 점검을 시작하지 않아요. 허가가 없는 시스템을 호기심으로 확인하는 것은 학습이 아니라 무단 접근이 될 수 있어요.", takeaway: "허가·대상·시간·방법·중단 조건을 확인하지 못하면 멈춰요." },
+      { title: "관찰 결과를 방어 자산으로 바꿔요", scene: "가상 점검에서 오래된 로그인 화면이 발견됐지만, 팀은 실제 계정으로 시험하지 않고 증거와 완화책을 기록합니다.", concept: "안전한 검증 · Safe Validation", body: "교육용 점검은 합성 데이터와 격리된 환경에서 작게 검증해야 해요. 실제 계정·개인정보·서비스 가용성을 건드리지 않고, 관찰한 사실과 추측을 구분해 기록해요. 발견한 문제는 재현 조건보다 영향과 완화책을 먼저 설명하면 운영팀이 안전하게 우선순위를 정할 수 있어요.", takeaway: "실제 피해를 만들지 않는 최소 검증과 방어 중심 기록을 선택해요." },
+      { title: "책임 있게 알리고 닫아요", scene: "보고서에는 취약한 지점, 영향, 재현에 필요한 최소 정보, 수정 권고와 재확인 방법이 들어갑니다.", concept: "책임 있는 공개 · Responsible Reporting", body: "문제를 찾았다면 공개적으로 퍼뜨리거나 이용하지 말고, 약속된 담당자에게 안전한 채널로 알립니다. 보고서에는 민감정보를 불필요하게 복사하지 않고, 수정 후 다시 확인할 기준을 남겨요. 좋은 화이트해커는 ‘뚫었다’보다 ‘안전하게 고쳤다’로 성공을 정의합니다.", takeaway: "발견보다 안전한 전달·수정·재확인이 더 중요해요." },
+    ],
+    questions: [
+      { question: "점검 요청서에 대상과 허용 범위가 적혀 있지 않아요. 가장 안전한 행동은?", choices: ["일단 넓게 스캔하고 나중에 설명한다", "허가자에게 범위와 중단 조건을 확인하기 전에는 시작하지 않는다", "친구의 시스템으로 먼저 시험한다"], answerIndex: 1, explanation: "화이트해킹은 명시적인 허가와 범위 안에서만 진행해야 해요. 불명확하면 먼저 확인하고 멈춥니다." },
+      { question: "가상 점검에서 오래된 로그인 화면을 발견했어요. 적절한 다음 행동은?", choices: ["실제 계정으로 비밀번호를 시험한다", "합성 데이터 안에서 최소 검증하고 영향과 완화책을 기록한다", "화면을 캡처해 공개 게시판에 올린다"], answerIndex: 1, explanation: "실제 계정이나 서비스에 영향을 주지 않는 최소 검증과 방어적 기록이 안전한 접근이에요." },
+      { question: "보고서에 포함할 내용으로 가장 적절한 것은?", choices: ["민감한 자격 증명 전체", "영향, 안전한 재현 범위, 수정 권고와 재확인 방법", "문제만 알리고 해결 방법은 숨긴다"], answerIndex: 1, explanation: "담당자가 안전하게 수정하고 확인할 수 있도록 영향과 완화책을 함께 전달해야 해요." },
+      { question: "화이트해커의 성공을 가장 잘 설명한 것은?", choices: ["가장 많은 시스템에 접근하는 것", "실제 피해 없이 위험을 찾아 안전하게 고치도록 돕는 것", "발견한 취약점을 가장 먼저 공개하는 것"], answerIndex: 1, explanation: "화이트해킹의 목적은 허가된 범위에서 방어를 강화하는 것이지 접근 자체를 과시하는 것이 아니에요." },
+    ],
+    references: [{ label: "Stanford · Foundations of Information Security", url: STANFORD_INFOSEC }, { label: "IUP · Introduction to Cyber Security", url: IUP_CYBERSECURITY }],
   },
 ];
 

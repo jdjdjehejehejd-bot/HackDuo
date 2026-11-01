@@ -12,6 +12,7 @@ const lessonIcons = {
   phishing: MailWarning, account: KeyRound, privacy: UserRound,
   web: Code2, network: Network, incident: ShieldCheck,
   "security-basics": ShieldCheck, "threat-model": Target, cryptography: LockKeyhole,
+  "white-hat": ShieldCheck,
 } as const;
 const weekdayNames = ["월", "화", "수", "목", "금", "토", "일"];
 
@@ -64,7 +65,7 @@ export default function Home() {
           <div className="topbar-right">
             <div className="top-stat streak-chip" aria-label={`연속 학습 ${currentStreak}일`}><Flame size={16} fill="currentColor" /><span>{currentStreak}</span><small>일</small></div>
             <div className="top-stat xp-chip" aria-label={`누적 ${progress.xp} XP`}><Zap size={15} fill="currentColor" /><span>{progress.xp.toLocaleString("ko-KR")}</span><small>XP</small></div>
-            <button className="profile-avatar" aria-label={`레벨 ${level} 내 노트 열기`} onClick={() => setLocation("/my")}>T</button>
+            <button className="profile-avatar" aria-label={`${progress.displayName}의 레벨 ${level} 내 노트 열기`} onClick={() => setLocation("/my")}>{progress.displayName.slice(0, 1)}</button>
           </div>
         </div>
       </header>
@@ -73,7 +74,7 @@ export default function Home() {
         <section className="home-welcome" aria-labelledby="welcome-title">
           <div className="welcome-copy">
             <span className="eyebrow"><span className="live-dot" /> 매일 조금씩, 보안 감각 ON</span>
-            <h1 id="welcome-title">위험 신호를 알아보는<br /><span>눈을 키워요.</span></h1>
+            <h1 id="welcome-title">{progress.displayName}님,<br /><span>위험 신호를 알아봐요.</span></h1>
             <p>짧은 이야기로 배우고, 직접 판단하며 내 것으로 만들어요.</p>
             <button className="button-primary welcome-cta" onClick={() => setLocation(`/lesson/${currentLesson.id}`)}>{nextLesson ? "이어서 배우기" : "오늘의 복습 시작"}<ArrowRight size={17} /></button>
             <div className="welcome-proof"><ShieldCheck size={14} /> 모든 연습은 안전한 가상 시나리오 안에서</div>

@@ -15,6 +15,7 @@ const episodeArt: Record<string, string> = {
   privacy: "/anime/episode-07-privacy.webp",
   phishing: "/anime/episode-08-phishing.webp",
   incident: "/anime/episode-09-incident.webp",
+  "white-hat": "/anime/episode-09-incident.webp",
 };
 
 function prefersReducedMotion() {
