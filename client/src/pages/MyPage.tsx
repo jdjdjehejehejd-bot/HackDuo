@@ -1,6 +1,7 @@
 import {
   ArrowLeft,
   ArrowRight,
+  BadgeCheck,
   BookOpen,
   Check,
   Clock3,
@@ -13,6 +14,7 @@ import {
 import { useState } from "react";
 import { useLocation } from "wouter";
 import BrandMark from "@/components/BrandMark";
+import { badges } from "@/data/badges";
 import { getCompletedLessonNotes, lessons } from "@/data/lessons";
 import { LAB_SIMULATION_IDS } from "@/pages/LabPage";
 import { getCurrentStreak, getLevelNumber, useLearningProgress } from "@/hooks/useLearningProgress";
@@ -29,6 +31,8 @@ export default function MyPage() {
   const nextLesson = lessons.find((lesson) => !completedIds.has(lesson.id));
   const level = getLevelNumber(progress.xp);
   const currentStreak = getCurrentStreak(progress.lastActiveDate, progress.streak);
+  const earnedBadgeCount = badges.filter((badge) => badge.isEarned(progress, lessons.length, LAB_SIMULATION_IDS.length)).length;
+  const nextBadge = badges.find((badge) => !badge.isEarned(progress, lessons.length, LAB_SIMULATION_IDS.length));
 
   return (
     <div className="app-shell my-page-shell">
@@ -102,6 +106,17 @@ export default function MyPage() {
 
           {notes.length > 0 && nextLesson && <button className="notebook-continue" onClick={() => setLocation(`/lesson/${nextLesson.id}`)}><span><BookOpen size={18} /><span><strong>다음 이야기를 이어갈까요?</strong><small>{nextLesson.shortTitle} · 클리어하면 노트에 이어서 추가돼요.</small></span></span><ArrowRight size={17} /></button>}
           {notes.length === lessons.length && <div className="notebook-finish"><Sparkles size={15} /> 모든 스토리를 클리어했어요. 이 노트가 나만의 보안 필드 가이드예요.</div>}
+        </section>
+
+        <section className="badge-collection" aria-labelledby="badge-title">
+          <div className="notebook-list-heading"><div><span className="section-kicker">YOUR ACHIEVEMENTS</span><h2 id="badge-title">작은 성취가 배지가 돼요</h2><p>스토리와 실습을 진행할수록 새로운 배지가 열려요.</p></div><span className="notebook-count"><BadgeCheck size={14} /> {earnedBadgeCount} / {badges.length}</span></div>
+          <div className="badge-grid">
+            {badges.map((badge) => {
+              const earned = badge.isEarned(progress, lessons.length, LAB_SIMULATION_IDS.length);
+              return <article className={`badge-card${earned ? " badge-card-earned" : ""}`} key={badge.id}><span className="badge-glyph">{badge.icon}</span><div><strong>{badge.title}</strong><p>{badge.description}</p></div>{earned && <Check size={15} className="badge-check" />}</article>;
+            })}
+          </div>
+          {nextBadge && <div className="badge-next"><Sparkles size={14} /><span>다음 목표 · <strong>{nextBadge.title}</strong> — {nextBadge.description}</span></div>}
         </section>
       </main>
 

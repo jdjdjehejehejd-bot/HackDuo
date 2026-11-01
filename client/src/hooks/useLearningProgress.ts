@@ -7,7 +7,7 @@ export const LAB_XP_REWARD = 10;
 export const MAX_LEVEL = 20;
 export const DEVELOPER_UNLOCK_CODE = "TEUM-DEV-MAX";
 
-type LearningProgress = {
+export type LearningProgress = {
   displayName: string;
   developerMode: boolean;
   completedLessonIds: string[];
