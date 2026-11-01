@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { classrooms, classroomMembers, InsertClassroom, InsertClassroomMember, learningEvents, InsertUser, users } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -88,4 +88,34 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+export async function createClassroom(input: Pick<InsertClassroom, "ownerId" | "name" | "inviteCode">) {
+  const db = await getDb();
+  if (!db) throw new Error("Database is not available");
+  const result = await db.insert(classrooms).values(input).$returningId();
+  return result[0];
+}
+
+export async function listOwnedClassrooms(ownerId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database is not available");
+  return db.select().from(classrooms).where(eq(classrooms.ownerId, ownerId));
+}
+
+export async function addClassroomMember(input: Pick<InsertClassroomMember, "classroomId" | "displayName" | "grade" | "userId">, ownerId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database is not available");
+  const owned = await db.select({ id: classrooms.id }).from(classrooms).where(and(eq(classrooms.id, input.classroomId), eq(classrooms.ownerId, ownerId))).limit(1);
+  if (!owned[0]) return null;
+  const result = await db.insert(classroomMembers).values(input).$returningId();
+  return result[0];
+}
+
+export async function getClassroomOverview(classroomId: number, ownerId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database is not available");
+  const owned = await db.select({ id: classrooms.id, name: classrooms.name, inviteCode: classrooms.inviteCode }).from(classrooms).where(and(eq(classrooms.id, classroomId), eq(classrooms.ownerId, ownerId))).limit(1);
+  if (!owned[0]) return null;
+  const members = await db.select().from(classroomMembers).where(eq(classroomMembers.classroomId, classroomId));
+  const events = await db.select().from(learningEvents).where(eq(learningEvents.classroomId, classroomId));
+  return { classroom: owned[0], members, events };
+}

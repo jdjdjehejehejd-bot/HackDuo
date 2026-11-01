@@ -25,4 +25,37 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
-// TODO: Add your tables here
+export const classrooms = mysqlTable("classrooms", {
+  id: int("id").autoincrement().primaryKey(),
+  ownerId: int("ownerId").notNull().references(() => users.id),
+  name: varchar("name", { length: 120 }).notNull(),
+  inviteCode: varchar("inviteCode", { length: 32 }).notNull().unique(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export const classroomMembers = mysqlTable("classroomMembers", {
+  id: int("id").autoincrement().primaryKey(),
+  classroomId: int("classroomId").notNull().references(() => classrooms.id),
+  userId: int("userId").references(() => users.id),
+  displayName: varchar("displayName", { length: 80 }).notNull(),
+  grade: varchar("grade", { length: 32 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export const learningEvents = mysqlTable("learningEvents", {
+  id: int("id").autoincrement().primaryKey(),
+  classroomId: int("classroomId").notNull().references(() => classrooms.id),
+  memberId: int("memberId").notNull().references(() => classroomMembers.id),
+  lessonId: varchar("lessonId", { length: 100 }).notNull(),
+  eventType: varchar("eventType", { length: 32 }).notNull(),
+  score: int("score"),
+  occurredAt: timestamp("occurredAt").defaultNow().notNull(),
+});
+
+export type Classroom = typeof classrooms.$inferSelect;
+export type InsertClassroom = typeof classrooms.$inferInsert;
+export type ClassroomMember = typeof classroomMembers.$inferSelect;
+export type InsertClassroomMember = typeof classroomMembers.$inferInsert;
+export type LearningEvent = typeof learningEvents.$inferSelect;
+export type InsertLearningEvent = typeof learningEvents.$inferInsert;
