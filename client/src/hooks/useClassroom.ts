@@ -7,6 +7,10 @@ export type ClassroomStudent = {
   name: string;
   grade: string;
   joinedAt: string;
+  completedLessons: number;
+  accuracy: number;
+  streak: number;
+  focusArea: string;
 };
 
 export type Classroom = {
@@ -25,7 +29,7 @@ function readState(): ClassroomState {
   try {
     const parsed = JSON.parse(window.localStorage.getItem(STORAGE_KEY) ?? "null") as Partial<ClassroomState> | null;
     if (!parsed || !Array.isArray(parsed.classrooms)) return EMPTY_STATE;
-    const classrooms = parsed.classrooms.filter((classroom): classroom is Classroom => Boolean(classroom && typeof classroom.id === "string" && typeof classroom.name === "string" && typeof classroom.inviteCode === "string" && Array.isArray(classroom.students)));
+    const classrooms = parsed.classrooms.filter((classroom): classroom is Classroom => Boolean(classroom && typeof classroom.id === "string" && typeof classroom.name === "string" && typeof classroom.inviteCode === "string" && Array.isArray(classroom.students))).map((classroom) => ({ ...classroom, students: classroom.students.filter((student) => Boolean(student && typeof student.id === "string" && typeof student.name === "string")).map((student) => ({ ...student, completedLessons: Number.isFinite(student.completedLessons) ? student.completedLessons : 0, accuracy: Number.isFinite(student.accuracy) ? student.accuracy : 0, streak: Number.isFinite(student.streak) ? student.streak : 0, focusArea: typeof student.focusArea === "string" ? student.focusArea : "학습 데이터 연결 대기" })) }));
     return { classrooms, activeClassroomId: typeof parsed.activeClassroomId === "string" ? parsed.activeClassroomId : classrooms[0]?.id ?? null };
   } catch {
     return EMPTY_STATE;
@@ -51,7 +55,7 @@ export function useClassroom() {
   function addStudent(name: string, grade: string) {
     const normalized = name.trim().slice(0, 24);
     if (!activeClassroom || !normalized) return false;
-    const student: ClassroomStudent = { id: `student-${Date.now()}`, name: normalized, grade: grade.trim().slice(0, 16) || "미입력", joinedAt: new Date().toISOString() };
+    const student: ClassroomStudent = { id: `student-${Date.now()}`, name: normalized, grade: grade.trim().slice(0, 16) || "미입력", joinedAt: new Date().toISOString(), completedLessons: 0, accuracy: 0, streak: 0, focusArea: "학습 데이터 연결 대기" };
     setState((current) => ({ ...current, classrooms: current.classrooms.map((classroom) => classroom.id === activeClassroom.id ? { ...classroom, students: [...classroom.students, student] } : classroom) }));
     return true;
   }
