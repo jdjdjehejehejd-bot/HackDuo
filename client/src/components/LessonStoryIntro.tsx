@@ -3,8 +3,9 @@ import { ArrowLeft, ArrowRight, Pause, Play, RotateCcw, Sparkles } from "lucide-
 import BrandMark from "@/components/BrandMark";
 import type { Lesson } from "@/data/lessons";
 import { lessonStoryboards } from "@/data/animatedStoryboards";
+import { storyArc } from "@/data/storyArc";
 
-const sceneLabels = ["무대가 열리다", "사건이 터지다", "임무를 맡다"] as const;
+const sceneLabels = ["지난 화의 단서", "새로운 신호", "현장 기록", "임무를 맡다", "다음 화의 떡밥"] as const;
 const episodeArt: Record<string, string> = {
   "security-basics": "/anime/episode-01-security-basics.webp",
   "threat-model": "/anime/episode-02-threat-model.webp",
@@ -36,10 +37,12 @@ type LessonStoryIntroProps = {
 export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit }: LessonStoryIntroProps) {
   const board = lessonStoryboards[lesson.id] ?? lessonStoryboards["security-basics"];
   const firstSection = lesson.sections[0];
-  const lines = [firstSentence(lesson.hook), firstSentence(firstSection.scene), lesson.mission];
+  const arc = storyArc[lesson.id] ?? storyArc["security-basics"];
+  const lines = [arc.previous, firstSentence(lesson.hook), firstSentence(firstSection.scene), lesson.mission, arc.cliffhanger];
   const [reducedMotion, setReducedMotion] = useState(prefersReducedMotion);
   const [act, setAct] = useState(0);
   const [isPlaying, setIsPlaying] = useState(() => !prefersReducedMotion());
+  const visualAct = Math.min(act, 2);
   const skipRef = useRef<HTMLButtonElement>(null);
   const finished = act === sceneLabels.length - 1 && !isPlaying;
   const background = episodeArt[lesson.id] ?? episodeArt["security-basics"];
@@ -113,21 +116,21 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
         <p>{lesson.episode}</p>
       </div>
 
-      <div className={`anime-opening-scene anime-opening-scene-${act}`} aria-hidden="true">
+        <div className={`anime-opening-scene anime-opening-scene-${visualAct}`} aria-hidden="true">
         <div className="anime-opening-sun-glow" />
         <div className="anime-opening-spark anime-opening-spark-one" />
         <div className="anime-opening-spark anime-opening-spark-two" />
-        <img className={`anime-opening-character anime-opening-minji anime-opening-minji-${act}`} src="/anime/minji-anime.webp" alt="" draggable={false} />
-        <img className={`anime-opening-character anime-opening-ttumi anime-opening-ttumi-${act}`} src="/anime/ttumi-anime.webp" alt="" draggable={false} />
+        <img className={`anime-opening-character anime-opening-minji anime-opening-minji-${visualAct}`} src="/anime/minji-anime.webp" alt="" draggable={false} />
+        <img className={`anime-opening-character anime-opening-ttumi anime-opening-ttumi-${visualAct}`} src="/anime/ttumi-anime.webp" alt="" draggable={false} />
       </div>
 
-      <div className={`anime-opening-action-line anime-opening-action-line-${act}`}>
-        <span>{sceneLabels[act]}</span>
-        <strong>{act === 0 ? board.location : act === 1 ? firstSection.title : lesson.mission}</strong>
-      </div>
+        <div className={`anime-opening-action-line anime-opening-action-line-${act}`}>
+          <span>{sceneLabels[act]}</span>
+          <strong>{act === 0 ? arc.previous : act === 1 ? board.location : act === 2 ? firstSection.title : act === 3 ? lesson.mission : arc.cliffhanger}</strong>
+        </div>
 
       <div className="anime-opening-subtitle" aria-live="polite" aria-atomic="true">
-        <span>{act === 1 ? "민지 · 새빛대 학생" : "틈이 · 보안 도우미"}</span>
+        <span>{act === 0 || act === 4 ? "내레이션 · 사건 기록" : act === 1 || act === 3 ? "민지 · 새빛대 학생" : "틈이 · 보안 도우미"}</span>
         <p key={act}>“{lines[act]}”</p>
       </div>
 

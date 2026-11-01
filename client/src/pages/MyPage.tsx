@@ -125,8 +125,8 @@ export default function MyPage() {
         <form onSubmit={(event) => { event.preventDefault(); const unlocked = activateDeveloperMode(developerCode, lessons.map((lesson) => lesson.id), [...LAB_SIMULATION_IDS]); setDeveloperMessage(unlocked ? "개발자 모드 활성화 · 레벨 20 · 전체 잠금 해제" : "코드가 올바르지 않아요."); if (unlocked) setDeveloperCode(""); }}>
           <label htmlFor="developer-code">잠금 해제 코드</label>
           <div><input id="developer-code" value={developerCode} onChange={(event) => { setDeveloperCode(event.target.value); setDeveloperMessage(""); }} placeholder="개발자 코드 입력" autoComplete="off" /><button type="submit">적용</button></div>
-          <small>개발·데모용 기능입니다. 브라우저에 저장되며 실제 보안 인증 수단으로 사용하지 마세요.</small>
-          {progress.developerMode && <button type="button" className="developer-disable-button" onClick={() => { deactivateDeveloperMode(); setDeveloperMessage("개발자 모드를 해제했어요. 이미 열린 학습 기록은 유지됩니다."); }}>개발자 모드 해제</button>}
+          <small>개발·데모용 기능입니다. 활성화 전 진행도를 저장하며, 해제하면 잠금·XP·실습 상태가 활성화 전으로 복원됩니다.</small>
+          {progress.developerMode && <button type="button" className="developer-disable-button" onClick={() => { deactivateDeveloperMode(); setDeveloperMessage("개발자 모드를 해제했어요. 활성화 전 잠금·XP·실습 상태로 복원했습니다."); }}>개발자 모드 해제 · 원래 상태로 복원</button>}
           {developerMessage && <strong role="status">{developerMessage}</strong>}
         </form>
       </details>

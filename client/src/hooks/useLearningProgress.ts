@@ -7,9 +7,8 @@ export const LAB_XP_REWARD = 10;
 export const MAX_LEVEL = 20;
 export const DEVELOPER_UNLOCK_CODE = "TEUM-DEV-MAX";
 
-export type LearningProgress = {
+export type ProgressSnapshot = {
   displayName: string;
-  developerMode: boolean;
   storyChoices: Record<string, number>;
   lessonPerformance: Record<string, { attempts: number; correct: number; total: number }>;
   completedLessonIds: string[];
@@ -21,9 +20,16 @@ export type LearningProgress = {
   dailyLessonCount: number;
 };
 
+export type LearningProgress = ProgressSnapshot & {
+  displayName: string;
+  developerMode: boolean;
+  developerModeSnapshot: ProgressSnapshot | null;
+};
+
 const EMPTY_PROGRESS: LearningProgress = {
   displayName: "학습자",
   developerMode: false,
+  developerModeSnapshot: null,
   storyChoices: {},
   lessonPerformance: {},
   completedLessonIds: [],
@@ -75,6 +81,9 @@ function readProgress(): LearningProgress {
         ? saved.displayName.trim().slice(0, 24)
         : EMPTY_PROGRESS.displayName,
       developerMode: saved.developerMode === true,
+      developerModeSnapshot: saved.developerModeSnapshot && typeof saved.developerModeSnapshot === "object"
+        ? saved.developerModeSnapshot as ProgressSnapshot
+        : null,
       storyChoices: saved.storyChoices && typeof saved.storyChoices === "object"
         ? Object.fromEntries(Object.entries(saved.storyChoices).filter(([id, choice]) => typeof id === "string" && Number.isInteger(choice)).map(([id, choice]) => [id, Number(choice)]))
         : {},
@@ -165,6 +174,18 @@ export function useLearningProgress() {
     setProgress((current) => ({
       ...current,
       developerMode: true,
+      developerModeSnapshot: current.developerModeSnapshot ?? {
+        displayName: current.displayName,
+        storyChoices: current.storyChoices,
+        lessonPerformance: current.lessonPerformance,
+        completedLessonIds: current.completedLessonIds,
+        completedLabIds: current.completedLabIds,
+        xp: current.xp,
+        streak: current.streak,
+        lastActiveDate: current.lastActiveDate,
+        dailyActivityDate: current.dailyActivityDate,
+        dailyLessonCount: current.dailyLessonCount,
+      },
       completedLessonIds: Array.from(new Set([...current.completedLessonIds, ...lessonIds])),
       completedLabIds: Array.from(new Set([...current.completedLabIds, ...labIds])),
       xp: Math.max(current.xp, MAX_LEVEL * LEVEL_XP - 1),
@@ -173,7 +194,11 @@ export function useLearningProgress() {
   }, []);
 
   const deactivateDeveloperMode = useCallback(() => {
-    setProgress((current) => ({ ...current, developerMode: false }));
+    setProgress((current) => {
+      if (!current.developerMode) return current;
+      if (!current.developerModeSnapshot) return { ...EMPTY_PROGRESS, displayName: current.displayName };
+      return { ...current.developerModeSnapshot, developerMode: false, developerModeSnapshot: null };
+    });
   }, []);
 
   const recordStoryChoice = useCallback((lessonId: string, choiceIndex: number) => {

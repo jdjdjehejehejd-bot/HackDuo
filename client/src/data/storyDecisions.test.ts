@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { lessons } from "./lessons";
 import { storyDecisions } from "./storyDecisions";
+import { storyArc } from "./storyArc";
 
 describe("story decision checkpoints", () => {
   it("provides a safe decision checkpoint for every lesson", () => {
@@ -11,6 +12,13 @@ describe("story decision checkpoints", () => {
       expect(decision.bestIndex, lesson.id).toBeGreaterThanOrEqual(0);
       expect(decision.bestIndex, lesson.id).toBeLessThan(decision.choices.length);
       expect(decision.outcomes.length, lesson.id).toBe(decision.choices.length);
+    }
+  });
+
+  it("connects every lesson to a previous clue and next-episode hook", () => {
+    for (const lesson of lessons) {
+      expect(storyArc[lesson.id]?.previous, lesson.id).toBeTruthy();
+      expect(storyArc[lesson.id]?.cliffhanger, lesson.id).toBeTruthy();
     }
   });
 });
