@@ -14,13 +14,16 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import BrandMark from "@/components/BrandMark";
 import { getCompletedLessonNotes, lessons } from "@/data/lessons";
+import { LAB_SIMULATION_IDS } from "@/pages/LabPage";
 import { getCurrentStreak, getLevelNumber, useLearningProgress } from "@/hooks/useLearningProgress";
 
 export default function MyPage() {
   const [, setLocation] = useLocation();
-  const { progress, setDisplayName } = useLearningProgress();
+  const { progress, setDisplayName, activateDeveloperMode } = useLearningProgress();
   const [isEditingName, setIsEditingName] = useState(false);
   const [draftName, setDraftName] = useState(progress.displayName);
+  const [developerCode, setDeveloperCode] = useState("");
+  const [developerMessage, setDeveloperMessage] = useState("");
   const completedIds = new Set(progress.completedLessonIds);
   const notes = getCompletedLessonNotes(progress.completedLessonIds);
   const nextLesson = lessons.find((lesson) => !completedIds.has(lesson.id));
@@ -101,6 +104,16 @@ export default function MyPage() {
           {notes.length === lessons.length && <div className="notebook-finish"><Sparkles size={15} /> 모든 스토리를 클리어했어요. 이 노트가 나만의 보안 필드 가이드예요.</div>}
         </section>
       </main>
+
+      <details className="developer-tools">
+        <summary>개발자 도구</summary>
+        <form onSubmit={(event) => { event.preventDefault(); const unlocked = activateDeveloperMode(developerCode, lessons.map((lesson) => lesson.id), [...LAB_SIMULATION_IDS]); setDeveloperMessage(unlocked ? "개발자 모드 활성화 · 레벨 20 · 전체 잠금 해제" : "코드가 올바르지 않아요."); if (unlocked) setDeveloperCode(""); }}>
+          <label htmlFor="developer-code">잠금 해제 코드</label>
+          <div><input id="developer-code" value={developerCode} onChange={(event) => { setDeveloperCode(event.target.value); setDeveloperMessage(""); }} placeholder="개발자 코드 입력" autoComplete="off" /><button type="submit">적용</button></div>
+          <small>개발·데모용 기능입니다. 브라우저에 저장되며 실제 보안 인증 수단으로 사용하지 마세요.</small>
+          {developerMessage && <strong role="status">{developerMessage}</strong>}
+        </form>
+      </details>
 
       <nav className="mobile-dock" aria-label="모바일 메뉴"><a href="/"><BookOpen size={18} /><span>피드</span></a><button onClick={() => setLocation("/lab")}><ShieldCheck size={18} /><span>실습</span></button><button className="dock-active" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}><NotebookPen size={18} /><span>My</span></button></nav>
       <footer className="site-footer"><BrandMark compact /><span>TEUM · 내 노트, 내 보안 감각.</span><button type="button" onClick={() => setLocation("/")}>학습 피드 <ArrowRight size={12} /></button></footer>

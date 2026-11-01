@@ -19,6 +19,8 @@ type Simulation = {
   artifact?: { from: string; subject: string; body: string; button: string };
 };
 
+export const LAB_SIMULATION_IDS = ["mail-room", "web-check", "access-audit"] as const;
+
 const simulations: Simulation[] = [
   {
     id: "mail-room",

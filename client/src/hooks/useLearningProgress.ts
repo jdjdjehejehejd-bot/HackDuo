@@ -4,9 +4,12 @@ import { useCallback, useEffect, useState } from "react";
 const STORAGE_KEY = "hackduo.learning-progress.v1";
 export const LEVEL_XP = 50;
 export const LAB_XP_REWARD = 10;
+export const MAX_LEVEL = 20;
+export const DEVELOPER_UNLOCK_CODE = "TEUM-DEV-MAX";
 
 type LearningProgress = {
   displayName: string;
+  developerMode: boolean;
   completedLessonIds: string[];
   completedLabIds: string[];
   xp: number;
@@ -18,6 +21,7 @@ type LearningProgress = {
 
 const EMPTY_PROGRESS: LearningProgress = {
   displayName: "학습자",
+  developerMode: false,
   completedLessonIds: [],
   completedLabIds: [],
   xp: 0,
@@ -66,6 +70,7 @@ function readProgress(): LearningProgress {
       displayName: typeof saved.displayName === "string" && saved.displayName.trim().length > 0
         ? saved.displayName.trim().slice(0, 24)
         : EMPTY_PROGRESS.displayName,
+      developerMode: saved.developerMode === true,
       completedLessonIds: Array.isArray(saved.completedLessonIds)
         ? saved.completedLessonIds.filter((id): id is string => typeof id === "string")
         : [],
@@ -134,7 +139,19 @@ export function useLearningProgress() {
     }));
   }, []);
 
-  return { progress, completeLesson, completeLab, setDisplayName };
+  const activateDeveloperMode = useCallback((code: string, lessonIds: string[], labIds: string[]) => {
+    if (code.trim().toUpperCase() !== DEVELOPER_UNLOCK_CODE) return false;
+    setProgress((current) => ({
+      ...current,
+      developerMode: true,
+      completedLessonIds: Array.from(new Set([...current.completedLessonIds, ...lessonIds])),
+      completedLabIds: Array.from(new Set([...current.completedLabIds, ...labIds])),
+      xp: Math.max(current.xp, MAX_LEVEL * LEVEL_XP - 1),
+    }));
+    return true;
+  }, []);
+
+  return { progress, completeLesson, completeLab, setDisplayName, activateDeveloperMode };
 }
 
 export function getCurrentStreak(lastActiveDate: string | null, streak: number) {
