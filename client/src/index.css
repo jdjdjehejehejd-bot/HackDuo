@@ -879,3 +879,21 @@ button:focus-visible, a:focus-visible { outline: 3px solid #cf77e9; outline-offs
 .badge-next svg { color: #b845d3; }
 .badge-next strong { color: #8b3ba5; }
 @media (max-width: 540px) { .badge-collection { padding: 17px; } .badge-grid { grid-template-columns: 1fr; } }
+
+.story-decision { margin: 15px 0 16px; padding: 13px; border: 1px solid #ecdaf2; border-radius: 13px; background: linear-gradient(135deg, #fffafd, #f9f4fc); }
+.story-decision-heading { display: flex; align-items: flex-start; gap: 8px; color: #9a42b8; }
+.story-decision-heading svg { flex: 0 0 auto; margin-top: 1px; }
+.story-decision-heading small { display: block; margin-bottom: 4px; color: #a383ae; font-size: 8px; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; }
+.story-decision-heading strong { display: block; color: #54395d; font-size: 11px; line-height: 1.45; }
+.story-decision-options { display: grid; gap: 6px; margin-top: 10px; }
+.story-decision-option { display: flex; align-items: flex-start; gap: 8px; padding: 9px 10px; border: 1px solid #eadfea; border-radius: 9px; background: #fff; color: #78697d; text-align: left; cursor: pointer; transition: .16s ease; }
+.story-decision-option:hover { border-color: #bd70d1; transform: translateY(-1px); }
+.story-decision-option > span { display: grid; width: 20px; height: 20px; flex: 0 0 auto; place-items: center; border-radius: 6px; background: #f3eaf6; color: #a34bc0; font-size: 9px; font-weight: 900; }
+.story-decision-option strong { font-size: 9px; line-height: 1.5; }
+.story-decision-selected { border-color: #bc6dd3; background: #fdf6ff; box-shadow: 0 3px 10px rgba(145,67,169,.08); }
+.story-decision-good { border-color: #73c2a0; background: #f3fcf7; }
+.story-decision-good > span { background: #d9f1e4; color: #36946d; }
+.story-decision-outcome { display: flex; align-items: flex-start; gap: 6px; margin-top: 9px; padding: 8px 9px; border-radius: 8px; background: #f4eff6; color: #807287; font-size: 9px; line-height: 1.5; }
+.story-decision-outcome svg { flex: 0 0 auto; margin-top: 1px; color: #a347bd; }
+.story-decision-outcome-good { background: #edf9f2; color: #468568; }
+.story-decision-outcome-good svg { color: #3a9c73; }

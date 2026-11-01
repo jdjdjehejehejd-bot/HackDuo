@@ -10,6 +10,7 @@ export const DEVELOPER_UNLOCK_CODE = "TEUM-DEV-MAX";
 export type LearningProgress = {
   displayName: string;
   developerMode: boolean;
+  storyChoices: Record<string, number>;
   completedLessonIds: string[];
   completedLabIds: string[];
   xp: number;
@@ -22,6 +23,7 @@ export type LearningProgress = {
 const EMPTY_PROGRESS: LearningProgress = {
   displayName: "학습자",
   developerMode: false,
+  storyChoices: {},
   completedLessonIds: [],
   completedLabIds: [],
   xp: 0,
@@ -71,6 +73,9 @@ function readProgress(): LearningProgress {
         ? saved.displayName.trim().slice(0, 24)
         : EMPTY_PROGRESS.displayName,
       developerMode: saved.developerMode === true,
+      storyChoices: saved.storyChoices && typeof saved.storyChoices === "object"
+        ? Object.fromEntries(Object.entries(saved.storyChoices).filter(([id, choice]) => typeof id === "string" && Number.isInteger(choice)).map(([id, choice]) => [id, Number(choice)]))
+        : {},
       completedLessonIds: Array.isArray(saved.completedLessonIds)
         ? saved.completedLessonIds.filter((id): id is string => typeof id === "string")
         : [],
@@ -151,7 +156,14 @@ export function useLearningProgress() {
     return true;
   }, []);
 
-  return { progress, completeLesson, completeLab, setDisplayName, activateDeveloperMode };
+  const recordStoryChoice = useCallback((lessonId: string, choiceIndex: number) => {
+    setProgress((current) => ({
+      ...current,
+      storyChoices: { ...current.storyChoices, [lessonId]: choiceIndex },
+    }));
+  }, []);
+
+  return { progress, completeLesson, completeLab, setDisplayName, activateDeveloperMode, recordStoryChoice };
 }
 
 export function getCurrentStreak(lastActiveDate: string | null, streak: number) {

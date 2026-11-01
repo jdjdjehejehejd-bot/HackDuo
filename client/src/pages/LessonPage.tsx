@@ -24,6 +24,7 @@ import BrandMark from "@/components/BrandMark";
 import AnimatedLesson from "@/components/AnimatedLesson";
 import LessonStoryIntro from "@/components/LessonStoryIntro";
 import { lessons } from "@/data/lessons";
+import { storyDecisions } from "@/data/storyDecisions";
 import { getCurrentStreak, getLevelNumber, useLearningProgress } from "@/hooks/useLearningProgress";
 import NotFound from "@/pages/NotFound";
 
@@ -34,7 +35,7 @@ export default function LessonPage() {
   const [, setLocation] = useLocation();
   const lessonIndex = match ? lessons.findIndex((item) => item.id === params.lessonId) : -1;
   const lesson = lessonIndex >= 0 ? lessons[lessonIndex] : undefined;
-  const { progress, completeLesson } = useLearningProgress();
+  const { progress, completeLesson, recordStoryChoice } = useLearningProgress();
   const [enteredLessonId, setEnteredLessonId] = useState(lesson?.id);
   const [completedAtEntry, setCompletedAtEntry] = useState(() =>
     lesson ? progress.completedLessonIds.includes(lesson.id) : false,
@@ -75,6 +76,8 @@ export default function LessonPage() {
   const correctFirstTryCount = Object.values(firstTryResults).filter(Boolean).length;
   const hearts = Math.max(0, STARTING_HEARTS - Object.values(firstTryResults).filter((correct) => !correct).length);
   const nextLesson = lessons.find((item) => !progress.completedLessonIds.includes(item.id));
+  const storyDecision = storyDecisions[lesson.id];
+  const chosenDecision = progress.storyChoices[lesson.id];
 
   function goBack() {
     if (phase === 0) {
@@ -152,6 +155,7 @@ export default function LessonPage() {
             <section key={`concept-${lesson.id}-${phase}`} className="concept-card" aria-live="polite">
               <div className="case-file-line"><span className="case-tag"><Sparkles size={13} /> 사건 기록 · {String(lessonIndex + 1).padStart(2, "0")}</span><span className="concept-number">단서 {phase + 1} / {sectionCount}</span></div>
               {phase === 0 && <blockquote className="lesson-hook">“{lesson.hook}”</blockquote>}
+              {phase === 0 && storyDecision && <div className="story-decision"><div className="story-decision-heading"><Target size={15} /><div><small>첫 번째 판단 체크포인트</small><strong>{storyDecision.prompt}</strong></div></div><div className="story-decision-options" role="group" aria-label="스토리 판단 선택지">{storyDecision.choices.map((choice, index) => { const chosen = chosenDecision === index; const isBest = index === storyDecision.bestIndex; return <button key={choice} className={`story-decision-option${chosen ? " story-decision-selected" : ""}${chosen && isBest ? " story-decision-good" : ""}`} onClick={() => recordStoryChoice(lesson.id, index)} aria-pressed={chosen}><span>{String.fromCharCode(65 + index)}</span><strong>{choice}</strong></button>; })}</div>{chosenDecision !== undefined && <div className={`story-decision-outcome${chosenDecision === storyDecision.bestIndex ? " story-decision-outcome-good" : ""}`}><Sparkles size={14} /><span>{storyDecision.outcomes[chosenDecision]}</span></div>}</div>}
               <div className="case-evidence"><span>현장 기록</span><p>{lesson.sections[phase].scene}</p></div>
               <AnimatedLesson lessonId={lesson.id} sectionIndex={phase} section={lesson.sections[phase]} />
               <h2>{lesson.sections[phase].title}</h2><p>{lesson.sections[phase].body}</p>
