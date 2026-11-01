@@ -1,7 +1,7 @@
 export type StoryArc = { previous: string; cliffhanger: string };
 
 export const storyArc: Record<string, StoryArc> = {
-  "security-basics": { previous: "새빛대학교 축제 앱의 이상 징후가 처음 포착됐어요.", cliffhanger: "검색 결과에 나타난 명단 뒤에는 누가 어떤 경로로 들어왔는지, 아직 답이 남아 있어요." },
+  "security-basics": { previous: "새빛대 축제를 준비하던 민지가 동아리방 안쪽 장비를 잘못 건드렸어요.", cliffhanger: "틈이의 첫 테스트에서 발견한 결함은, 누가 어떤 경로로 예매자 정보에 접근했는지 묻는 더 큰 문제로 이어집니다." },
   "threat-model": { previous: "예매자 명단을 숨겼지만, 팀은 ‘무엇을 지켜야 하는가’부터 다시 묻기로 했어요.", cliffhanger: "지도에 찍힌 낯선 연결 하나가 운영자 계정과 이어져 있어요. 다음 단서는 접근 권한입니다." },
   account: { previous: "위협 지도를 그리자 자원봉사자 계정이 예상보다 넓은 문을 열고 있다는 사실이 드러났어요.", cliffhanger: "회수되지 않은 권한으로 열 수 있는 비밀 쪽지가 하나 발견됐어요." },
   cryptography: { previous: "민서의 권한을 줄인 뒤, 운영팀은 비밀 쪽지를 안전하게 전달해야 했어요.", cliffhanger: "검증된 서명 아래에 네트워크 주소가 하나 더 숨어 있어요. 누군가 연결 경계를 시험 중입니다." },

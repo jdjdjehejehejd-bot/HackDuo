@@ -33,6 +33,6 @@ describe("story decision checkpoints", () => {
   it("starts the first episode in-scene without a narrator", () => {
     expect(storyDialogues["security-basics"][0].speaker).toContain("민지");
     expect(storyDialogues["security-basics"][0].line).toContain("축제");
-    expect(storyDialogues["security-basics"][1].speaker).toContain("틈이");
+    expect(storyDialogues["security-basics"][3].speaker).toContain("틈이");
   });
 });
