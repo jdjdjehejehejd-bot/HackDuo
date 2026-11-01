@@ -6,7 +6,7 @@ import {
 import { useLocation } from "wouter";
 import BrandMark from "@/components/BrandMark";
 import { lessonStages, lessons } from "@/data/lessons";
-import { getCurrentStreak, getLevelNumber, getLevelProgress, getWeekStreakDates, useLearningProgress } from "@/hooks/useLearningProgress";
+import { getCurrentStreak, getLevelNumber, getLevelProgress, getRecommendedReview, getWeekStreakDates, useLearningProgress } from "@/hooks/useLearningProgress";
 
 const lessonIcons = {
   phishing: MailWarning, account: KeyRound, privacy: UserRound,
@@ -51,6 +51,8 @@ export default function Home() {
   const dailyGoalComplete = todayLessonCount > 0;
   const currentLesson = nextLesson ?? lessons[0];
   const hasLabAccess = level >= 3;
+  const recommendedReview = getRecommendedReview(lessons, progress);
+  const reviewPerformance = recommendedReview ? progress.lessonPerformance[recommendedReview.id] : undefined;
 
   return (
     <div className="app-shell">
@@ -156,6 +158,7 @@ export default function Home() {
 
           <aside className="insights-column" id="my-progress" aria-label="내 학습 기록">
             <section className="daily-goal-card"><div className="daily-goal-top"><div className="goal-icon"><Target size={18} /></div><div><span>오늘의 작은 목표</span><strong>학습 한 번 하기</strong></div><span className={`goal-status${dailyGoalComplete ? " goal-status-done" : ""}`}>{dailyGoalComplete ? "완료" : "5분"}</span></div><div className="daily-goal-line"><span>오늘의 기록</span><strong>{dailyGoalComplete ? `${todayLessonCount}회 완료` : "시작 전"}</strong></div><div className="daily-goal-track" role="progressbar" aria-label="오늘의 학습 목표" aria-valuemin={0} aria-valuemax={1} aria-valuenow={dailyGoalComplete ? 1 : 0}><i style={{ width: dailyGoalComplete ? "100%" : "0%" }} /></div><p>{dailyGoalComplete ? "좋아요. 오늘의 작은 보안 습관을 만들었어요." : "짧은 스토리 하나로 오늘의 리듬을 시작해요."}</p></section>
+            {recommendedReview && reviewPerformance && <section className="review-recommendation" aria-labelledby="review-title"><div className="review-recommendation-icon"><Target size={16} /></div><div><span className="section-kicker">SMART REPLAY</span><h2 id="review-title">한 번 더 연습해 볼까요?</h2><p><strong>{recommendedReview.shortTitle}</strong>에서 헷갈린 단서를 다시 확인해요.</p><small>최근 정답률 {Math.round((reviewPerformance.correct / (reviewPerformance.attempts * reviewPerformance.total)) * 100)}%</small></div><button onClick={() => setLocation(`/lesson/${recommendedReview.id}`)} aria-label={`${recommendedReview.shortTitle} 맞춤 복습`}><ArrowRight size={17} /></button></section>}
 
             <section className="progress-card">
               <div className="card-heading"><div><span className="section-kicker">YOUR SIGNAL</span><h2>쌓이는 보안 감각</h2></div><Trophy size={19} className="trophy-icon" /></div>

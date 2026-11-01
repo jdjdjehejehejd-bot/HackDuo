@@ -11,6 +11,7 @@ export type LearningProgress = {
   displayName: string;
   developerMode: boolean;
   storyChoices: Record<string, number>;
+  lessonPerformance: Record<string, { attempts: number; correct: number; total: number }>;
   completedLessonIds: string[];
   completedLabIds: string[];
   xp: number;
@@ -24,6 +25,7 @@ const EMPTY_PROGRESS: LearningProgress = {
   displayName: "학습자",
   developerMode: false,
   storyChoices: {},
+  lessonPerformance: {},
   completedLessonIds: [],
   completedLabIds: [],
   xp: 0,
@@ -76,6 +78,14 @@ function readProgress(): LearningProgress {
       storyChoices: saved.storyChoices && typeof saved.storyChoices === "object"
         ? Object.fromEntries(Object.entries(saved.storyChoices).filter(([id, choice]) => typeof id === "string" && Number.isInteger(choice)).map(([id, choice]) => [id, Number(choice)]))
         : {},
+      lessonPerformance: saved.lessonPerformance && typeof saved.lessonPerformance === "object"
+        ? Object.fromEntries(Object.entries(saved.lessonPerformance).flatMap(([id, value]) => {
+          if (!value || typeof value !== "object") return [];
+          const item = value as { attempts?: unknown; correct?: unknown; total?: unknown };
+          if (![item.attempts, item.correct, item.total].every((number) => Number.isFinite(number))) return [];
+          return [[id, { attempts: Math.max(0, Number(item.attempts)), correct: Math.max(0, Number(item.correct)), total: Math.max(1, Number(item.total)) }]];
+        }))
+        : {},
       completedLessonIds: Array.isArray(saved.completedLessonIds)
         ? saved.completedLessonIds.filter((id): id is string => typeof id === "string")
         : [],
@@ -112,13 +122,19 @@ export function useLearningProgress() {
     }
   }, [progress]);
 
-  const completeLesson = useCallback((lessonId: string, xpReward: number) => {
+  const completeLesson = useCallback((lessonId: string, xpReward: number, performance?: { correct: number; total: number }) => {
     setProgress((current) => {
       const isNewLesson = !current.completedLessonIds.includes(lessonId);
-      if (!isNewLesson) return { ...current, ...activityStats(current, dateKey(new Date())) };
+      const previousPerformance = current.lessonPerformance[lessonId] ?? { attempts: 0, correct: 0, total: performance?.total ?? 1 };
+      const nextPerformance = performance ? {
+        attempts: previousPerformance.attempts + 1,
+        correct: previousPerformance.correct + Math.max(0, Math.min(performance.correct, performance.total)),
+        total: performance.total,
+      } : previousPerformance;
+      const withPerformance = { ...current, ...activityStats(current, dateKey(new Date())), lessonPerformance: { ...current.lessonPerformance, [lessonId]: nextPerformance } };
+      if (!isNewLesson) return withPerformance;
       return {
-        ...current,
-        ...activityStats(current, dateKey(new Date())),
+        ...withPerformance,
         completedLessonIds: [...current.completedLessonIds, lessonId],
         xp: current.xp + Math.max(0, xpReward),
       };
@@ -183,4 +199,15 @@ export function getWeekStreakDates(lastActiveDate: string | null, streak: number
     activeDates.add(dateKey(activeDay));
   }
   return activeDates;
+}
+
+export function getRecommendedReview<T extends { id: string; shortTitle: string }>(lessons: T[], progress: LearningProgress): T | undefined {
+  return lessons
+    .map((lesson, index) => ({ lesson, index, performance: progress.lessonPerformance[lesson.id] }))
+    .filter((item) => item.performance && item.performance.attempts > 0 && item.performance.correct / (item.performance.attempts * item.performance.total) < 0.75)
+    .sort((a, b) => {
+      const aAccuracy = a.performance!.correct / (a.performance!.attempts * a.performance!.total);
+      const bAccuracy = b.performance!.correct / (b.performance!.attempts * b.performance!.total);
+      return aAccuracy - bAccuracy || a.index - b.index;
+    })[0]?.lesson;
 }

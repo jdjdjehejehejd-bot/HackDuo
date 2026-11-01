@@ -897,3 +897,13 @@ button:focus-visible, a:focus-visible { outline: 3px solid #cf77e9; outline-offs
 .story-decision-outcome svg { flex: 0 0 auto; margin-top: 1px; color: #a347bd; }
 .story-decision-outcome-good { background: #edf9f2; color: #468568; }
 .story-decision-outcome-good svg { color: #3a9c73; }
+
+.review-recommendation { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding: 13px; border: 1px solid #ead8ef; border-radius: 14px; background: linear-gradient(135deg, #fff, #fbf3fd); box-shadow: 0 5px 16px rgba(85,45,105,.05); }
+.review-recommendation-icon { display: grid; width: 32px; height: 32px; flex: 0 0 auto; place-items: center; border-radius: 10px; background: #f1dcf8; color: #9f42bd; }
+.review-recommendation > div:nth-child(2) { min-width: 0; flex: 1; }
+.review-recommendation .section-kicker { color: #aa75b7; font-size: 7px; }
+.review-recommendation h2 { margin: 4px 0 3px; color: #4e3858; font-size: 12px; font-weight: 900; }
+.review-recommendation p { margin: 0; overflow: hidden; color: #8b7c91; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+.review-recommendation p strong { color: #86419e; }
+.review-recommendation small { display: block; margin-top: 5px; color: #b050c3; font-size: 8px; font-weight: 850; }
+.review-recommendation button { display: grid; width: 28px; height: 28px; flex: 0 0 auto; place-items: center; border: 0; border-radius: 9px; background: #a746c1; color: #fff; cursor: pointer; }
