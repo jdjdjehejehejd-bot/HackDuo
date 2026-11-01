@@ -131,7 +131,7 @@ export default function MyPage() {
       </details>
 
       <nav className="mobile-dock" aria-label="모바일 메뉴"><a href="/"><BookOpen size={18} /><span>피드</span></a><button onClick={() => setLocation("/lab")}><ShieldCheck size={18} /><span>실습</span></button><button className="dock-active" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}><NotebookPen size={18} /><span>My</span></button></nav>
-      <footer className="site-footer"><BrandMark compact /><span>TEUM · 내 노트, 내 보안 감각.</span><button type="button" onClick={() => setLocation("/")}>학습 피드 <ArrowRight size={12} /></button></footer>
+      <footer className="site-footer"><BrandMark compact /><span>TEUM · 내 노트, 내 보안 감각.</span><button type="button" onClick={() => setLocation("/teacher")}>교사용 리포트 <ArrowRight size={12} /></button><button type="button" onClick={() => setLocation("/")}>학습 피드 <ArrowRight size={12} /></button></footer>
     </div>
   );
 }

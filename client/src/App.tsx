@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import LessonPage from "./pages/LessonPage";
 import LabPage from "./pages/LabPage";
 import MyPage from "./pages/MyPage";
+import TeacherDashboard from "./pages/TeacherDashboard";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -17,6 +18,7 @@ function Router() {
       <Route path="/lesson/:lessonId" component={LessonPage} />
       <Route path="/lab" component={LabPage} />
       <Route path="/my" component={MyPage} />
+      <Route path="/teacher" component={TeacherDashboard} />
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
