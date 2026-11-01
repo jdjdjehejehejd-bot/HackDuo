@@ -21,7 +21,7 @@ import { getCurrentStreak, getLevelNumber, useLearningProgress } from "@/hooks/u
 
 export default function MyPage() {
   const [, setLocation] = useLocation();
-  const { progress, setDisplayName, activateDeveloperMode } = useLearningProgress();
+  const { progress, setDisplayName, activateDeveloperMode, deactivateDeveloperMode } = useLearningProgress();
   const [isEditingName, setIsEditingName] = useState(false);
   const [draftName, setDraftName] = useState(progress.displayName);
   const [developerCode, setDeveloperCode] = useState("");
@@ -126,6 +126,7 @@ export default function MyPage() {
           <label htmlFor="developer-code">잠금 해제 코드</label>
           <div><input id="developer-code" value={developerCode} onChange={(event) => { setDeveloperCode(event.target.value); setDeveloperMessage(""); }} placeholder="개발자 코드 입력" autoComplete="off" /><button type="submit">적용</button></div>
           <small>개발·데모용 기능입니다. 브라우저에 저장되며 실제 보안 인증 수단으로 사용하지 마세요.</small>
+          {progress.developerMode && <button type="button" className="developer-disable-button" onClick={() => { deactivateDeveloperMode(); setDeveloperMessage("개발자 모드를 해제했어요. 이미 열린 학습 기록은 유지됩니다."); }}>개발자 모드 해제</button>}
           {developerMessage && <strong role="status">{developerMessage}</strong>}
         </form>
       </details>

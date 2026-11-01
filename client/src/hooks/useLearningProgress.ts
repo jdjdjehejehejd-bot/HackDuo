@@ -172,6 +172,10 @@ export function useLearningProgress() {
     return true;
   }, []);
 
+  const deactivateDeveloperMode = useCallback(() => {
+    setProgress((current) => ({ ...current, developerMode: false }));
+  }, []);
+
   const recordStoryChoice = useCallback((lessonId: string, choiceIndex: number) => {
     setProgress((current) => ({
       ...current,
@@ -179,7 +183,7 @@ export function useLearningProgress() {
     }));
   }, []);
 
-  return { progress, completeLesson, completeLab, setDisplayName, activateDeveloperMode, recordStoryChoice };
+  return { progress, completeLesson, completeLab, setDisplayName, activateDeveloperMode, deactivateDeveloperMode, recordStoryChoice };
 }
 
 export function getCurrentStreak(lastActiveDate: string | null, streak: number) {
