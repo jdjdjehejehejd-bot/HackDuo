@@ -3,10 +3,13 @@ export type StoryDialogue = { label: string; speaker: string; line: string; focu
 export const storyDialogues: Record<string, StoryDialogue[]> = {
   "security-basics": [
     { label: "동아리방", speaker: "민지의 독백", line: "“수업 끝나면 동아리방, 동아리방 끝나면 축제 준비. 바쁘긴 한데… 이상하게 이런 날이 좋았다.”", focus: "축제를 준비하는 새빛대 신입" },
+    { label: "축제 준비", speaker: "민지", line: "“현수막은 내일 달고, 예매 화면은 오늘 안에 점검. 좋아, 하나씩 하면 돼. …아마도.”", focus: "처음 맡은 축제 업무" },
+    { label: "마지막 불", speaker: "민지의 독백", line: "“다들 갔네. 나도 가야 하는데… 저쪽 서버만 확인하고. 진짜 그것만.”", focus: "혼자 남은 동아리방" },
     { label: "손끝의 실수", speaker: "민지", line: "“이건 선배들이 만지지 말랬던 건데… 어? 켜졌네.”", focus: "동아리방 안쪽에서 깨어난 장비" },
     { label: "낯선 화면", speaker: "민지", line: "“T.TUMI? 예매 테스트 화면은 아닌데. 이걸 동아리에서 만들고 있었다고?”", focus: "개발 중인 비밀 프로젝트 틈이" },
     { label: "화면 속 목소리", speaker: "틈이", line: "“안녕, 민지. 놀랐지? 나는 틈이야. 아직 테스트 중인 보안 도우미.”", focus: "화면 안에서 자신을 소개하는 틈이" },
-    { label: "첫 번째 결함", speaker: "틈이", line: "“민지, 여기 봐. 예매자 정보가 전부 열려 있어. 이건… 생각보다 큰 문제야.”", focus: "첫 결함을 따라 시작되는 보안 수업" },
+    { label: "뜻밖의 대화", speaker: "민지", line: "“보안 도우미가 왜 동아리 서버 안에 숨어 있어? 그리고… 내 이름은 어떻게 알아?”", focus: "처음 마주한 틈이의 비밀" },
+    { label: "첫 번째 결함", speaker: "틈이", line: "“그건 나중에 설명할게. 지금은 이것부터 봐. 예매자 정보가 전부 열려 있어. 이건… 생각보다 큰 문제야.”", focus: "첫 결함을 따라 시작되는 보안 수업" },
   ],
   "threat-model": [
     { label: "벽면 지도", speaker: "민지", line: "“명단은 닫았는데… 어디로 빠져나갔는지는 아직 모르겠어.”", focus: "사건의 범위를 다시 보기" },

@@ -23,9 +23,9 @@ describe("story decision checkpoints", () => {
     }
   });
 
-  it("gives every episode a complete five-scene dialogue", () => {
+  it("gives every episode a complete dialogue", () => {
     for (const lesson of lessons) {
-      expect(storyDialogues[lesson.id], lesson.id).toHaveLength(5);
+      expect(storyDialogues[lesson.id].length, lesson.id).toBe(lesson.id === "security-basics" ? 8 : 5);
       expect(storyDialogues[lesson.id].every((scene) => scene.line.length > 10 && scene.speaker.length > 0), lesson.id).toBe(true);
     }
   });
@@ -33,6 +33,6 @@ describe("story decision checkpoints", () => {
   it("starts the first episode in-scene without a narrator", () => {
     expect(storyDialogues["security-basics"][0].speaker).toContain("민지");
     expect(storyDialogues["security-basics"][0].line).toContain("축제");
-    expect(storyDialogues["security-basics"][3].speaker).toContain("틈이");
+    expect(storyDialogues["security-basics"][5].speaker).toContain("틈이");
   });
 });

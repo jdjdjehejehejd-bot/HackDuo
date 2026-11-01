@@ -4,7 +4,6 @@ import BrandMark from "@/components/BrandMark";
 import type { Lesson } from "@/data/lessons";
 import { storyDialogues } from "@/data/storyDialogues";
 
-const sceneLabels = ["기록 속에서", "이상한 점", "현장 확인", "함께 정리하기", "다음 단서"] as const;
 const episodeArt: Record<string, string> = {
   "security-basics": "/anime/episode-01-security-basics.webp",
   "threat-model": "/anime/episode-02-threat-model.webp",
@@ -36,7 +35,7 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
   const [isPlaying, setIsPlaying] = useState(() => !prefersReducedMotion());
   const visualAct = Math.min(act, 2);
   const skipRef = useRef<HTMLButtonElement>(null);
-  const finished = act === sceneLabels.length - 1 && !isPlaying;
+  const finished = act === episodeDialogue.length - 1 && !isPlaying;
   const background = episodeArt[lesson.id] ?? episodeArt["security-basics"];
 
   useEffect(() => {
@@ -55,12 +54,13 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
 
   useEffect(() => {
     if (!isPlaying || reducedMotion) return;
+    const lineDuration = Math.min(10000, Math.max(4500, 2600 + episodeDialogue[act].line.length * 55));
     const timer = window.setTimeout(() => {
-      if (act >= sceneLabels.length - 1) setIsPlaying(false);
+      if (act >= episodeDialogue.length - 1) setIsPlaying(false);
       else setAct((current) => current + 1);
-    }, 2400);
+    }, lineDuration);
     return () => window.clearTimeout(timer);
-  }, [act, isPlaying, reducedMotion]);
+  }, [act, episodeDialogue, isPlaying, reducedMotion]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -72,7 +72,7 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
 
   function togglePlayback() {
     if (reducedMotion) {
-      setAct((current) => current >= sceneLabels.length - 1 ? 0 : current + 1);
+      setAct((current) => current >= episodeDialogue.length - 1 ? 0 : current + 1);
       return;
     }
     if (isPlaying) {
@@ -116,7 +116,7 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
         <img className={`anime-opening-character anime-opening-ttumi anime-opening-ttumi-${visualAct}`} src="/anime/ttumi-anime.webp" alt="" draggable={false} />
       </div>
 
-      <div className={`anime-opening-action-line anime-opening-action-line-${act}`}>
+      <div className="anime-opening-action-line anime-opening-action-line-visible">
         <span>{episodeDialogue[act].label}</span>
       </div>
 
@@ -138,7 +138,7 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
           <span className="anime-opening-hint">{reducedMotion ? "모션 감소 · 장면을 직접 넘겨 보세요" : isPlaying ? lesson.episode : finished ? "이야기가 이어질 준비가 됐어요" : "오프닝 재생을 조절할 수 있어요"}</span>
           <button className="anime-opening-play" onClick={togglePlayback} aria-pressed={isPlaying}>
             {reducedMotion ? <Play size={15} /> : isPlaying ? <Pause size={15} /> : finished ? <RotateCcw size={15} /> : <Play size={15} />}
-            {reducedMotion ? act === sceneLabels.length - 1 ? "처음부터" : "다음 장면" : isPlaying ? "일시정지" : finished ? "다시 보기" : "이어서 보기"}
+            {reducedMotion ? act === episodeDialogue.length - 1 ? "처음부터" : "다음 장면" : isPlaying ? "일시정지" : finished ? "다시 보기" : "이어서 보기"}
           </button>
           {finished && <button className="anime-opening-start" onClick={onStart}>수업 시작 <ArrowRight size={17} /></button>}
         </div>
