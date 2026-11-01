@@ -116,10 +116,9 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
         <img className={`anime-opening-character anime-opening-ttumi anime-opening-ttumi-${visualAct}`} src="/anime/ttumi-anime.webp" alt="" draggable={false} />
       </div>
 
-        <div className={`anime-opening-action-line anime-opening-action-line-${act}`}>
-          <span>{sceneLabels[act]}</span>
-          <strong>{episodeDialogue[act].focus}</strong>
-        </div>
+      <div className={`anime-opening-action-line anime-opening-action-line-${act}`}>
+        <span>{episodeDialogue[act].label}</span>
+      </div>
 
       <div className="anime-opening-subtitle" aria-live="polite" aria-atomic="true">
         <span>{episodeDialogue[act].speaker}</span>
@@ -128,10 +127,10 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
 
       <footer className="anime-opening-controls">
         <div className="anime-opening-progress" role="group" aria-label="오프닝 장면 선택">
-          {sceneLabels.map((label, index) => (
-            <button key={label} className={act === index ? "anime-opening-step-active" : ""} onClick={() => selectAct(index)} aria-label={`${index + 1}장면: ${label}`} aria-pressed={act === index}>
+          {episodeDialogue.map((scene, index) => (
+            <button key={scene.label} className={act === index ? "anime-opening-step-active" : ""} onClick={() => selectAct(index)} aria-label={`${index + 1}장면: ${scene.label}`} aria-pressed={act === index}>
               <span className="anime-opening-progress-track"><i /></span>
-              <span className="anime-opening-step-label">{label}</span>
+              <span className="anime-opening-step-label">{scene.label}</span>
             </button>
           ))}
         </div>

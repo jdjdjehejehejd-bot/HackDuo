@@ -779,7 +779,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid #cf77e9; outline-offs
 .anime-opening-subtitle > span { display: block; margin-bottom: 4px; color: #ffe1a5; font-size: 10px; font-weight: 950; letter-spacing: .09em; text-shadow: 0 2px 10px rgba(0,0,0,.8); }
 .anime-opening-subtitle > p { margin: 0; color: #fff; font-size: clamp(15px, 2.2vw, 23px); font-weight: 760; line-height: 1.56; text-shadow: 0 2px 12px rgba(0,0,0,.95), 0 1px 2px #000; }
 .anime-opening-controls { position: absolute; z-index: 9; right: max(18px, env(safe-area-inset-right)); bottom: max(11px, env(safe-area-inset-bottom)); left: max(18px, env(safe-area-inset-left)); width: min(1120px, calc(100% - 36px)); margin: 0 auto; }
-.anime-opening-progress { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(9px, 2vw, 24px); margin-bottom: 9px; }
+.anime-opening-progress { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(7px, 1.7vw, 20px); margin-bottom: 9px; }
 .anime-opening-progress button { display: flex; min-width: 0; flex-direction: column; gap: 5px; padding: 2px 0; border: 0; background: transparent; color: rgba(255,255,255,.56); font-size: 9px; font-weight: 800; text-align: left; text-shadow: 0 2px 7px #000; cursor: pointer; }
 .anime-opening-progress-track { display: block; width: 100%; height: 2px; overflow: hidden; background: rgba(255,255,255,.38); }
 .anime-opening-progress-track > i { display: block; width: 0; height: 100%; background: #fff0cf; box-shadow: 0 0 10px rgba(255,226,170,.75); }
