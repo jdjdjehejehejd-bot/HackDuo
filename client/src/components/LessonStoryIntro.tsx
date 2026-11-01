@@ -2,10 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Pause, Play, RotateCcw, Sparkles } from "lucide-react";
 import BrandMark from "@/components/BrandMark";
 import type { Lesson } from "@/data/lessons";
-import { lessonStoryboards } from "@/data/animatedStoryboards";
-import { storyArc } from "@/data/storyArc";
+import { storyDialogues } from "@/data/storyDialogues";
 
-const sceneLabels = ["지난 화의 단서", "새로운 신호", "현장 기록", "임무를 맡다", "다음 화의 떡밥"] as const;
+const sceneLabels = ["기록 속에서", "이상한 점", "현장 확인", "함께 정리하기", "다음 단서"] as const;
 const episodeArt: Record<string, string> = {
   "security-basics": "/anime/episode-01-security-basics.webp",
   "threat-model": "/anime/episode-02-threat-model.webp",
@@ -23,10 +22,6 @@ function prefersReducedMotion() {
   return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-function firstSentence(text: string) {
-  return text.match(/[^.!?]+[.!?]?/u)?.[0]?.trim() || text;
-}
-
 type LessonStoryIntroProps = {
   lesson: Lesson;
   lessonNumber: number;
@@ -35,10 +30,7 @@ type LessonStoryIntroProps = {
 };
 
 export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit }: LessonStoryIntroProps) {
-  const board = lessonStoryboards[lesson.id] ?? lessonStoryboards["security-basics"];
-  const firstSection = lesson.sections[0];
-  const arc = storyArc[lesson.id] ?? storyArc["security-basics"];
-  const lines = [arc.previous, firstSentence(lesson.hook), firstSentence(firstSection.scene), lesson.mission, arc.cliffhanger];
+  const episodeDialogue = storyDialogues[lesson.id] ?? storyDialogues["security-basics"];
   const [reducedMotion, setReducedMotion] = useState(prefersReducedMotion);
   const [act, setAct] = useState(0);
   const [isPlaying, setIsPlaying] = useState(() => !prefersReducedMotion());
@@ -126,12 +118,12 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
 
         <div className={`anime-opening-action-line anime-opening-action-line-${act}`}>
           <span>{sceneLabels[act]}</span>
-          <strong>{act === 0 ? arc.previous : act === 1 ? board.location : act === 2 ? firstSection.title : act === 3 ? lesson.mission : arc.cliffhanger}</strong>
+          <strong>{episodeDialogue[act].focus}</strong>
         </div>
 
       <div className="anime-opening-subtitle" aria-live="polite" aria-atomic="true">
-        <span>{act === 0 || act === 4 ? "내레이션 · 사건 기록" : act === 1 || act === 3 ? "민지 · 새빛대 학생" : "틈이 · 보안 도우미"}</span>
-        <p key={act}>“{lines[act]}”</p>
+        <span>{episodeDialogue[act].speaker}</span>
+        <p key={act}>{episodeDialogue[act].line}</p>
       </div>
 
       <footer className="anime-opening-controls">
