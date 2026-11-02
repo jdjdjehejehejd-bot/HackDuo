@@ -146,7 +146,7 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
       <button className="anime-opening-nav anime-opening-nav-next" onClick={advanceAct} aria-label={act === episodeDialogue.length - 1 ? "수업 시작" : "컷씬 다음 장면"}><ArrowRight size={23} /></button>
 
       <div className="anime-opening-action-line anime-opening-action-line-visible">
-        <span>{episodeDialogue[act].label}</span>
+        <span>새빛대학교 보안 동아리 · 틈이 프로젝트</span>
       </div>
 
       <div className="anime-opening-subtitle" aria-live="polite" aria-atomic="true">
