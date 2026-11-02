@@ -8,7 +8,8 @@ import Home from "./pages/Home";
 import LessonPage from "./pages/LessonPage";
 import LabPage from "./pages/LabPage";
 import MyPage from "./pages/MyPage";
-import TeacherDashboard from "./pages/TeacherDashboard";
+import TeacherDashboard from "@/pages/TeacherDashboard";
+import UnitPage from "@/pages/UnitPage";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -16,6 +17,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/lesson/:lessonId" component={LessonPage} />
+      <Route path="/unit/:unitId" component={UnitPage} />
       <Route path="/lab" component={LabPage} />
       <Route path="/my" component={MyPage} />
       <Route path="/teacher" component={TeacherDashboard} />
