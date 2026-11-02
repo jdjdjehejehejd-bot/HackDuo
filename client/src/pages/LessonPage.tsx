@@ -47,6 +47,7 @@ export default function LessonPage() {
   const [firstTryResults, setFirstTryResults] = useState<Record<number, boolean>>({});
   const [earnedXp, setEarnedXp] = useState(0);
   const [storyIntroDismissedFor, setStoryIntroDismissedFor] = useState<string | null>(null);
+  const [isFailed, setIsFailed] = useState(false);
 
   useEffect(() => {
     if (!lesson || lesson.id === enteredLessonId) return;
@@ -57,9 +58,19 @@ export default function LessonPage() {
     setShowFeedback(false);
     setFirstTryResults({});
     setEarnedXp(0);
+    setIsFailed(false);
   }, [enteredLessonId, lesson, progress.completedLessonIds]);
 
   if (!lesson) return <NotFound />;
+
+  const lessonQuestions = lesson.questions.length >= STARTING_HEARTS
+    ? lesson.questions.slice(0, STARTING_HEARTS)
+    : [...lesson.questions, ...lesson.sections.slice(0, STARTING_HEARTS - lesson.questions.length).map((section) => ({
+      question: `사건 속 “${section.title}”를 확인할 때 가장 먼저 기억할 내용은?`,
+      choices: [section.takeaway, "확인 없이 추측으로 결론 내리기", "허가 범위를 넘어 실제 시스템 시험하기"],
+      answerIndex: 0,
+      explanation: `${section.concept}: ${section.takeaway}`,
+    }))];
 
   const previousLesson = lessonIndex > 0 ? lessons[lessonIndex - 1] : undefined;
   const completedBefore = completedAtEntry;
@@ -67,12 +78,12 @@ export default function LessonPage() {
   const currentStreak = getCurrentStreak(progress.lastActiveDate, progress.streak);
   const level = getLevelNumber(progress.xp);
   const sectionCount = lesson.sections.length;
-  const questionCount = lesson.questions.length;
+  const questionCount = lessonQuestions.length;
   const totalSteps = sectionCount + questionCount;
   const isComplete = phase >= totalSteps;
   const isConcept = phase < sectionCount;
   const quizIndex = phase - sectionCount;
-  const currentQuestion = !isConcept && !isComplete ? lesson.questions[quizIndex] : undefined;
+  const currentQuestion = !isConcept && !isComplete ? lessonQuestions[quizIndex] : undefined;
   const quizIsCorrect = currentQuestion ? selectedAnswer === currentQuestion.answerIndex : false;
   const correctFirstTryCount = Object.values(firstTryResults).filter(Boolean).length;
   const hearts = Math.max(0, STARTING_HEARTS - Object.values(firstTryResults).filter((correct) => !correct).length);
@@ -113,6 +124,10 @@ export default function LessonPage() {
       return;
     }
     if (showFeedback) {
+      if (hearts === 0) {
+        setIsFailed(true);
+        return;
+      }
       if (quizIndex === questionCount - 1) {
         finishLesson();
         return;
@@ -142,6 +157,10 @@ export default function LessonPage() {
         onExit={() => setLocation(`/unit/${unitId}`)}
       />
     );
+  }
+
+  if (isFailed) {
+    return <div className="lesson-shell"><header className="lesson-topbar"><button className="back-button" onClick={() => setLocation(`/unit/${unitId}`)}><ArrowLeft size={18} /><span>단원</span></button><BrandMark /><span /></header><main className="locked-main lesson-failed-main"><div className="locked-medallion"><Heart size={30} /></div><span className="completion-eyebrow"><ShieldCheck size={14} /> 다시 확인하기</span><h1>목숨을 모두 사용했어요.</h1><p>괜찮아요. 문제의 해설을 다시 읽고, 같은 레슨에 도전할 수 있어요.</p><button className="button-primary completion-home" onClick={() => { setPhase(0); setSelectedAnswer(null); setShowFeedback(false); setFirstTryResults({}); setEarnedXp(0); setIsFailed(false); }}>레슨 다시 시작하기 <ArrowRight size={17} /></button><button className="plain-home-button" onClick={() => setLocation(`/unit/${unitId}`)}>단원으로 돌아가기</button></main></div>;
   }
 
   return (
