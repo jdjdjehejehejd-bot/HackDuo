@@ -589,8 +589,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid #cf77e9; outline-offs
 .cartoon-playing .cartoon-pose-1.cartoon-ttumi { animation: ttumi-explain 1.25s ease-in-out infinite; }
 .cartoon-playing .cartoon-pose-2.cartoon-minji { animation: minji-solve 1.2s ease-in-out infinite; }
 .cartoon-playing .cartoon-pose-2.cartoon-ttumi { animation: ttumi-celebrate 1s ease-in-out infinite; }
-.cartoon-beat-2 .cartoon-prop-card { z-index: 5; }
-.cartoon-dialogue { position: absolute; top: 46px; left: 50%; z-index: 8; width: min(490px, calc(100% - 36px)); padding: 8px 11px 9px; border: 2px solid var(--cartoon-shadow); border-radius: 16px 16px 16px 4px; background: #fff; box-shadow: 3px 4px 0 rgba(73,50,88,.14); transform: translateX(-50%); }
+.cartoon-dialogue { position: absolute; top: 46px; left: 50%; z-index: 6; width: min(490px, calc(100% - 36px)); padding: 8px 11px 9px; border: 2px solid var(--cartoon-shadow); border-radius: 16px 16px 16px 4px; background: #fff; box-shadow: 3px 4px 0 rgba(73,50,88,.14); transform: translateX(-50%); }
 .cartoon-dialogue::after { position: absolute; bottom: -10px; left: 27px; width: 15px; height: 15px; border-right: 2px solid var(--cartoon-shadow); border-bottom: 2px solid var(--cartoon-shadow); background: #fff; content: ""; transform: skewY(35deg) rotate(28deg); }
 .cartoon-dialogue-1 { border-color: var(--cartoon-accent); border-radius: 16px 16px 4px 16px; }
 .cartoon-dialogue-1::after { right: 27px; left: auto; border-color: var(--cartoon-accent); transform: skewY(-35deg) rotate(-28deg); }
@@ -616,8 +615,8 @@ button:focus-visible, a:focus-visible { outline: 3px solid #cf77e9; outline-offs
   .cartoon-minji { left: 1%; width: 93px; height: 145px; }
   .cartoon-ttumi { right: 1%; width: 74px; height: 86px; }
   .cartoon-beat-1 .cartoon-ttumi { right: 11%; bottom: 5px; }
-  .cartoon-beat-2 .cartoon-minji { left: 8%; bottom: -1px; transform: rotate(4deg); }
-  .cartoon-beat-2 .cartoon-ttumi { right: 13%; bottom: 12px; transform: rotate(8deg) scale(1.07); }
+  .cartoon-beat-2 .cartoon-minji { left: 8%; }
+  .cartoon-beat-2 .cartoon-ttumi { right: 13%; bottom: 12px; }
   .cartoon-set-window > span { max-width: 54%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .cartoon-controls { gap: 5px; }
   .cartoon-controls .animated-play-button { min-width: 89px; padding: 0 6px; font-size: 7px; }
