@@ -111,11 +111,12 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
   function handleOpeningClick(event: MouseEvent<HTMLDivElement>) {
     const target = event.target as HTMLElement;
     if (target.closest("button, header, footer")) return;
-    advanceAct();
+    if (event.clientX < window.innerWidth / 2) previousAct();
+    else advanceAct();
   }
 
   return (
-    <div className={`anime-opening anime-opening-act-${act}${isPlaying ? " anime-opening-playing" : ""}`} role="dialog" aria-modal="true" aria-labelledby="anime-opening-title" onClick={handleOpeningClick} title="화면을 클릭하면 다음 장면으로 넘어갑니다">
+    <div className={`anime-opening anime-opening-act-${act}${isPlaying ? " anime-opening-playing" : ""}`} role="dialog" aria-modal="true" aria-labelledby="anime-opening-title" onClick={handleOpeningClick} title="왼쪽 화면은 이전 장면, 오른쪽 화면은 다음 장면">
       <img className="anime-opening-background" src={background} alt="" aria-hidden="true" draggable={false} />
       <div className="anime-opening-color-grade" aria-hidden="true" />
       <div className="anime-opening-vignette" aria-hidden="true" />
@@ -142,9 +143,6 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
         <img className={`anime-opening-character anime-opening-ttumi anime-opening-ttumi-${visualAct}${ttumiVisible ? " anime-opening-ttumi-visible" : " anime-opening-ttumi-hidden"}${isFirstEpisode && act === 5 ? " anime-opening-ttumi-reveal" : ""}`} src="/anime/ttumi-anime.webp" alt="" draggable={false} />
       </div>
 
-      <button className="anime-opening-nav anime-opening-nav-prev" onClick={previousAct} disabled={act === 0} aria-label="컷씬 이전 장면"><ArrowLeft size={23} /></button>
-      <button className="anime-opening-nav anime-opening-nav-next" onClick={advanceAct} aria-label={act === episodeDialogue.length - 1 ? "수업 시작" : "컷씬 다음 장면"}><ArrowRight size={23} /></button>
-
       <div className="anime-opening-action-line anime-opening-action-line-visible">
         <span>새빛대학교 보안 동아리 · 틈이 프로젝트</span>
       </div>
@@ -164,7 +162,7 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
           ))}
         </div>
         <div className="anime-opening-control-row">
-          <span className="anime-opening-hint">{reducedMotion ? "모션 감소 · 화면을 클릭해 다음 장면" : isPlaying ? "화면 클릭 · 다음 장면" : finished ? "이야기가 이어질 준비가 됐어요" : "화면 클릭 또는 재생 버튼"}</span>
+          <span className="anime-opening-hint">{reducedMotion ? "왼쪽 클릭 · 이전 장면 / 오른쪽 클릭 · 다음 장면" : isPlaying ? "왼쪽 클릭 · 이전 / 오른쪽 클릭 · 다음" : finished ? "이야기가 이어질 준비가 됐어요" : "화면 양쪽을 클릭해 이동"}</span>
           <button className="anime-opening-play" onClick={togglePlayback} aria-pressed={isPlaying}>
             {reducedMotion ? <Play size={15} /> : isPlaying ? <Pause size={15} /> : finished ? <RotateCcw size={15} /> : <Play size={15} />}
             {reducedMotion ? act === episodeDialogue.length - 1 ? "처음부터" : "다음 장면" : isPlaying ? "일시정지" : finished ? "다시 보기" : "이어서 보기"}

@@ -6,6 +6,7 @@ export const LEVEL_XP = 50;
 export const LAB_XP_REWARD = 10;
 export const MAX_LEVEL = 20;
 export const DEVELOPER_UNLOCK_CODE = "TEUM-DEV-MAX";
+export type DeveloperStats = { xp: number; streak: number; completedLessonCount: number };
 
 export type ProgressSnapshot = {
   displayName: string;
@@ -201,6 +202,18 @@ export function useLearningProgress() {
     });
   }, []);
 
+  const adjustDeveloperStats = useCallback((stats: DeveloperStats, lessonIds: string[]) => {
+    setProgress((current) => {
+      if (!current.developerMode) return current;
+      const completedLessonCount = Math.max(0, Math.min(lessonIds.length, Math.floor(stats.completedLessonCount)));
+      return { ...current, xp: Math.max(0, Math.floor(stats.xp)), streak: Math.max(0, Math.floor(stats.streak)), completedLessonIds: lessonIds.slice(0, completedLessonCount) };
+    });
+  }, []);
+
+  const resetDeveloperStats = useCallback(() => {
+    setProgress((current) => current.developerMode ? { ...current, storyChoices: {}, lessonPerformance: {}, completedLessonIds: [], completedLabIds: [], xp: 0, streak: 0, lastActiveDate: null, dailyActivityDate: null, dailyLessonCount: 0 } : current);
+  }, []);
+
   const recordStoryChoice = useCallback((lessonId: string, choiceIndex: number) => {
     setProgress((current) => ({
       ...current,
@@ -208,7 +221,7 @@ export function useLearningProgress() {
     }));
   }, []);
 
-  return { progress, completeLesson, completeLab, setDisplayName, activateDeveloperMode, deactivateDeveloperMode, recordStoryChoice };
+  return { progress, completeLesson, completeLab, setDisplayName, activateDeveloperMode, deactivateDeveloperMode, adjustDeveloperStats, resetDeveloperStats, recordStoryChoice };
 }
 
 export function getCurrentStreak(lastActiveDate: string | null, streak: number) {

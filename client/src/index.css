@@ -901,6 +901,7 @@ button.quick-summary-item:hover { transform: translateY(-1px); border-color: #df
 .developer-tools button { min-height: 34px; padding: 0 12px; border: 0; border-radius: 8px; background: #8f3faf; color: #fff; font-size: 10px; font-weight: 850; cursor: pointer; }
 .developer-tools small { display: block; margin-top: 8px; color: #a99dac; line-height: 1.5; }
 .developer-tools strong { display: block; margin-top: 8px; color: #389b76; font-size: 10px; }
+.developer-stat-controls { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin-top:12px; padding-top:11px; border-top:1px solid #eee5f1; }.developer-stat-title { grid-column:1 / -1; color:#86668e; font-size:9px; font-weight:900; }.developer-stat-controls label { display:flex; flex-direction:column; gap:4px; color:#917d96; font-size:8px; font-weight:800; }.developer-stat-controls input { width:100%; min-height:30px; padding:0 7px; border:1px solid #dfd1e4; border-radius:7px; background:#fff; color:#4c3c55; font:inherit; font-size:10px; }.developer-stat-actions { display:flex; grid-column:1 / -1; gap:7px; }.developer-stat-actions button { flex:1; }.developer-stat-actions .developer-reset-button { border:1px solid #e6ccd8; background:#fff8fa; color:#ad6379; }
 
 .badge-collection { width: min(720px, calc(100% - 32px)); margin: 0 auto 34px; padding: 22px; border: 1px solid #eadff0; border-radius: 18px; background: rgba(255,255,255,.72); box-shadow: 0 8px 28px rgba(73,44,91,.05); }
 .badge-collection .notebook-list-heading { margin-bottom: 16px; }

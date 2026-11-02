@@ -21,11 +21,14 @@ import { getCurrentStreak, getLevelNumber, useLearningProgress } from "@/hooks/u
 
 export default function MyPage() {
   const [, setLocation] = useLocation();
-  const { progress, setDisplayName, activateDeveloperMode, deactivateDeveloperMode } = useLearningProgress();
+  const { progress, setDisplayName, activateDeveloperMode, deactivateDeveloperMode, adjustDeveloperStats, resetDeveloperStats } = useLearningProgress();
   const [isEditingName, setIsEditingName] = useState(false);
   const [draftName, setDraftName] = useState(progress.displayName);
   const [developerCode, setDeveloperCode] = useState("");
   const [developerMessage, setDeveloperMessage] = useState("");
+  const [developerXp, setDeveloperXp] = useState(String(progress.xp));
+  const [developerStreak, setDeveloperStreak] = useState(String(progress.streak));
+  const [developerCompleted, setDeveloperCompleted] = useState(String(progress.completedLessonIds.length));
   const completedIds = new Set(progress.completedLessonIds);
   const notes = getCompletedLessonNotes(progress.completedLessonIds);
   const nextLesson = lessons.find((lesson) => !completedIds.has(lesson.id));
@@ -127,6 +130,7 @@ export default function MyPage() {
           <div><input id="developer-code" value={developerCode} onChange={(event) => { setDeveloperCode(event.target.value); setDeveloperMessage(""); }} placeholder="개발자 코드 입력" autoComplete="off" /><button type="submit">적용</button></div>
           <small>개발·데모용 기능입니다. 활성화 전 진행도를 저장하며, 해제하면 잠금·XP·실습 상태가 활성화 전으로 복원됩니다.</small>
           {progress.developerMode && <button type="button" className="developer-disable-button" onClick={() => { deactivateDeveloperMode(); setDeveloperMessage("개발자 모드를 해제했어요. 활성화 전 잠금·XP·실습 상태로 복원했습니다."); }}>개발자 모드 해제 · 원래 상태로 복원</button>}
+          {progress.developerMode && <div className="developer-stat-controls"><span className="developer-stat-title">활성 스탯 조절</span><label>XP<input type="number" min="0" value={developerXp} onChange={(event) => setDeveloperXp(event.target.value)} /></label><label>연속 학습 일수<input type="number" min="0" value={developerStreak} onChange={(event) => setDeveloperStreak(event.target.value)} /></label><label>완료 레슨 수<input type="number" min="0" max={lessons.length} value={developerCompleted} onChange={(event) => setDeveloperCompleted(event.target.value)} /></label><div className="developer-stat-actions"><button type="button" onClick={() => { adjustDeveloperStats({ xp: Number(developerXp), streak: Number(developerStreak), completedLessonCount: Number(developerCompleted) }, lessons.map((lesson) => lesson.id)); setDeveloperMessage("개발자 스탯을 적용했어요."); }}>스탯 적용</button><button type="button" className="developer-reset-button" onClick={() => { resetDeveloperStats(); setDeveloperXp("0"); setDeveloperStreak("0"); setDeveloperCompleted("0"); setDeveloperMessage("개발자 스탯과 완료 상태를 초기화했어요."); }}>스탯 리셋</button></div></div>}
           {developerMessage && <strong role="status">{developerMessage}</strong>}
         </form>
       </details>
