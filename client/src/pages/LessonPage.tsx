@@ -23,6 +23,7 @@ import {
 import { useLocation, useRoute } from "wouter";
 import BrandMark from "@/components/BrandMark";
 import AnimatedLesson from "@/components/AnimatedLesson";
+import ExpandableText from "@/components/ExpandableText";
 import LessonStoryIntro from "@/components/LessonStoryIntro";
 import { lessons } from "@/data/lessons";
 import { storyDecisions } from "@/data/storyDecisions";
@@ -32,9 +33,10 @@ import NotFound from "@/pages/NotFound";
 const STARTING_HEARTS = 3;
 const TARGET_QUESTION_COUNT = 7;
 
-function getExplanationPreview(body: string) {
-  const sentences = body.split(/(?<=\.\s)/);
-  return { text: sentences.slice(0, 2).join("") + (sentences.length > 2 ? "…" : ""), hasMore: sentences.length > 2 };
+// 설명 본문에서 처음 두 문장만 접힌 상태의 도입부로 사용해요.
+function getBodyPreview(body: string) {
+  const sentences = body.split(/(?<=\.)\s+/);
+  return sentences.slice(0, 2).join(" ");
 }
 
 export default function LessonPage() {
@@ -54,8 +56,6 @@ export default function LessonPage() {
   const [earnedXp, setEarnedXp] = useState(0);
   const [storyIntroDismissedFor, setStoryIntroDismissedFor] = useState<string | null>(null);
   const [isFailed, setIsFailed] = useState(false);
-  const [expandedExplanation, setExpandedExplanation] = useState(false);
-  const [expandedLessonIntro, setExpandedLessonIntro] = useState(false);
 
   useEffect(() => {
     if (!lesson || lesson.id === enteredLessonId) return;
@@ -67,8 +67,6 @@ export default function LessonPage() {
     setFirstTryResults({});
     setEarnedXp(0);
     setIsFailed(false);
-    setExpandedExplanation(false);
-    setExpandedLessonIntro(false);
   }, [enteredLessonId, lesson, progress.completedLessonIds]);
 
   if (!lesson) return <NotFound />;
@@ -113,7 +111,6 @@ export default function LessonPage() {
     setPhase((current) => current - 1);
     setSelectedAnswer(null);
     setShowFeedback(false);
-    setExpandedExplanation(false);
   }
 
   function finishLesson() {
@@ -130,7 +127,6 @@ export default function LessonPage() {
   function advance() {
     if (isConcept) {
       setPhase((current) => current + 1);
-      setExpandedExplanation(false);
       return;
     }
     if (!showFeedback && selectedAnswer !== null && currentQuestion) {
@@ -185,7 +181,7 @@ export default function LessonPage() {
 
       {!isComplete ? (
         <main className="lesson-main">
-          <div className="lesson-intro"><span className="lesson-category"><ShieldCheck size={13} /> {lesson.category}<i>·</i> EP.{String(lessonIndex + 1).padStart(2, "0")}</span><span className="lesson-episode-label">CHAPTER 0{lesson.stageNumber} · {lesson.episode}</span><h1>{lesson.title}</h1><div className="lesson-story-lead"><p>{expandedLessonIntro ? `${lesson.hook} ${lesson.summary} 이 사건의 다음 장면에서 무엇이 정상이고 무엇을 지켜야 하는지 직접 찾아봐요.` : `${lesson.hook.split(" ").slice(0, 24).join(" ")}…`}</p><button className="description-toggle" type="button" onClick={() => setExpandedLessonIntro((current) => !current)}>{expandedLessonIntro ? "설명 접기" : "더보기"}</button></div><div className="lesson-mission"><Target size={15} /><span><small>이번 편의 임무</small><strong>{lesson.mission}</strong></span></div></div>
+          <div className="lesson-intro"><span className="lesson-category"><ShieldCheck size={13} /> {lesson.category}<i>·</i> EP.{String(lessonIndex + 1).padStart(2, "0")}</span><span className="lesson-episode-label">CHAPTER 0{lesson.stageNumber} · {lesson.episode}</span><h1>{lesson.title}</h1><div className="lesson-story-lead"><ExpandableText key={lesson.id} text={`${lesson.hook} ${lesson.summary} 이 사건의 다음 장면에서 무엇이 정상이고 무엇을 지켜야 하는지 직접 찾아봐요.`} preview={lesson.hook} lines={2} /></div><div className="lesson-mission"><Target size={15} /><span><small>이번 편의 임무</small><strong>{lesson.mission}</strong></span></div></div>
           <div className="lesson-meter"><button className="meter-back" onClick={goBack} aria-label="이전 단계"><ArrowLeft size={16} /></button><div className="meter-track" role="progressbar" aria-label="스토리 진행률" aria-valuemin={1} aria-valuemax={totalSteps} aria-valuenow={phase + 1} aria-valuetext={`${totalSteps}단계 중 ${phase + 1}단계`}>{Array.from({ length: totalSteps }, (_, index) => <i className={phase >= index ? "meter-filled" : ""} key={index} />)}</div><span className="meter-label">{phase + 1}<small> / {totalSteps}</small></span><span className={`heart-counter${hearts <= 2 ? " hearts-low" : ""}`} aria-label={`남은 하트 ${hearts}개`}>{Array.from({ length: STARTING_HEARTS }, (_, index) => <Heart key={index} size={14} fill={index < hearts ? "currentColor" : "none"} />)}</span></div>
 
           {isConcept ? (
@@ -195,7 +191,7 @@ export default function LessonPage() {
               {phase === 0 && storyDecision && <div className="story-decision"><div className="story-decision-heading"><Target size={15} /><div><small>첫 번째 판단 체크포인트</small><strong>{storyDecision.prompt}</strong></div></div><div className="story-decision-options" role="group" aria-label="스토리 판단 선택지">{storyDecision.choices.map((choice, index) => { const chosen = chosenDecision === index; const isBest = index === storyDecision.bestIndex; return <button key={choice} className={`story-decision-option${chosen ? " story-decision-selected" : ""}${chosen && isBest ? " story-decision-good" : ""}`} onClick={() => recordStoryChoice(lesson.id, index)} aria-pressed={chosen}><span>{String.fromCharCode(65 + index)}</span><strong>{choice}</strong></button>; })}</div>{chosenDecision !== undefined && <div className={`story-decision-outcome${chosenDecision === storyDecision.bestIndex ? " story-decision-outcome-good" : ""}`}><Sparkles size={14} /><span>{storyDecision.outcomes[chosenDecision]}</span></div>}</div>}
               <div className="case-evidence"><span>현장 기록</span><p>{lesson.sections[phase].scene}</p></div>
               <AnimatedLesson lessonId={lesson.id} sectionIndex={phase} section={lesson.sections[phase]} />
-              <h2>{lesson.sections[phase].title}</h2>{(() => { const explanation = getExplanationPreview(lesson.sections[phase].body); return <div className={`lesson-explanation${expandedExplanation ? " is-expanded" : ""}`}><p>{expandedExplanation ? lesson.sections[phase].body : explanation.text}</p>{explanation.hasMore && <button type="button" onClick={() => setExpandedExplanation((current) => !current)}>{expandedExplanation ? "설명 접기" : "설명 펼쳐보기"}</button>}</div>; })()}
+              <h2>{lesson.sections[phase].title}</h2><div className="lesson-explanation"><ExpandableText key={`${lesson.id}-${phase}`} text={lesson.sections[phase].body} preview={getBodyPreview(lesson.sections[phase].body)} lines={2} lessLabel="설명 접기" /></div>
               <div className="takeaway"><span><Sparkles size={14} /></span><div><small>기억해 두기</small><strong>{lesson.sections[phase].takeaway}</strong></div></div>
               <div className="lesson-learning-note"><BadgeCheck size={14} /><span>실제 일상에서 비슷한 장면을 만나면 떠올려 봐요.</span></div>
             </section>

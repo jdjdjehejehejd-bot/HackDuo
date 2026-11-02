@@ -61,6 +61,9 @@ export default function Home() {
   const currentUnitId = currentLesson.storyUnitId ?? `unit-${String(Math.floor(lessons.findIndex((lesson) => lesson.id === currentLesson.id) / 5) + 1).padStart(2, "0")}`;
   const currentUnit = storyUnits.find((unit) => unit.id === currentUnitId) ?? storyUnits[0];
   const currentUnitLessons = getUnitLessons(currentUnit.id);
+  // 홈에서는 모든 단원을 나열하지 않고, 지금 이어가는 단원부터 네 개만 미리 보여줘요.
+  const previewUnits = [currentUnit, ...storyUnits.filter((unit) => unit.id !== currentUnit.id)].slice(0, 4);
+  const doneUnitCount = storyUnits.filter((unit) => getUnitLessons(unit.id).every((lesson) => completedIds.has(lesson.id))).length;
   const hasLabAccess = level >= 3;
   const recommendedReview = getRecommendedReview(lessons, progress);
   const reviewPerformance = recommendedReview ? progress.lessonPerformance[recommendedReview.id] : undefined;
@@ -72,6 +75,7 @@ export default function Home() {
           <a className="brand-link" href="/" aria-label="TEUM 홈"><BrandMark /></a>
           <nav className="desktop-nav" aria-label="주 메뉴">
             <a className="nav-link nav-link-active" href="/">학습 피드</a>
+            <a className="nav-link" href="/units">단원 전체</a>
             <button className="nav-link" onClick={() => setLocation("/lab")}>안전 실습</button>
             <button className="nav-link" onClick={() => setLocation("/my")}>내 노트</button>
           </nav>
@@ -116,14 +120,32 @@ export default function Home() {
         <section className="story-section" aria-labelledby="story-title">
           <div className="section-heading story-heading"><div><span className="section-kicker">UNIT {String(currentUnit.number).padStart(2, "0")} · IN PROGRESS</span><h2 id="story-title">오늘의 보안 스토리</h2><p>{currentUnit.title} · {currentUnit.promise}</p></div><span className="story-count">{currentUnitLessons.filter((lesson) => completedIds.has(lesson.id)).length}<i>/</i>{currentUnitLessons.length}</span></div>
           <div className="today-unit-banner"><div><strong>{currentUnit.title}</strong><span>{currentUnit.arc}</span></div><button className="button-light" onClick={() => setLocation(`/unit/${currentUnit.id}`)}>단원 열기 <ArrowRight size={15} /></button></div>
-          <div className="story-strip today-story-strip" role="list" aria-label="현재 단원 레슨">
+          <div className="story-strip today-story-strip" role="group" aria-label="현재 단원 레슨">
             {currentUnitLessons.map((lesson, index) => {
               const completed = completedIds.has(lesson.id);
               const lessonIndex = lessons.findIndex((item) => item.id === lesson.id);
               const unlocked = completed || lessonIndex === 0 || completedIds.has(lessons[lessonIndex - 1]?.id);
               const current = !completed && lesson.id === nextLesson?.id;
               const Icon = lessonIcons[lesson.id as keyof typeof lessonIcons] ?? ShieldCheck;
-              return <button className="today-story-item" key={lesson.id} onClick={() => unlocked && setLocation(`/lesson/${lesson.id}`)} disabled={!unlocked} aria-label={`${lesson.shortTitle} ${completed ? "완료" : current ? "이어 학습" : !unlocked ? "잠김" : "시작 가능"}`} title={lesson.shortTitle}><span className={`today-story-index${completed ? " is-done" : current ? " is-current" : ""}`}>{completed ? <Check size={17} /> : <Icon size={19} />}</span><span className="today-story-number">{String(index + 1).padStart(2, "0")}</span></button>;
+              const state = completed ? "완료" : current ? "이어 학습" : !unlocked ? "잠김" : "시작 가능";
+              return (
+                <button
+                  className={`today-story-item${completed ? " is-done" : current ? " is-current" : ""}${!unlocked ? " is-locked" : ""}`}
+                  key={lesson.id}
+                  onClick={() => unlocked && setLocation(`/lesson/${lesson.id}`)}
+                  disabled={!unlocked}
+                  aria-label={`${lesson.shortTitle} ${state}`}
+                >
+                  <span className="today-story-top">
+                    <span className={`today-story-index${completed ? " is-done" : current ? " is-current" : ""}`}>{completed ? <Check size={15} /> : <Icon size={16} />}</span>
+                    <span className="today-story-number">EP.{String(index + 1).padStart(2, "0")}</span>
+                    {current && <span className="today-story-now">이어서</span>}
+                  </span>
+                  <strong className="today-story-title">{lesson.shortTitle}</strong>
+                  <small className="today-story-desc">{lesson.summary}</small>
+                  <span className="today-story-meta">{completed ? <><Check size={10} strokeWidth={3} /> 완료</> : unlocked ? <><Clock3 size={10} /> {lesson.duration}</> : <><LockKeyhole size={10} /> 잠김</>}</span>
+                </button>
+              );
             })}
           </div>
         </section>
@@ -140,8 +162,29 @@ export default function Home() {
             </section>
 
             <section className="unit-directory" aria-labelledby="unit-directory-title">
-              <div className="section-heading course-heading"><div><span className="section-kicker">THE STORY UNIVERSE · {storyUnits.length} UNITS</span><h2 id="unit-directory-title">단원별 보안 스토리</h2><p>큰 사건을 선택하면 그 단원의 레슨과 진행 상황을 볼 수 있어요.</p></div><span className="course-progress-pill"><BadgeCheck size={14} /> {completedCount}/{lessons.length}</span></div>
-              <div className="unit-directory-list">{storyUnits.map((unit) => { const unitLessons = getUnitLessons(unit.id); const done = unitLessons.filter((lesson) => completedIds.has(lesson.id)).length; const active = unit.id === currentUnit.id; return <button className={`unit-directory-row${active ? " is-active" : ""}`} key={unit.id} onClick={() => setLocation(`/unit/${unit.id}`)}><span className="unit-directory-number">{String(unit.number).padStart(2, "0")}</span><span className="unit-directory-copy"><strong>{unit.title}</strong><small>{unit.promise}</small></span><span className="unit-directory-progress">{done}/{unitLessons.length || 5}<small>레슨</small></span><ChevronRight size={17} /></button>; })}</div>
+              <div className="section-heading course-heading">
+                <div><span className="section-kicker">THE STORY UNIVERSE · {storyUnits.length} UNITS</span><h2 id="unit-directory-title">단원별 보안 스토리</h2><p>이어가는 단원부터 네 개만 먼저 보여드려요. 스무 개 전체는 단원 전체 페이지에 모아 두었어요.</p></div>
+                <span className="course-progress-pill"><BadgeCheck size={14} /> {completedCount}/{lessons.length}</span>
+              </div>
+              <div className="unit-directory-list">
+                {previewUnits.map((unit) => {
+                  const unitLessons = getUnitLessons(unit.id);
+                  const done = unitLessons.filter((lesson) => completedIds.has(lesson.id)).length;
+                  const active = unit.id === currentUnit.id;
+                  return (
+                    <button className={`unit-directory-row${active ? " is-active" : ""}`} key={unit.id} onClick={() => setLocation(`/unit/${unit.id}`)} aria-label={`UNIT ${unit.number} ${unit.title} ${done}/${unitLessons.length || 5} 레슨`}>
+                      <span className="unit-directory-number">{String(unit.number).padStart(2, "0")}</span>
+                      <span className="unit-directory-copy"><strong>{unit.title}</strong><small>{unit.promise}</small></span>
+                      <span className="unit-directory-progress">{done}/{unitLessons.length || 5}<small>레슨</small></span>
+                      <ChevronRight size={17} />
+                    </button>
+                  );
+                })}
+              </div>
+              <button className="unit-directory-more" onClick={() => setLocation("/units")}>
+                <span><strong>단원 전체 보기</strong><small>{storyUnits.length}개 단원 · {doneUnitCount}개 완료</small></span>
+                <ArrowRight size={16} />
+              </button>
             </section>
 
             <section className={`lab-teaser${hasLabAccess ? " lab-teaser-open" : ""}`} aria-labelledby="lab-teaser-title">
