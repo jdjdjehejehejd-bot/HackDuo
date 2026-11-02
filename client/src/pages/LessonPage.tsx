@@ -29,7 +29,8 @@ import { storyDecisions } from "@/data/storyDecisions";
 import { getCurrentStreak, getLevelNumber, useLearningProgress } from "@/hooks/useLearningProgress";
 import NotFound from "@/pages/NotFound";
 
-const STARTING_HEARTS = 5;
+const STARTING_HEARTS = 3;
+const TARGET_QUESTION_COUNT = 7;
 
 function getExplanationPreview(body: string) {
   const sentences = body.split(/(?<=\.\s)/);
@@ -70,14 +71,17 @@ export default function LessonPage() {
 
   if (!lesson) return <NotFound />;
 
-  const lessonQuestions = lesson.questions.length >= STARTING_HEARTS
-    ? lesson.questions.slice(0, STARTING_HEARTS)
-    : [...lesson.questions, ...lesson.sections.slice(0, STARTING_HEARTS - lesson.questions.length).map((section) => ({
+  const lessonQuestions = [...lesson.questions, ...lesson.sections.map((section) => ({
       question: `사건 속 “${section.title}”를 확인할 때 가장 먼저 기억할 내용은?`,
       choices: [section.takeaway, "확인 없이 추측으로 결론 내리기", "허가 범위를 넘어 실제 시스템 시험하기"],
       answerIndex: 0,
       explanation: `${section.concept}: ${section.takeaway}`,
-    }))];
+    })), {
+      question: `이번 편의 핵심 임무는 무엇일까요?`,
+      choices: [lesson.mission, "확인 없이 서둘러 결론 내리기", "허가 범위를 넘어 직접 시험하기"],
+      answerIndex: 0,
+      explanation: `이번 편에서는 ${lesson.mission}`,
+    }].slice(0, TARGET_QUESTION_COUNT);
 
   const previousLesson = lessonIndex > 0 ? lessons[lessonIndex - 1] : undefined;
   const completedBefore = completedAtEntry;
