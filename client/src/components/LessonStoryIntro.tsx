@@ -3,7 +3,6 @@ import { ArrowLeft, ArrowRight, Pause, Play, RotateCcw, Sparkles } from "lucide-
 import BrandMark from "@/components/BrandMark";
 import type { Lesson } from "@/data/lessons";
 import { storyDialogues } from "@/data/storyDialogues";
-import EpisodeOneVideoIntro from "@/components/EpisodeOneVideoIntro";
 
 const episodeArt: Record<string, string> = {
   "security-basics": "/anime/episode-01-security-basics.webp",
@@ -33,11 +32,9 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
   const episodeDialogue = storyDialogues[lesson.id] ?? storyDialogues["security-basics"];
   const [reducedMotion, setReducedMotion] = useState(prefersReducedMotion);
   const [act, setAct] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(() => !prefersReducedMotion() && lesson.id !== "security-basics");
-  const [videoFailed, setVideoFailed] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(() => !prefersReducedMotion());
   const visualAct = Math.min(act, 2);
   const isFirstEpisode = lesson.id === "security-basics";
-  const isVideoOpening = isFirstEpisode && !videoFailed && !reducedMotion;
   const ttumiVisible = !isFirstEpisode || act >= 5;
   const skipRef = useRef<HTMLButtonElement>(null);
   const finished = act === episodeDialogue.length - 1 && !isPlaying;
@@ -56,12 +53,6 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
       window.cancelAnimationFrame(focusFrame);
     };
   }, []);
-
-  useEffect(() => {
-    if (!videoFailed || reducedMotion) return;
-    setAct(0);
-    setIsPlaying(true);
-  }, [reducedMotion, videoFailed]);
 
   useEffect(() => {
     if (!isPlaying || reducedMotion) return;
@@ -92,13 +83,12 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onExit();
-      if (isVideoOpening) return;
       if (event.key === "ArrowLeft") previousAct();
       if (event.key === "ArrowRight") advanceAct();
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [onExit, act, episodeDialogue.length, isVideoOpening]);
+  }, [onExit, act, episodeDialogue.length]);
 
   function togglePlayback() {
     if (reducedMotion) {
@@ -122,18 +112,6 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
     const target = event.target as HTMLElement;
     if (target.closest("button, header, footer")) return;
     advanceAct();
-  }
-
-  if (isVideoOpening) {
-    return (
-      <EpisodeOneVideoIntro
-        lesson={lesson}
-        lessonNumber={lessonNumber}
-        onStart={onStart}
-        onExit={onExit}
-        onVideoError={() => setVideoFailed(true)}
-      />
-    );
   }
 
   return (
