@@ -1,3 +1,5 @@
+import { expandedStoryboards } from "./storyEpisodeSupport";
+
 export type CartoonStoryboard = {
   badge: string;
   location: string;
@@ -118,4 +120,5 @@ export const lessonStoryboards: Record<string, CartoonStoryboard> = {
       ["보안 보고서", "영향과 완화책을 정리해", "안전하게 수정·재확인"],
     ],
   },
+  ...expandedStoryboards,
 };

@@ -9,7 +9,7 @@ describe("TEUM beginner security curriculum", () => {
       "design",
       "response",
     ]);
-    expect(lessons.map((lesson) => lesson.id)).toEqual([
+    expect(lessons.slice(0, 10).map((lesson) => lesson.id)).toEqual([
       "security-basics",
       "threat-model",
       "account",
@@ -21,7 +21,7 @@ describe("TEUM beginner security curriculum", () => {
       "incident",
       "white-hat",
     ]);
-    expect(lessons.map((lesson) => lesson.stageId)).toEqual([
+    expect(lessons.slice(0, 10).map((lesson) => lesson.stageId)).toEqual([
       "foundations",
       "foundations",
       "design",
@@ -33,6 +33,7 @@ describe("TEUM beginner security curriculum", () => {
       "response",
       "response",
     ]);
+    expect(lessons).toHaveLength(100);
   });
 
   it("preserves IDs used by learners' existing local progress", () => {

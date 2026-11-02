@@ -168,11 +168,12 @@ export default function Home() {
               <div className="section-heading course-heading"><div><span className="section-kicker">THE STORY UNIVERSE · {storyUnits.length} UNITS · 5 EPISODES EACH</span><h2 id="season-roadmap-title">하나의 큰 사건, 다섯 번의 작은 단서</h2><p>각 UNIT은 하나의 보안 사건을 끝까지 따라가고, 레슨마다 사건의 다음 조각을 발견해요.</p></div><span className="course-progress-pill"><Sparkles size={14} /> 시즌 맵</span></div>
               <div className="season-roadmap-grid">
                 {storyUnits.map((unit) => {
-                  const active = unit.number <= 3;
+                  const unitLessons = lessons.filter((lesson) => lesson.storyUnitId === unit.id);
+                  const active = unit.number <= 2 || unitLessons.length > 0;
                   return <article className={`season-unit-card${active ? " season-unit-active" : ""}`} key={unit.id}>
                     <div className="season-unit-top"><span className="season-unit-number">{String(unit.number).padStart(2, "0")}</span><span className={`season-unit-state${active ? " season-unit-state-active" : ""}`}>{active ? "현재 경로" : "다음 시즌"}</span></div>
                     <h3>{unit.title}</h3><p>{unit.arc}</p><small>{unit.promise}</small>
-                    <div className="season-episode-list" aria-label={`${unit.title} 에피소드 5개`}>{unit.episodes.map((episode, index) => <span key={episode} className={active && index === 0 ? "season-episode-current" : ""}><i>{index + 1}</i>{episode}</span>)}</div>
+                    <div className="season-episode-list" aria-label={`${unit.title} 에피소드 5개`}>{unit.episodes.map((episode, index) => { const episodeLesson = unitLessons[index]; return episodeLesson ? <button key={episode} className={active && index === 0 ? "season-episode-current" : ""} onClick={() => setLocation(`/lesson/${episodeLesson.id}`)}><i>{index + 1}</i>{episode}</button> : <span key={episode} className={active && index === 0 ? "season-episode-current" : ""}><i>{index + 1}</i>{episode}</span>; })}</div>
                   </article>;
                 })}
               </div>

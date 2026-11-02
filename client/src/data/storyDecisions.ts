@@ -1,3 +1,5 @@
+import { expandedStoryDecisions } from "./storyEpisodeSupport";
+
 export type StoryDecision = {
   prompt: string;
   choices: string[];
@@ -16,4 +18,5 @@ export const storyDecisions: Record<string, StoryDecision> = {
   phishing: { prompt: "틈이를 아는 계정 확인 메일을 받았다면?", choices: ["메일 밖의 공식 앱에서 알림을 확인하고 로그인 기록을 보존한다", "메일 속 링크를 바로 누른다", "인증 코드를 답장으로 보낸다"], bestIndex: 0, outcomes: ["좋아요. 독립된 경로로 확인하면서 이미 발생한 흔적도 남겨야 해요.", "맞춤형 메일일수록 링크를 누르기 전에 멈춰야 해요.", "인증 코드는 공격자에게 문을 열어 줄 수 있어요."] },
   incident: { prompt: "민지가 틈이를 몰래 켠 사실까지 알게 됐다면?", choices: ["자신의 실수도 포함해 사실을 기록하고 정해진 담당자에게 보고한다", "불리한 로그를 삭제하고 기기를 초기화한다", "의심 파일을 모든 채팅방에 전달한다"], bestIndex: 0, outcomes: ["정확해요. 책임 있는 대응은 불편한 사실도 숨기지 않고 증거를 보존하는 데서 시작해요.", "증거가 사라지면 피해 범위와 원인을 확인할 수 없어요.", "자료를 퍼뜨리면 사건이 더 커질 수 있어요."] },
   "white-hat": { prompt: "마지막 점검을 시작하기 전 반드시 정할 것은?", choices: ["허가자·대상·시간·중단 조건을 문서로 확인한다", "일단 운영 서버까지 넓게 확인하고 나중에 설명한다", "친구의 시스템에서 먼저 시험한다"], bestIndex: 0, outcomes: ["화이트해커다운 선택이에요. 허가와 경계가 기술보다 먼저예요.", "범위 없는 점검은 무단 접근과 장애로 이어질 수 있어요.", "다른 사람의 시스템은 허가 없이 시험하면 안 돼요."] },
+  ...expandedStoryDecisions,
 };

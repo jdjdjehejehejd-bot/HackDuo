@@ -1,3 +1,5 @@
+import { expandedStoryDialogues } from "./storyEpisodeDialogues";
+
 export type StoryDialogue = { label: string; speaker: string; line: string; focus: string };
 
 // 새빛대학교 축제 보안 사건: 각 레슨은 하나의 단서를 발견하고 다음 사건으로 넘긴다.
@@ -84,4 +86,5 @@ export const storyDialogues: Record<string, StoryDialogue[]> = {
     { label: "멈출 줄 아는 사람", speaker: "틈이", line: "“내가 위험한 문을 열었어. 그렇다고 더 깊이 들어가서 증명하려 하면, 우리도 같은 실수를 하게 돼.”", focus: "윤리적 경계" },
     { label: "새빛대 축제", speaker: "민지의 독백", line: "“축제 당일, 예매 앱은 멈추지 않았고 명단도 새지 않았다. 사건은 끝났지만, 우리 이야기는 이제 시작이었다.”", focus: "다음 시즌의 약속" },
   ],
+  ...expandedStoryDialogues,
 };

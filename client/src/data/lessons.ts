@@ -1,3 +1,5 @@
+import { expandedStoryLessons } from "./storyEpisodeLessons";
+
 export type QuizQuestion = {
   question: string;
   choices: string[];
@@ -29,6 +31,8 @@ export type Lesson = {
   sections: LessonSection[];
   questions: QuizQuestion[];
   references: { label: string; url: string }[];
+  storyUnitId?: string;
+  episodeNumber?: number;
 };
 
 export const lessonStages = [
@@ -308,6 +312,7 @@ export const lessons: Lesson[] = [
     ],
     references: [{ label: "Stanford · Foundations of Information Security", url: STANFORD_INFOSEC }, { label: "IUP · Introduction to Cyber Security", url: IUP_CYBERSECURITY }],
   },
+  ...expandedStoryLessons,
 ];
 
 

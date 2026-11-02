@@ -1,3 +1,5 @@
+import { expandedStoryArcs } from "./storyEpisodeSupport";
+
 export type StoryArc = { previous: string; cliffhanger: string };
 
 export const storyArc: Record<string, StoryArc> = {
@@ -41,4 +43,5 @@ export const storyArc: Record<string, StoryArc> = {
     previous: "팀은 재호를 범인으로 몰지 않고, 허가서와 가짜 데이터로 테스트 서버를 점검하기로 했어요.",
     cliffhanger: "진짜 원인은 틈이의 테스트 모드가 운영 서버에 복사된 것이었어요. 축제 전에 마지막 안전 점검이 필요합니다.",
   },
+  ...expandedStoryArcs,
 };
