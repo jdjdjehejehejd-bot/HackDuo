@@ -55,6 +55,7 @@ export default function LessonPage() {
   const [storyIntroDismissedFor, setStoryIntroDismissedFor] = useState<string | null>(null);
   const [isFailed, setIsFailed] = useState(false);
   const [expandedExplanation, setExpandedExplanation] = useState(false);
+  const [expandedLessonIntro, setExpandedLessonIntro] = useState(false);
 
   useEffect(() => {
     if (!lesson || lesson.id === enteredLessonId) return;
@@ -67,6 +68,7 @@ export default function LessonPage() {
     setEarnedXp(0);
     setIsFailed(false);
     setExpandedExplanation(false);
+    setExpandedLessonIntro(false);
   }, [enteredLessonId, lesson, progress.completedLessonIds]);
 
   if (!lesson) return <NotFound />;
@@ -182,7 +184,7 @@ export default function LessonPage() {
 
       {!isComplete ? (
         <main className="lesson-main">
-          <div className="lesson-intro"><span className="lesson-category"><ShieldCheck size={13} /> {lesson.category}<i>·</i> EP.{String(lessonIndex + 1).padStart(2, "0")}</span><span className="lesson-episode-label">CHAPTER 0{lesson.stageNumber} · {lesson.episode}</span><h1>{lesson.title}</h1><p className="lesson-story-lead">{lesson.hook} {lesson.summary} 이 사건의 다음 장면에서 무엇이 정상이고 무엇을 지켜야 하는지 직접 찾아봐요.</p><div className="lesson-mission"><Target size={15} /><span><small>이번 편의 임무</small><strong>{lesson.mission}</strong></span></div></div>
+          <div className="lesson-intro"><span className="lesson-category"><ShieldCheck size={13} /> {lesson.category}<i>·</i> EP.{String(lessonIndex + 1).padStart(2, "0")}</span><span className="lesson-episode-label">CHAPTER 0{lesson.stageNumber} · {lesson.episode}</span><h1>{lesson.title}</h1><div className="lesson-story-lead"><p>{expandedLessonIntro ? `${lesson.hook} ${lesson.summary} 이 사건의 다음 장면에서 무엇이 정상이고 무엇을 지켜야 하는지 직접 찾아봐요.` : `${lesson.hook.split(" ").slice(0, 24).join(" ")}…`}</p><button className="description-toggle" type="button" onClick={() => setExpandedLessonIntro((current) => !current)}>{expandedLessonIntro ? "설명 접기" : "더보기"}</button></div><div className="lesson-mission"><Target size={15} /><span><small>이번 편의 임무</small><strong>{lesson.mission}</strong></span></div></div>
           <div className="lesson-meter"><button className="meter-back" onClick={goBack} aria-label="이전 단계"><ArrowLeft size={16} /></button><div className="meter-track" role="progressbar" aria-label="스토리 진행률" aria-valuemin={1} aria-valuemax={totalSteps} aria-valuenow={phase + 1} aria-valuetext={`${totalSteps}단계 중 ${phase + 1}단계`}>{Array.from({ length: totalSteps }, (_, index) => <i className={phase >= index ? "meter-filled" : ""} key={index} />)}</div><span className="meter-label">{phase + 1}<small> / {totalSteps}</small></span><span className={`heart-counter${hearts <= 2 ? " hearts-low" : ""}`} aria-label={`남은 하트 ${hearts}개`}>{Array.from({ length: STARTING_HEARTS }, (_, index) => <Heart key={index} size={14} fill={index < hearts ? "currentColor" : "none"} />)}</span></div>
 
           {isConcept ? (

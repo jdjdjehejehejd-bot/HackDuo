@@ -123,7 +123,7 @@ export default function Home() {
               const unlocked = completed || lessonIndex === 0 || completedIds.has(lessons[lessonIndex - 1]?.id);
               const current = !completed && lesson.id === nextLesson?.id;
               const Icon = lessonIcons[lesson.id as keyof typeof lessonIcons] ?? ShieldCheck;
-              return <button className="today-story-item" key={lesson.id} onClick={() => unlocked && setLocation(`/lesson/${lesson.id}`)} disabled={!unlocked} aria-label={`${lesson.shortTitle} ${completed ? "완료" : current ? "이어 학습" : !unlocked ? "잠김" : "시작 가능"}`}><span className={`today-story-index${completed ? " is-done" : current ? " is-current" : ""}`}>{completed ? <Check size={13} /> : <Icon size={16} />}</span><span><small>EP. {String(index + 1).padStart(2, "0")}</small><strong>{lesson.shortTitle}</strong></span><ChevronRight size={15} /></button>;
+              return <button className="today-story-item" key={lesson.id} onClick={() => unlocked && setLocation(`/lesson/${lesson.id}`)} disabled={!unlocked} aria-label={`${lesson.shortTitle} ${completed ? "완료" : current ? "이어 학습" : !unlocked ? "잠김" : "시작 가능"}`} title={lesson.shortTitle}><span className={`today-story-index${completed ? " is-done" : current ? " is-current" : ""}`}>{completed ? <Check size={17} /> : <Icon size={19} />}</span><span className="today-story-number">{String(index + 1).padStart(2, "0")}</span></button>;
             })}
           </div>
         </section>
