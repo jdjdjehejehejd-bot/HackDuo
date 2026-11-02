@@ -122,7 +122,7 @@ export default function LessonPage() {
     const reward = completedBefore
       ? 0
       : Math.round((lesson.xp * correctFirstTryCount) / questionCount) + perfectBonus;
-    completeLesson(lesson.id, reward, { correct: correctFirstTryCount, total: questionCount });
+    completeLesson(lesson.id, reward, { correct: correctFirstTryCount, total: questionCount, wrongQuestionIndexes: Object.entries(firstTryResults).filter(([, correct]) => !correct).map(([index]) => Number(index)) });
     setEarnedXp(reward);
     setPhase(totalSteps);
   }

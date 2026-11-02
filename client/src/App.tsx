@@ -10,6 +10,7 @@ import LabPage from "./pages/LabPage";
 import MyPage from "./pages/MyPage";
 import TeacherDashboard from "@/pages/TeacherDashboard";
 import UnitPage from "@/pages/UnitPage";
+import ReplayPage from "@/pages/ReplayPage";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -18,6 +19,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/lesson/:lessonId" component={LessonPage} />
       <Route path="/unit/:unitId" component={UnitPage} />
+      <Route path="/replay" component={ReplayPage} />
       <Route path="/lab" component={LabPage} />
       <Route path="/my" component={MyPage} />
       <Route path="/teacher" component={TeacherDashboard} />

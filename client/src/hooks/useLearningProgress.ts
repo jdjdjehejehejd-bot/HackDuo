@@ -12,6 +12,7 @@ export type ProgressSnapshot = {
   displayName: string;
   storyChoices: Record<string, number>;
   lessonPerformance: Record<string, { attempts: number; correct: number; total: number }>;
+  questionMistakes: Record<string, number[]>;
   completedLessonIds: string[];
   completedLabIds: string[];
   xp: number;
@@ -33,6 +34,7 @@ const EMPTY_PROGRESS: LearningProgress = {
   developerModeSnapshot: null,
   storyChoices: {},
   lessonPerformance: {},
+  questionMistakes: {},
   completedLessonIds: [],
   completedLabIds: [],
   xp: 0,
@@ -96,6 +98,9 @@ function readProgress(): LearningProgress {
           return [[id, { attempts: Math.max(0, Number(item.attempts)), correct: Math.max(0, Number(item.correct)), total: Math.max(1, Number(item.total)) }]];
         }))
         : {},
+      questionMistakes: saved.questionMistakes && typeof saved.questionMistakes === "object"
+        ? Object.fromEntries(Object.entries(saved.questionMistakes).flatMap(([id, indexes]) => Array.isArray(indexes) ? [[id, indexes.filter((index): index is number => Number.isInteger(index) && index >= 0)]] : []))
+        : {},
       completedLessonIds: Array.isArray(saved.completedLessonIds)
         ? saved.completedLessonIds.filter((id): id is string => typeof id === "string")
         : [],
@@ -132,7 +137,7 @@ export function useLearningProgress() {
     }
   }, [progress]);
 
-  const completeLesson = useCallback((lessonId: string, xpReward: number, performance?: { correct: number; total: number }) => {
+  const completeLesson = useCallback((lessonId: string, xpReward: number, performance?: { correct: number; total: number; wrongQuestionIndexes?: number[] }) => {
     setProgress((current) => {
       const isNewLesson = !current.completedLessonIds.includes(lessonId);
       const previousPerformance = current.lessonPerformance[lessonId] ?? { attempts: 0, correct: 0, total: performance?.total ?? 1 };
@@ -141,7 +146,7 @@ export function useLearningProgress() {
         correct: previousPerformance.correct + Math.max(0, Math.min(performance.correct, performance.total)),
         total: performance.total,
       } : previousPerformance;
-      const withPerformance = { ...current, ...activityStats(current, dateKey(new Date())), lessonPerformance: { ...current.lessonPerformance, [lessonId]: nextPerformance } };
+      const withPerformance = { ...current, ...activityStats(current, dateKey(new Date())), lessonPerformance: { ...current.lessonPerformance, [lessonId]: nextPerformance }, questionMistakes: { ...current.questionMistakes, [lessonId]: Array.from(new Set([...(current.questionMistakes[lessonId] ?? []), ...(performance?.wrongQuestionIndexes ?? [])])) } };
       if (!isNewLesson) return withPerformance;
       return {
         ...withPerformance,
@@ -179,6 +184,7 @@ export function useLearningProgress() {
         displayName: current.displayName,
         storyChoices: current.storyChoices,
         lessonPerformance: current.lessonPerformance,
+        questionMistakes: current.questionMistakes,
         completedLessonIds: current.completedLessonIds,
         completedLabIds: current.completedLabIds,
         xp: current.xp,
@@ -211,7 +217,7 @@ export function useLearningProgress() {
   }, []);
 
   const resetDeveloperStats = useCallback(() => {
-    setProgress((current) => current.developerMode ? { ...current, storyChoices: {}, lessonPerformance: {}, completedLessonIds: [], completedLabIds: [], xp: 0, streak: 0, lastActiveDate: null, dailyActivityDate: null, dailyLessonCount: 0 } : current);
+    setProgress((current) => current.developerMode ? { ...current, storyChoices: {}, lessonPerformance: {}, questionMistakes: {}, completedLessonIds: [], completedLabIds: [], xp: 0, streak: 0, lastActiveDate: null, dailyActivityDate: null, dailyLessonCount: 0 } : current);
   }, []);
 
   const recordStoryChoice = useCallback((lessonId: string, choiceIndex: number) => {
