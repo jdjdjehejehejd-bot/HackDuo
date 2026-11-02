@@ -227,7 +227,11 @@ export function useLearningProgress() {
     }));
   }, []);
 
-  return { progress, completeLesson, completeLab, setDisplayName, activateDeveloperMode, deactivateDeveloperMode, adjustDeveloperStats, resetDeveloperStats, recordStoryChoice };
+  const recordQuestionMistakes = useCallback((lessonId: string, indexes: number[]) => {
+    setProgress((current) => ({ ...current, questionMistakes: { ...current.questionMistakes, [lessonId]: Array.from(new Set([...(current.questionMistakes[lessonId] ?? []), ...indexes])) } }));
+  }, []);
+
+  return { progress, completeLesson, completeLab, setDisplayName, activateDeveloperMode, deactivateDeveloperMode, adjustDeveloperStats, resetDeveloperStats, recordStoryChoice, recordQuestionMistakes };
 }
 
 export function getCurrentStreak(lastActiveDate: string | null, streak: number) {

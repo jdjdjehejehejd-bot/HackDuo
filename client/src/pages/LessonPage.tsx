@@ -42,7 +42,7 @@ export default function LessonPage() {
   const [, setLocation] = useLocation();
   const lessonIndex = match ? lessons.findIndex((item) => item.id === params.lessonId) : -1;
   const lesson = lessonIndex >= 0 ? lessons[lessonIndex] : undefined;
-  const { progress, completeLesson, recordStoryChoice } = useLearningProgress();
+  const { progress, completeLesson, recordStoryChoice, recordQuestionMistakes } = useLearningProgress();
   const [enteredLessonId, setEnteredLessonId] = useState(lesson?.id);
   const [completedAtEntry, setCompletedAtEntry] = useState(() =>
     lesson ? progress.completedLessonIds.includes(lesson.id) : false,
@@ -140,6 +140,7 @@ export default function LessonPage() {
     }
     if (showFeedback) {
       if (hearts === 0) {
+        if (lesson) recordQuestionMistakes(lesson.id, Object.entries(firstTryResults).filter(([, correct]) => !correct).map(([index]) => Number(index)));
         setIsFailed(true);
         return;
       }
