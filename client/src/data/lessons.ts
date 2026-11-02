@@ -32,9 +32,9 @@ export type Lesson = {
 };
 
 export const lessonStages = [
-  { id: "foundations", number: 1, title: "무엇을 지킬까?", subtitle: "보안의 목표와 위험을 읽는 법" },
-  { id: "design", number: 2, title: "어떻게 설계할까?", subtitle: "아이덴티티부터 시스템 방어까지" },
-  { id: "response", number: 3, title: "어떻게 지키고 대응할까?", subtitle: "데이터, 사람, 사고 대응" },
+  { id: "foundations", number: 1, unitLabel: "UNIT 01", title: "무엇을 지킬까?", subtitle: "보안의 목표와 위험을 읽는 법", objective: "축제에서 벌어진 첫 사건의 범위와 위험을 읽어요." },
+  { id: "design", number: 2, unitLabel: "UNIT 02", title: "어떻게 설계할까?", subtitle: "아이덴티티부터 시스템 방어까지", objective: "틈이와 함께 안전한 서비스의 구조를 다시 세워요." },
+  { id: "response", number: 3, unitLabel: "UNIT 03", title: "어떻게 지키고 대응할까?", subtitle: "데이터, 사람, 사고 대응", objective: "사건이 커지기 전에 지키고, 발생 후에는 책임 있게 대응해요." },
 ] as const;
 
 const MIT_COURSE = "https://ocw.mit.edu/courses/6-858-computer-systems-security-fall-2014/";

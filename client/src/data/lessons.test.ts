@@ -40,6 +40,15 @@ describe("TEUM beginner security curriculum", () => {
     expect(lessons.map((lesson) => lesson.id)).toEqual(expect.arrayContaining(previousIds));
   });
 
+  it("organizes the curriculum into broad units with multiple connected lessons", () => {
+    for (const stage of lessonStages) {
+      const stageLessons = lessons.filter((lesson) => lesson.stageId === stage.id);
+      expect(stage.unitLabel, stage.id).toMatch(/^UNIT 0[1-3]$/);
+      expect(stage.objective.length, stage.id).toBeGreaterThan(15);
+      expect(stageLessons.length, stage.id).toBeGreaterThanOrEqual(2);
+    }
+  });
+
   it("provides a recurring cartoon story and three acted beats for every lesson concept", () => {
     expect(Object.keys(lessonStoryboards).sort()).toEqual(lessons.map((lesson) => lesson.id).sort());
 

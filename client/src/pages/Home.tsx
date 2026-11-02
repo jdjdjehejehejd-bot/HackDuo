@@ -120,14 +120,14 @@ export default function Home() {
             </section>
 
             <section className="course-section" aria-labelledby="course-title">
-              <div className="section-heading course-heading"><div><span className="section-kicker">THE FIELD GUIDE · 3 CHAPTERS</span><h2 id="course-title">보안의 기초부터 차근차근</h2><p>대학 정보보안의 기초를 세 단계 이야기로 쉽게 배워요.</p></div><span className="course-progress-pill"><BadgeCheck size={14} /> {completedCount}/{lessons.length}</span></div>
+              <div className="section-heading course-heading"><div><span className="section-kicker">THE FIELD GUIDE · 3 UNITS · {lessons.length} EPISODES</span><h2 id="course-title">큰 주제 안에서 사건을 따라가요</h2><p>하나의 UNIT을 여러 레슨으로 나눠, 개념이 다음 사건으로 이어지게 배워요.</p></div><span className="course-progress-pill"><BadgeCheck size={14} /> {completedCount}/{lessons.length}</span></div>
               <div className="curriculum-stages">
                 {lessonStages.map((stage) => {
                   const stageLessons = lessons.filter((lesson) => lesson.stageId === stage.id);
                   const stageCompleted = stageLessons.filter((lesson) => completedIds.has(lesson.id)).length;
                   return (
                     <section className={`curriculum-stage curriculum-stage-${stage.number}`} key={stage.id} aria-labelledby={`stage-title-${stage.number}`}>
-                      <header className="curriculum-stage-heading"><span className="stage-number">0{stage.number}</span><div><span className="stage-kicker">CHAPTER 0{stage.number} · {stageCompleted}/{stageLessons.length} 완료</span><h3 id={`stage-title-${stage.number}`}>{stage.title}</h3><p>{stage.subtitle}</p></div></header>
+                      <header className="curriculum-stage-heading"><span className="stage-number">0{stage.number}</span><div><span className="stage-kicker">{stage.unitLabel} · {stageCompleted}/{stageLessons.length} 레슨 완료</span><h3 id={`stage-title-${stage.number}`}>{stage.title}</h3><p>{stage.subtitle} · {stage.objective}</p></div></header>
                       <div className="course-grid">
                         {stageLessons.map((lesson) => {
                           const index = lessons.findIndex((item) => item.id === lesson.id);
