@@ -37,20 +37,20 @@ function makeEpisode(unit: (typeof storyUnits)[number], episodeNumber: number): 
   const stageNumber = unit.number <= 7 ? 2 : unit.number <= 15 ? 3 : 4;
   const stageId = stageNumber === 2 ? "design" : stageNumber === 3 ? "response" : "mastery";
   const scenes = [
-    `${episodeTitle} 현장에서 민지와 틈이는 ${focus.concept}와 관련된 작은 이상 징후를 발견했어.`,
-    `팀은 ${previous}에서 남은 기록과 이번 단서를 나란히 놓고 확인해.`,
-    `결정할 시간이야. 실제 시스템에 손대지 않고 ${focus.action.toLowerCase()}`,
+    `${episodeTitle} 현장에서 민지와 틈이는 ${focus.concept}와 얽힌 낯선 흔적을 발견했어. 무엇이 평소와 다른 걸까?`,
+    `팀은 ${previous}에서 남은 기록과 새 단서를 나란히 놓고, 실제로 확인된 사실부터 맞춰 봐.`,
+    `이제 다음 행동을 정할 차례야. 실제 시스템에는 손대지 말고, ${focus.action.toLowerCase()}`,
   ];
   const titles = ["현장의 단서", "기록을 맞춰 보기", "안전한 다음 행동"];
   const bodies = [
-    `${focus.concept}은 어려운 도구의 이름보다 무엇을 지키고 어떤 경계를 믿을지 정하는 데서 시작해. 사건을 만났다면 먼저 자산, 사용자, 정상적인 흐름을 적어 봐. 그래야 우연한 오류와 중요한 위험을 구분할 수 있어.`,
-    `한 조각의 기록만으로 사람이나 원인을 단정하지 않아. 시간, 대상, 권한, 변경 내용처럼 확인 가능한 사실을 분리하고 공식 기록과 비교해. 모르는 부분은 모른다고 남기는 것이 안전한 분석의 시작이야.`,
-    `학습 환경에서는 합성 데이터와 가상 사례만 사용하고, 실제 계정·서비스·네트워크를 시험하지 않아. 담당자에게 알리고, 허가된 범위 안에서 최소한의 확인과 방어 조치를 선택해야 해.`,
+    `현장에서 낯선 흔적을 봤다고 곧장 결론 내릴 수는 없어. ${focus.concept}을 이해하려면 먼저 무엇을 지키는지, 누가 어디까지 접근하는지 살펴봐야 해. 자산과 사용자, 평소의 흐름을 적어 두면 우연한 오류와 실제 위험을 가려내기 쉬워져.`,
+    `한 줄의 기록만 보고 누가 원인인지 단정하면 안 돼. 시간과 대상, 권한, 바뀐 내용을 나눠 살펴보고 공식 기록과 대조해 보자. 아직 모르는 부분은 그대로 남겨 두는 게 안전한 분석의 출발점이야.`,
+    `실제 계정이나 서비스, 네트워크를 시험하는 건 안 돼. 학습 환경의 합성 데이터와 가상 사례만 다루고, 담당자에게 알린 뒤 허가된 범위 안에서 필요한 만큼만 확인하자. 목표는 침투가 아니라 피해를 막는 방어야.`,
   ];
   const takeaways = [
-    `${focus.concept}을 판단하기 전에 지킬 자산과 정상 흐름을 먼저 적어.`,
-    "사실·추측·확인할 질문을 나눠 기록해.",
-    "안전한 학습은 허가된 가상 환경과 방어적 행동에서 시작해.",
+    `무엇을 지키는지, 평소 흐름은 어떤지 먼저 살펴봐야 ${focus.concept}을 제대로 판단할 수 있어.`,
+    "확인된 사실과 추측, 더 확인할 질문을 나눠 적어 두자.",
+    "허가된 가상 환경에서 방어에 집중하는 게 안전한 학습의 출발점이야.",
   ];
   const correct = [
     "자산과 정상 흐름을 먼저 확인하고 공식 기록을 비교한다",
@@ -70,9 +70,9 @@ function makeEpisode(unit: (typeof storyUnits)[number], episodeNumber: number): 
     episode: `새빛대학교 축제 · UNIT ${String(unit.number).padStart(2, "0")} · ${episodeNumber}화`,
     duration: "6분",
     xp: 30 + (unit.number > 15 ? 5 : 0),
-    summary: `${unit.arc} 이번 편에서는 ${focus.concept}의 첫 판단을 연습해.`,
+    summary: `${unit.arc} 이번 편에서는 현장의 단서를 따라가며 ${focus.concept}을 어떻게 판단할지 살펴봐.`,
     mission: focus.action,
-    hook: `${unit.arc} ${episodeTitle}의 현장에서 민지와 틈이는 ${focus.concept}에 관한 단서를 발견했어. 이전 기록을 확인하고, 실제 피해를 만들지 않는 안전한 다음 행동을 골라야 해.`,
+    hook: `${unit.arc} ${episodeTitle} 현장에서 민지와 틈이는 ${focus.concept}에 관한 낯선 단서를 발견했어. 이전 기록과 대조해 사실을 가려내고, 실제 피해 없이 할 수 있는 다음 행동을 찾아보자.`,
     sections: sectionKinds.map((kind, index) => ({ title: `${kind}: ${titles[index]}`, scene: scenes[index], concept: focus.concept, body: bodies[index], takeaway: takeaways[index] })),
     questions: [
       { question: `${episodeTitle}에서 가장 먼저 확인할 것은 뭘까?`, choices: [correct[0], "감으로 의심되는 사람부터 공개한다", "도구를 실행하고 결과를 나중에 해석한다"], answerIndex: 0, explanation: "자산과 정상 흐름을 먼저 알아야 무엇이 이상한지 안전하게 구분할 수 있어." },
