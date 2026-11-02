@@ -124,7 +124,7 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
       <div className="anime-opening-grain" aria-hidden="true" />
 
       <header className="anime-opening-header">
-        <button className="anime-opening-exit" onClick={onExit} aria-label="학습 피드로 돌아가기"><ArrowLeft size={16} /><span>피드</span></button>
+        <button className="anime-opening-exit" onClick={onExit} aria-label="현재 단원으로 돌아가기"><ArrowLeft size={16} /><span>단원</span></button>
         <div className="anime-opening-brand"><BrandMark compact /><span>TEUM · ORIGINAL SERIES</span></div>
         <button ref={skipRef} className="anime-opening-skip" onClick={onStart}>건너뛰기 <ArrowRight size={14} /></button>
       </header>

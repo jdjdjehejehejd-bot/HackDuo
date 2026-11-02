@@ -79,6 +79,7 @@ export default function LessonPage() {
   const nextLesson = lessons.find((item) => !progress.completedLessonIds.includes(item.id));
   const storyDecision = storyDecisions[lesson.id];
   const chosenDecision = progress.storyChoices[lesson.id];
+  const unitId = lesson.storyUnitId ?? `unit-${String(Math.floor(lessonIndex / 5) + 1).padStart(2, "0")}`;
 
   function goBack() {
     if (phase === 0) {
@@ -138,7 +139,7 @@ export default function LessonPage() {
         lesson={lesson}
         lessonNumber={lessonIndex + 1}
         onStart={() => setStoryIntroDismissedFor(lesson.id)}
-        onExit={() => setLocation("/")}
+        onExit={() => setLocation(`/unit/${unitId}`)}
       />
     );
   }
