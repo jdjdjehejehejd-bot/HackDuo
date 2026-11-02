@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { badges } from "./badges";
+import { LAB_SIMULATION_IDS } from "./labScenarios";
 import type { LearningProgress } from "@/hooks/useLearningProgress";
 
 const emptyProgress: LearningProgress = {
@@ -31,7 +32,8 @@ describe("achievement badges", () => {
 
   it("awards safe practice when every lab is complete", () => {
     const badge = badges.find((item) => item.id === "safe-practice");
-    expect(badge?.isEarned({ ...emptyProgress, completedLabIds: ["mail-room", "web-check"] }, 10, 3)).toBe(false);
-    expect(badge?.isEarned({ ...emptyProgress, completedLabIds: ["mail-room", "web-check", "access-audit"] }, 10, 3)).toBe(true);
+    const allButOne = LAB_SIMULATION_IDS.slice(0, -1);
+    expect(badge?.isEarned({ ...emptyProgress, completedLabIds: allButOne }, 10, LAB_SIMULATION_IDS.length)).toBe(false);
+    expect(badge?.isEarned({ ...emptyProgress, completedLabIds: LAB_SIMULATION_IDS }, 10, LAB_SIMULATION_IDS.length)).toBe(true);
   });
 });

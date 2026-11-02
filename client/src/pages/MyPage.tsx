@@ -16,7 +16,7 @@ import { useLocation } from "wouter";
 import BrandMark from "@/components/BrandMark";
 import { badges } from "@/data/badges";
 import { getCompletedLessonNotes, lessons } from "@/data/lessons";
-import { LAB_SIMULATION_IDS } from "@/pages/LabPage";
+import { LAB_SIMULATION_IDS } from "@/data/labScenarios";
 import { getCurrentStreak, getLevelNumber, useLearningProgress } from "@/hooks/useLearningProgress";
 
 export default function MyPage() {

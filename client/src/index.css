@@ -1082,3 +1082,121 @@ button.quick-summary-item:hover { transform: translateY(-1px); border-color: #df
 .team-challenge-track i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #a540ca, #ee6da5); }
 .team-challenge-copy small { display: block; margin-top: 5px; color: #a18ca5; font-size: 8px; }
 .team-challenge-status { display: grid; width: 45px; height: 45px; flex: 0 0 auto; place-items: center; border: 1px solid #edccec; border-radius: 50%; background: #fff; color: #a146bd; font-size: 10px; font-weight: 900; }
+
+
+/* Expanded TEUM simulation deck: readable evidence, level locks, and mobile swipe navigation. */
+.lab-heading-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin-bottom: 20px; }
+.lab-heading-row .lab-heading { margin-bottom: 0; }
+.lab-collection-card { width: min(235px, 32%); flex: 0 0 auto; padding: 12px 14px; border: 1px solid #ece2f1; border-radius: 15px; background: rgba(255,255,255,.88); box-shadow: 0 5px 18px rgba(63,39,75,.04); }
+.lab-collection-card > div:first-child { display: flex; align-items: baseline; justify-content: space-between; color: #9a899f; font-size: 8px; font-weight: 800; }
+.lab-collection-card strong { color: #503a5a; font-size: 18px; font-weight: 900; letter-spacing: -.6px; }
+.lab-collection-card strong small { color: #a69aaa; font-size: 10px; }
+.lab-collection-track { height: 5px; overflow: hidden; margin: 7px 0 6px; border-radius: 99px; background: #f0eaf2; }
+.lab-collection-track i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg,#ad43d0,#e769a5); transition: width .35s ease; }
+.lab-collection-card > small { color: #a39aaa; font-size: 7px; }
+.lab-list-head > p { margin: 4px 0 0; color: #a095a5; font-size: 8px; }
+.lab-list-items { display: flex; max-height: min(66vh, 650px); flex-direction: column; gap: 5px; overflow-x: hidden; overflow-y: auto; padding: 1px 3px 4px 0; overscroll-behavior: contain; scrollbar-color: #ddc8e4 transparent; scrollbar-width: thin; }
+.lab-list-item { min-height: 57px; gap: 8px; margin: 0; padding: 8px 7px; border-color: transparent; }
+.lab-list-item:disabled { cursor: not-allowed; }
+.lab-list-item:disabled:hover { background: #fbfafc; }
+.lab-list-index { width: 18px; flex: 0 0 auto; font-variant-numeric: tabular-nums; }
+.lab-list-icon { width: 32px; height: 32px; border-radius: 11px; }
+.lab-list-title small { max-width: 100%; overflow: hidden; font-size: 6px; text-overflow: ellipsis; white-space: nowrap; }
+.lab-list-title strong { font-size: 9px; }
+.lab-list-item-locked { border-color: #f2eef3; background: #fdfcfd; opacity: .74; }
+.lab-list-item-locked .lab-list-icon { background: #f3f0f4; color: #9f96a3; }
+.lab-list-item-locked .lab-list-title strong { color: #837a88; }
+.lab-list-lock { flex: 0 0 auto; padding: 4px 5px; border: 1px solid #eee8ef; border-radius: 999px; color: #9c919f; font-size: 6px; font-weight: 900; white-space: nowrap; }
+.lab-list-item-done .lab-list-icon { background: #edf8f1; color: #439a70; }
+.lab-list-done-icon { flex: 0 0 auto; color: #48a37d; }
+.lab-list-arrow { flex: 0 0 auto; color: #b1a5b5; }
+.lab-workspace { min-width: 0; padding: 19px; }
+.lab-workspace-top { min-height: 22px; }
+.lab-case-label { min-width: 0; overflow-wrap: anywhere; font-size: 7px; }
+.lab-reward { flex: 0 0 auto; white-space: nowrap; }
+.lab-scenario-brief { margin-top: 14px; padding: 13px 14px 12px; border: 1px solid #eee4f3; border-radius: 14px; background: linear-gradient(115deg,#fcf7ff,#fffafd); }
+.lab-section-kicker { display: inline-flex; align-items: center; gap: 5px; color: #a34bbd; font-size: 7px; font-weight: 950; letter-spacing: .09em; }
+.lab-scenario-brief > p { margin: 8px 0 10px; color: #61556a; font-size: 10px; line-height: 1.75; }
+.lab-mission-line { display: flex; align-items: center; gap: 6px; color: #91639c; font-size: 8px; font-weight: 820; line-height: 1.5; }
+.lab-mission-line > svg { flex: 0 0 auto; color: #b14dcc; }
+.lab-duration { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 3px; margin-left: auto; color: #a297a8; font-size: 7px; font-weight: 800; }
+.lab-evidence-card { overflow: hidden; margin-top: 11px; border: 1px solid #e8e4ec; border-radius: 13px; background: #fcfbfd; }
+.lab-evidence-head { display: flex; height: 33px; align-items: center; justify-content: space-between; gap: 8px; padding: 0 11px; border-bottom: 1px solid #ece8ef; background: #f7f5f8; }
+.lab-evidence-head > span { display: inline-flex; align-items: center; gap: 5px; color: #75677d; font-size: 8px; font-weight: 850; }
+.lab-evidence-head > span svg { color: #9d48b9; }
+.lab-evidence-head > small { padding: 3px 6px; border-radius: 999px; background: #eef7f0; color: #668773; font-size: 6px; font-weight: 950; letter-spacing: .08em; }
+.lab-evidence-card > strong { display: block; padding: 10px 12px 0; color: #65566e; font-size: 8px; font-weight: 850; }
+.lab-evidence-card pre { max-height: 150px; overflow: auto; margin: 0; padding: 8px 12px 12px; color: #696172; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 8px; line-height: 1.75; white-space: pre-wrap; overflow-wrap: anywhere; }
+.lab-step-meter { margin: 15px 1px 10px; }
+.lab-step-meter-head { display: flex; align-items: baseline; justify-content: space-between; color: #a093a5; font-size: 6px; font-weight: 950; letter-spacing: .1em; }
+.lab-step-meter-head strong { color: #8f7599; font-size: 8px; letter-spacing: 0; }
+.lab-step-meter-head strong small { color: #b1a5b5; font-size: 7px; }
+.lab-step-meter-track { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 5px; margin-top: 6px; }
+.lab-step-meter-track i { height: 4px; border-radius: 99px; background: #eee9f0; }
+.lab-step-meter-track .lab-step-meter-current { background: #e7d4ec; }
+.lab-step-meter-track .lab-step-meter-filled { background: linear-gradient(90deg,#a944cd,#d962b9); }
+.lab-step-card { padding: 14px 13px 0; border: 1px solid #eee9f0; border-radius: 14px; background: #fff; }
+.lab-step-overline { display: flex; align-items: center; gap: 8px; color: #44334e; font-size: 11px; }
+.lab-step-overline > span { display: grid; width: 25px; height: 25px; flex: 0 0 auto; place-items: center; border-radius: 8px; background: #f5eafa; color: #9d43bb; font-size: 8px; font-weight: 950; }
+.lab-step-overline > strong { font-size: 10px; font-weight: 900; }
+.lab-step-evidence { display: flex; align-items: flex-start; gap: 7px; margin-top: 11px; padding: 9px 10px; border-radius: 10px; background: #f7f5f8; color: #786f80; font-size: 8px; line-height: 1.65; }
+.lab-step-evidence svg { flex: 0 0 auto; margin-top: 1px; color: #a248bf; }
+.lab-step-card .lab-prompt { margin: 12px 0 8px; font-size: 9px; }
+.lab-step-card .lab-options { gap: 6px; }
+.lab-step-card .lab-option { min-height: 42px; border-radius: 10px; }
+.lab-step-card .lab-option:disabled { opacity: 1; cursor: default; }
+.lab-step-card .lab-option[aria-checked="true"]:not(.lab-option-correct):not(.lab-option-wrong) { border-color: #bc76d0; background: #fcf6ff; }
+.lab-step-card .lab-workspace-footer { margin-top: 10px; }
+.lab-reference-line { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin: 12px 2px 0; color: #a196a6; font-size: 7px; }
+.lab-reference-line > span:first-child { color: #94879a; font-weight: 850; }
+.lab-reference-line a { color: #91619c; text-decoration: underline; text-decoration-color: #e5d6e9; text-underline-offset: 2px; }
+.lab-reference-line a:hover { color: #a13dc1; }
+.lab-option:focus-visible, .lab-list-item:focus-visible, .lab-workspace-footer button:focus-visible { outline: 3px solid rgba(177,71,205,.35); outline-offset: 2px; }
+@media (max-width: 800px) {
+  .lab-layout { grid-template-columns: minmax(0, .82fr) minmax(0, 1.6fr); gap: 11px; }
+  .lab-list-item { gap: 6px; padding-right: 5px; padding-left: 5px; }
+  .lab-workspace { padding: 15px; }
+}
+@media (max-width: 640px) {
+  .lab-heading-row { align-items: stretch; flex-direction: column; gap: 10px; margin-bottom: 13px; }
+  .lab-heading { margin-bottom: 0; }
+  .lab-collection-card { width: 100%; padding: 9px 11px; }
+  .lab-collection-card strong { font-size: 16px; }
+  .lab-layout { display: flex; flex-direction: column; gap: 10px; }
+  .lab-sidebar, .lab-workspace { width: 100%; }
+  .lab-sidebar { padding: 10px 9px 9px; }
+  .lab-list-head { padding: 1px 3px 8px; }
+  .lab-list-head h2 { font-size: 12px; }
+  .lab-list-items { max-height: none; flex-direction: row; gap: 7px; overflow-x: auto; overflow-y: hidden; padding: 1px 2px 7px; scroll-snap-type: x mandatory; }
+  .lab-list-item { width: min(245px, 76vw); min-width: min(245px, 76vw); min-height: 57px; flex: 0 0 auto; scroll-snap-align: start; }
+  .lab-list-title small { font-size: 7px; }
+  .lab-list-title strong { font-size: 9px; }
+  .lab-sidebar .lab-safety-note { margin-top: 7px; }
+  .lab-workspace { padding: 13px 11px; }
+  .lab-workspace-top { align-items: flex-start; gap: 5px; }
+  .lab-case-label { max-width: 68%; font-size: 7px; }
+  .lab-reward { font-size: 8px; }
+  .lab-intro h2 { font-size: 17px; }
+  .lab-intro p { font-size: 10px; }
+  .lab-scenario-brief { margin-top: 11px; padding: 10px; }
+  .lab-scenario-brief > p { font-size: 10px; }
+  .lab-mission-line { align-items: flex-start; font-size: 8px; }
+  .lab-duration { align-items: center; font-size: 7px; }
+  .lab-evidence-card pre { max-height: 138px; font-size: 8px; }
+  .lab-step-card { padding: 11px 9px 0; }
+  .lab-step-overline > strong { font-size: 10px; }
+  .lab-step-evidence { font-size: 9px; }
+  .lab-step-card .lab-prompt { font-size: 10px; }
+  .lab-step-card .lab-option { min-height: 42px; gap: 7px; padding: 7px; }
+  .lab-step-card .lab-option > span:nth-child(2) { font-size: 10px; }
+  .lab-workspace-footer { align-items: flex-end; }
+  .lab-workspace-footer > span { max-width: 130px; font-size: 7px; line-height: 1.5; }
+  .lab-workspace-footer .button-primary { min-height: 34px; font-size: 9px; }
+  .lab-reference-line { gap: 4px; font-size: 7px; line-height: 1.6; }
+  .lab-back-link { align-items: flex-start; font-size: 7px; }
+  .lab-back-link > span { max-width: 150px; text-align: right; line-height: 1.5; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lab-collection-track i { transition: none; }
+  .lab-list-item { transition: none; }
+}
