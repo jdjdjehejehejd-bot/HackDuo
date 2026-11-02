@@ -1344,3 +1344,50 @@ button.quick-summary-item:hover { transform: translateY(-1px); border-color: #df
   .unit-lesson-desc p { font-size: 10px; }
   .lesson-story-lead .expandable-text p { font-size: 11px; }
 }
+/* 보안 스토리: 원형 아이콘은 유지하고 제목과 짧은 설명을 아래에 배치 */
+.story-section .today-story-strip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; align-items: start; padding: 18px 2px 8px; overflow: visible; }
+.story-section .today-story-item { display: flex; min-width: 0; min-height: 0; flex-direction: column; align-items: center; gap: 7px; padding: 7px 8px 10px; border: 1px solid transparent; border-radius: 15px; background: transparent; text-align: center; }
+.story-section .today-story-item:hover:not(:disabled) { border-color: #ead8f0; background: rgba(255,255,255,.72); box-shadow: none; transform: translateY(-2px); }
+.story-section .today-story-item.is-current { border-color: #ead3f1; background: #fffaff; box-shadow: 0 6px 16px #a944c40d; }
+.story-section .today-story-item:disabled { opacity: .56; }
+.story-section .today-story-item .story-ring { width: 58px; height: 58px; }
+.story-section .today-story-item .story-inner { width: 50px; height: 50px; border-color: var(--canvas); }
+.story-section .today-story-item .story-check { right: -2px; bottom: -2px; }
+.story-section .today-story-number { display: block; color: #a79baa; font-size: 8px; font-weight: 850; }
+.story-section .today-story-title { display: -webkit-box; width: 100%; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; color: #55425e; font-size: 10px; font-weight: 850; line-height: 1.45; }
+.story-section .today-story-desc { display: -webkit-box; width: 100%; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; color: #9c91a1; font-size: 8px; font-weight: 600; line-height: 1.5; }
+
+/* 스마트 리플레이: 저장된 오답을 먼저 목록으로 보여줘 */
+.replay-list-back { display: inline-flex; align-items: center; gap: 5px; margin: -4px 0 15px; padding: 0; border: 0; background: transparent; color: #9a54ad; font: inherit; font-size: 9px; font-weight: 850; cursor: pointer; }
+.replay-list-back:hover { color: #75348c; }
+.replay-list-panel { margin-top: 20px; padding: 21px; border: 1px solid #eee8f1; border-radius: 20px; background: #fff; box-shadow: 0 9px 24px #5732600a; }
+.replay-list-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; padding: 0 1px 13px; border-bottom: 1px solid #f0eaf3; }
+.replay-list-heading .section-kicker { margin-bottom: 4px; }
+.replay-list-heading h2 { margin: 0; color: #392a44; font-size: 17px; font-weight: 850; }
+.replay-list-count { display: inline-flex; gap: 4px; align-items: baseline; padding: 6px 9px; border-radius: 999px; background: #f7eff9; color: #8f3eaa; font-size: 9px; font-weight: 850; white-space: nowrap; }
+.replay-list-count i { color: #c6bdcb; font-size: 8px; font-style: normal; }
+.replay-question-list { display: flex; flex-direction: column; gap: 7px; padding-top: 12px; }
+.replay-question-row { display: flex; width: 100%; min-width: 0; align-items: center; gap: 11px; padding: 12px 13px; border: 1px solid #f0eaf2; border-radius: 13px; background: #fff; color: #4c3d53; text-align: left; cursor: pointer; transition: .16s; }
+.replay-question-row:hover { border-color: #d8a5e5; background: #fffbff; transform: translateX(2px); }
+.replay-question-index { display: grid; width: 31px; height: 31px; flex: 0 0 auto; place-items: center; border-radius: 10px; background: #fff0f1; color: #cc5c69; font-size: 9px; font-weight: 900; }
+.replay-question-row.is-solved .replay-question-index { background: #e9f7ef; color: #26945d; }
+.replay-question-copy { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 3px; }
+.replay-question-copy small { overflow: hidden; color: #a28fa8; font-size: 8px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
+.replay-question-copy strong { overflow: hidden; color: #493650; font-size: 10px; font-weight: 820; line-height: 1.5; }
+.replay-question-copy em { color: #b1a4b5; font-size: 8px; font-style: normal; }
+.replay-question-row.is-solved .replay-question-copy em { color: #3d9a71; }
+.replay-question-row > svg { flex: 0 0 auto; color: #ad70bd; }
+
+@media (max-width: 900px) {
+  .story-section .today-story-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  .story-section .today-story-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+  .story-section .today-story-item { padding: 9px 7px; }
+  .story-section .today-story-item .story-ring { width: 54px; height: 54px; }
+  .story-section .today-story-item .story-inner { width: 46px; height: 46px; }
+  .story-section .today-story-title { font-size: 10px; }
+  .story-section .today-story-desc { font-size: 8px; }
+  .replay-list-panel { padding: 16px 13px; }
+  .replay-question-row { gap: 9px; padding: 11px 10px; }
+}

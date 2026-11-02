@@ -128,6 +128,7 @@ export default function Home() {
               const current = !completed && lesson.id === nextLesson?.id;
               const Icon = lessonIcons[lesson.id as keyof typeof lessonIcons] ?? ShieldCheck;
               const state = completed ? "완료" : current ? "이어 학습" : !unlocked ? "잠김" : "시작 가능";
+              const ringState = completed ? "story-ring-complete" : current ? "story-ring-current" : !unlocked ? "story-ring-locked" : "";
               return (
                 <button
                   className={`today-story-item${completed ? " is-done" : current ? " is-current" : ""}${!unlocked ? " is-locked" : ""}`}
@@ -136,14 +137,15 @@ export default function Home() {
                   disabled={!unlocked}
                   aria-label={`${lesson.shortTitle} ${state}`}
                 >
-                  <span className="today-story-top">
-                    <span className={`today-story-index${completed ? " is-done" : current ? " is-current" : ""}`}>{completed ? <Check size={15} /> : <Icon size={16} />}</span>
-                    <span className="today-story-number">EP.{String(index + 1).padStart(2, "0")}</span>
-                    {current && <span className="today-story-now">이어서</span>}
+                  <span className={`story-ring ${ringState}`}>
+                    <span className={`story-inner story-${lesson.id}`}>
+                      {completed ? <Check size={17} /> : !unlocked ? <LockKeyhole size={16} /> : <Icon size={18} />}
+                    </span>
+                    {completed && <i className="story-check"><Check size={10} strokeWidth={3} /></i>}
                   </span>
+                  <span className="today-story-number">EP.{String(index + 1).padStart(2, "0")}{current ? " · 이어서" : ""}</span>
                   <strong className="today-story-title">{lesson.shortTitle}</strong>
                   <small className="today-story-desc">{lesson.summary}</small>
-                  <span className="today-story-meta">{completed ? <><Check size={10} strokeWidth={3} /> 완료</> : unlocked ? <><Clock3 size={10} /> {lesson.duration}</> : <><LockKeyhole size={10} /> 잠김</>}</span>
                 </button>
               );
             })}
@@ -194,7 +196,7 @@ export default function Home() {
 
           <aside className="insights-column" id="my-progress" aria-label="내 학습 기록">
             <section className="daily-goal-card"><div className="daily-goal-top"><div className="goal-icon"><Target size={18} /></div><div><span>오늘의 작은 목표</span><strong>학습 한 번 하기</strong></div><span className={`goal-status${dailyGoalComplete ? " goal-status-done" : ""}`}>{dailyGoalComplete ? "완료" : "5분"}</span></div><div className="daily-goal-line"><span>오늘의 기록</span><strong>{dailyGoalComplete ? `${todayLessonCount}회 완료` : "시작 전"}</strong></div><div className="daily-goal-track" role="progressbar" aria-label="오늘의 학습 목표" aria-valuemin={0} aria-valuemax={1} aria-valuenow={dailyGoalComplete ? 1 : 0}><i style={{ width: dailyGoalComplete ? "100%" : "0%" }} /></div><p>{dailyGoalComplete ? "좋아요. 오늘의 작은 보안 습관을 만들었어요." : "짧은 스토리 하나로 오늘의 리듬을 시작해요."}</p></section>
-            {recommendedReview && reviewPerformance && <section className="review-recommendation" aria-labelledby="review-title"><div className="review-recommendation-icon"><Target size={16} /></div><div><span className="section-kicker">SMART REPLAY</span><h2 id="review-title">헷갈렸던 문제만 다시 풀어요.</h2><p><strong>{recommendedReview.shortTitle}</strong>에서 틀린 문제를 모아 짧게 복습해요.</p><small>최근 정답률 {Math.round((reviewPerformance.correct / (reviewPerformance.attempts * reviewPerformance.total)) * 100)}%</small></div><button onClick={() => setLocation("/replay")} aria-label="틀린 문제만 Smart Replay"><ArrowRight size={17} /></button></section>}
+            {recommendedReview && reviewPerformance && <section className="review-recommendation" aria-labelledby="review-title"><div className="review-recommendation-icon"><Target size={16} /></div><div><span className="section-kicker">SMART REPLAY</span><h2 id="review-title">놓친 문제를 하나씩 다시 살펴봐.</h2><p><strong>{recommendedReview.shortTitle}</strong>에서 놓친 질문을 모아뒀어. 목록에서 궁금한 문제부터 다시 풀어봐.</p><small>최근 정답률 {Math.round((reviewPerformance.correct / (reviewPerformance.attempts * reviewPerformance.total)) * 100)}%</small></div><button onClick={() => setLocation("/replay")} aria-label="놓친 문제 목록 열기"><ArrowRight size={17} /></button></section>}
 
             <section className="progress-card">
               <div className="card-heading"><div><span className="section-kicker">YOUR SIGNAL</span><h2>쌓이는 보안 감각</h2></div><Trophy size={19} className="trophy-icon" /></div>
