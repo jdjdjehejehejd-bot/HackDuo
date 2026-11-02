@@ -60,9 +60,9 @@ export default function Home() {
         <div className="topbar-inner">
           <a className="brand-link" href="/" aria-label="TEUM 홈"><BrandMark /></a>
           <nav className="desktop-nav" aria-label="주 메뉴">
-            <a className="nav-link nav-link-active" href="/">피드</a>
-            <button className="nav-link" onClick={() => setLocation("/lab")}>실습실</button>
-            <button className="nav-link" onClick={() => setLocation("/my")}>My 노트</button>
+            <a className="nav-link nav-link-active" href="/">학습 피드</a>
+            <button className="nav-link" onClick={() => setLocation("/lab")}>안전 실습</button>
+            <button className="nav-link" onClick={() => setLocation("/my")}>내 노트</button>
           </nav>
           <div className="topbar-right">
             <div className="top-stat streak-chip" aria-label={`연속 학습 ${currentStreak}일`}><Flame size={16} fill="currentColor" /><span>{currentStreak}</span><small>일</small></div>
@@ -88,6 +88,18 @@ export default function Home() {
             <div className="avatar-xp"><Zap size={14} fill="currentColor" /> {progress.xp} XP</div>
             <Sparkles className="avatar-spark" size={19} />
           </div>
+        </section>
+
+        <section className="quick-summary" aria-label="내 학습 요약">
+          <div className="quick-summary-label"><span className="section-kicker">YOUR DASHBOARD</span><strong>지금 내 학습 상태</strong></div>
+          <button className="quick-summary-item quick-summary-action" onClick={() => setLocation(`/lesson/${currentLesson.id}`)}>
+            <span className="quick-summary-icon"><BookOpen size={15} /></span><span><small>다음 행동</small><strong>{nextLesson ? "다음 스토리 이어가기" : "완료한 스토리 복습하기"}</strong><em>{currentLesson.shortTitle}</em></span><ChevronRight size={15} />
+          </button>
+          <div className="quick-summary-item"><span className="quick-summary-icon quick-summary-icon-progress"><BadgeCheck size={15} /></span><span><small>전체 진도</small><strong>{completedCount}/{lessons.length} 레슨</strong><em>{percent}% 완료</em></span></div>
+          <div className="quick-summary-item"><span className="quick-summary-icon quick-summary-icon-streak"><Flame size={15} /></span><span><small>학습 리듬</small><strong>{currentStreak}일 연속</strong><em>{dailyGoalComplete ? "오늘 목표 완료" : "오늘 1회 시작하기"}</em></span></div>
+          <button className={`quick-summary-item quick-summary-action${hasLabAccess ? " quick-summary-lab-open" : ""}`} onClick={() => setLocation("/lab")}>
+            <span className="quick-summary-icon quick-summary-icon-lab"><Code2 size={15} /></span><span><small>안전 실습</small><strong>{hasLabAccess ? "실습실 열림" : `레벨 ${Math.max(3 - level, 0)}단계 남음`}</strong><em>{hasLabAccess ? "가상 시나리오 시작" : "기초 레슨을 이어가세요"}</em></span><ChevronRight size={15} />
+          </button>
         </section>
 
         <section className="story-section" aria-labelledby="story-title">
@@ -174,7 +186,7 @@ export default function Home() {
         </div>
       </main>
 
-      <nav className="mobile-dock" aria-label="모바일 메뉴"><a className="dock-active" href="/"><BookOpen size={18} /><span>피드</span></a><button onClick={() => setLocation("/lab")}><Code2 size={18} /><span>실습</span></button><button onClick={() => setLocation("/my")}><UserRound size={18} /><span>My</span></button></nav>
+      <nav className="mobile-dock" aria-label="모바일 메뉴"><a className="dock-active" href="/"><BookOpen size={18} /><span>학습</span></a><button onClick={() => setLocation("/lab")}><Code2 size={18} /><span>실습</span></button><button onClick={() => setLocation("/my")}><UserRound size={18} /><span>내 노트</span></button></nav>
       <footer className="site-footer"><BrandMark compact /><span>TEUM · 안전하게 알고, 작게 실천하기.</span><button type="button" onClick={() => setLocation("/my")}>My 노트 <ArrowRight size={12} /></button></footer>
     </div>
   );
