@@ -583,13 +583,15 @@ button:focus-visible, a:focus-visible { outline: 3px solid #cf77e9; outline-offs
 .cartoon-ttumi { right: 4%; width: 89px; height: 102px; transform-origin: 50% 80%; }
 .cartoon-beat-1 .cartoon-minji { left: 7%; bottom: -7px; transform: rotate(-3deg); }
 .cartoon-beat-1 .cartoon-ttumi { right: 15%; bottom: 8px; transform: rotate(-7deg) scale(1.1); }
-.cartoon-beat-2 .cartoon-minji { left: 14%; bottom: -1px; transform: rotate(4deg); }
-.cartoon-beat-2 .cartoon-ttumi { right: 18%; bottom: 15px; transform: rotate(8deg) scale(1.07); }
+.cartoon-beat-2 .cartoon-minji { left: 2%; bottom: -38px; transform: rotate(4deg) scale(.82); transform-origin: 50% 100%; }
+.cartoon-beat-2 .cartoon-ttumi { right: 2%; bottom: -27px; transform: rotate(8deg) scale(.84); transform-origin: 50% 100%; }
 .cartoon-playing .cartoon-pose-0.cartoon-minji { animation: minji-question 1.5s ease-in-out infinite; }
 .cartoon-playing .cartoon-pose-1.cartoon-ttumi { animation: ttumi-explain 1.25s ease-in-out infinite; }
 .cartoon-playing .cartoon-pose-2.cartoon-minji { animation: minji-solve 1.2s ease-in-out infinite; }
 .cartoon-playing .cartoon-pose-2.cartoon-ttumi { animation: ttumi-celebrate 1s ease-in-out infinite; }
-.cartoon-dialogue { position: absolute; top: 46px; left: 50%; z-index: 6; width: min(490px, calc(100% - 36px)); padding: 8px 11px 9px; border: 2px solid var(--cartoon-shadow); border-radius: 16px 16px 16px 4px; background: #fff; box-shadow: 3px 4px 0 rgba(73,50,88,.14); transform: translateX(-50%); }
+.cartoon-playing.cartoon-beat-2 .cartoon-pose-2.cartoon-minji { animation: cartoon-minji-safe 1.35s ease-in-out infinite; }
+.cartoon-playing.cartoon-beat-2 .cartoon-pose-2.cartoon-ttumi { animation: cartoon-ttumi-safe 1.2s ease-in-out infinite; }
+.cartoon-dialogue { position: absolute; top: 46px; left: 50%; z-index: 8; width: min(490px, calc(100% - 36px)); padding: 8px 11px 9px; border: 2px solid var(--cartoon-shadow); border-radius: 16px 16px 16px 4px; background: #fff; box-shadow: 3px 4px 0 rgba(73,50,88,.14); transform: translateX(-50%); }
 .cartoon-dialogue::after { position: absolute; bottom: -10px; left: 27px; width: 15px; height: 15px; border-right: 2px solid var(--cartoon-shadow); border-bottom: 2px solid var(--cartoon-shadow); background: #fff; content: ""; transform: skewY(35deg) rotate(28deg); }
 .cartoon-dialogue-1 { border-color: var(--cartoon-accent); border-radius: 16px 16px 4px 16px; }
 .cartoon-dialogue-1::after { right: 27px; left: auto; border-color: var(--cartoon-accent); transform: skewY(-35deg) rotate(-28deg); }
@@ -603,6 +605,8 @@ button:focus-visible, a:focus-visible { outline: 3px solid #cf77e9; outline-offs
 @keyframes ttumi-explain { 0%,100% { transform: rotate(-6deg) translateY(0) scale(1.08); } 50% { transform: rotate(5deg) translateY(-6px) scale(1.1); } }
 @keyframes minji-solve { 0%,100% { transform: rotate(2deg) translateY(0); } 50% { transform: rotate(-3deg) translateY(-8px); } }
 @keyframes ttumi-celebrate { 0%,100% { transform: rotate(8deg) translateY(0) scale(1.05); } 50% { transform: rotate(-8deg) translateY(-8px) scale(1.11); } }
+@keyframes cartoon-minji-safe { 0%,100% { transform: rotate(4deg) translateY(0) scale(.82); } 50% { transform: rotate(2deg) translateY(-2px) scale(.83); } }
+@keyframes cartoon-ttumi-safe { 0%,100% { transform: rotate(8deg) translateY(0) scale(.84); } 50% { transform: rotate(5deg) translateY(-2px) scale(.85); } }
 @media (max-width: 640px) {
   .cartoon-lesson { padding: 10px; }
   .cartoon-stage { height: 274px; border-radius: 15px; }
@@ -615,8 +619,8 @@ button:focus-visible, a:focus-visible { outline: 3px solid #cf77e9; outline-offs
   .cartoon-minji { left: 1%; width: 93px; height: 145px; }
   .cartoon-ttumi { right: 1%; width: 74px; height: 86px; }
   .cartoon-beat-1 .cartoon-ttumi { right: 11%; bottom: 5px; }
-  .cartoon-beat-2 .cartoon-minji { left: 8%; }
-  .cartoon-beat-2 .cartoon-ttumi { right: 13%; bottom: 12px; }
+  .cartoon-beat-2 .cartoon-minji { left: -2%; bottom: -27px; transform: rotate(4deg) scale(.72); }
+  .cartoon-beat-2 .cartoon-ttumi { right: -2%; bottom: -22px; transform: rotate(8deg) scale(.74); }
   .cartoon-set-window > span { max-width: 54%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .cartoon-controls { gap: 5px; }
   .cartoon-controls .animated-play-button { min-width: 89px; padding: 0 6px; font-size: 7px; }
