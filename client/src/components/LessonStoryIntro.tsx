@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { ArrowLeft, ArrowRight, Pause, Play, RotateCcw, Sparkles } from "lucide-react";
 import BrandMark from "@/components/BrandMark";
 import type { Lesson } from "@/data/lessons";
@@ -88,8 +88,19 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
     setIsPlaying(false);
   }
 
+  function handleOpeningClick(event: MouseEvent<HTMLDivElement>) {
+    const target = event.target as HTMLElement;
+    if (target.closest("button, header, footer")) return;
+    if (act >= episodeDialogue.length - 1) {
+      setIsPlaying(false);
+      return;
+    }
+    setAct((current) => current + 1);
+    setIsPlaying(true);
+  }
+
   return (
-    <div className={`anime-opening anime-opening-act-${act}${isPlaying ? " anime-opening-playing" : ""}`} role="dialog" aria-modal="true" aria-labelledby="anime-opening-title">
+    <div className={`anime-opening anime-opening-act-${act}${isPlaying ? " anime-opening-playing" : ""}`} role="dialog" aria-modal="true" aria-labelledby="anime-opening-title" onClick={handleOpeningClick} title="화면을 클릭하면 다음 장면으로 넘어갑니다">
       <img className="anime-opening-background" src={background} alt="" aria-hidden="true" draggable={false} />
       <div className="anime-opening-color-grade" aria-hidden="true" />
       <div className="anime-opening-vignette" aria-hidden="true" />
@@ -135,7 +146,7 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
           ))}
         </div>
         <div className="anime-opening-control-row">
-          <span className="anime-opening-hint">{reducedMotion ? "모션 감소 · 장면을 직접 넘겨 보세요" : isPlaying ? lesson.episode : finished ? "이야기가 이어질 준비가 됐어요" : "오프닝 재생을 조절할 수 있어요"}</span>
+          <span className="anime-opening-hint">{reducedMotion ? "모션 감소 · 화면을 클릭해 다음 장면" : isPlaying ? "화면 클릭 · 다음 장면" : finished ? "이야기가 이어질 준비가 됐어요" : "화면 클릭 또는 재생 버튼"}</span>
           <button className="anime-opening-play" onClick={togglePlayback} aria-pressed={isPlaying}>
             {reducedMotion ? <Play size={15} /> : isPlaying ? <Pause size={15} /> : finished ? <RotateCcw size={15} /> : <Play size={15} />}
             {reducedMotion ? act === episodeDialogue.length - 1 ? "처음부터" : "다음 장면" : isPlaying ? "일시정지" : finished ? "다시 보기" : "이어서 보기"}
