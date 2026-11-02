@@ -765,12 +765,15 @@ button:focus-visible, a:focus-visible { outline: 3px solid #cf77e9; outline-offs
 .anime-opening-ttumi-1 { right: clamp(30px, 23vw, 330px); bottom: clamp(115px, 18vh, 200px); }
 .anime-opening-minji-2 { left: clamp(65px, 20vw, 290px); transform: rotate(2deg); }
 .anime-opening-ttumi-2 { right: clamp(36px, 18vw, 260px); bottom: clamp(126px, 17vh, 190px); transform: rotate(8deg) scale(1.05); }
+.anime-opening-ttumi-hidden { visibility: hidden; opacity: 0; pointer-events: none; }
+.anime-opening-ttumi-visible { visibility: visible; opacity: 1; }
 .anime-opening-playing .anime-opening-minji-0 { animation: anime-minji-arrive 2.4s cubic-bezier(.2,.8,.2,1) both; }
 .anime-opening-playing .anime-opening-ttumi-0 { animation: anime-ttumi-arrive 2.1s cubic-bezier(.2,.8,.2,1) both, anime-hover 1.5s 1.2s ease-in-out infinite; }
 .anime-opening-playing .anime-opening-minji-1 { animation: anime-minji-react 2.4s cubic-bezier(.2,.8,.2,1) both; }
 .anime-opening-playing .anime-opening-ttumi-1 { animation: anime-ttumi-point 2.4s cubic-bezier(.2,.8,.2,1) both; }
 .anime-opening-playing .anime-opening-minji-2 { animation: anime-minji-solve 2.4s cubic-bezier(.2,.8,.2,1) both; }
 .anime-opening-playing .anime-opening-ttumi-2 { animation: anime-ttumi-celebrate 2.2s ease-in-out both; }
+.anime-opening-playing .anime-opening-ttumi-reveal { animation: anime-ttumi-reveal 1.7s cubic-bezier(.16,.9,.25,1) both, anime-hover 1.5s 1.7s ease-in-out infinite; }
 .anime-opening-action-line { position: absolute; z-index: 4; top: 46%; left: clamp(28px, 9vw, 134px); display: flex; max-width: min(620px, 78vw); flex-direction: column; gap: 8px; padding-left: 15px; border-left: 2px solid #ffe0a1; opacity: 0; transform: translate3d(-12px,0,0); transition: opacity .5s ease, transform .6s cubic-bezier(.2,.8,.2,1); pointer-events: none; }
 .anime-opening-action-line-visible { opacity: 1; transform: translate3d(0,0,0); }
 .anime-opening-action-line > span { color: #ffe1a5; font-size: 9px; font-weight: 950; letter-spacing: .18em; text-shadow: 0 2px 12px rgba(0,0,0,.7); }
@@ -802,6 +805,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid #cf77e9; outline-offs
 @keyframes anime-ttumi-point { 0% { transform: translate3d(25px,-25px,0) scale(.88); } 36% { transform: translate3d(-8px,0,0) scale(1.08) rotate(-8deg); } 70% { transform: translate3d(3px,-6px,0) scale(1.02) rotate(5deg); } 100% { transform: translate3d(0,0,0) scale(1) rotate(0); } }
 @keyframes anime-minji-solve { 0% { transform: translate3d(-15px,8px,0) scale(.97); } 40% { transform: translate3d(5px,-11px,0) scale(1.02); } 76% { transform: translate3d(0,0,0) rotate(-3deg); } 100% { transform: translate3d(0,0,0) rotate(0); } }
 @keyframes anime-ttumi-celebrate { 0% { transform: translateY(15px) scale(.8) rotate(-12deg); opacity: .5; } 45% { transform: translateY(-12px) scale(1.13) rotate(8deg); opacity: 1; } 100% { transform: translateY(0) scale(1.04) rotate(0); opacity: 1; } }
+@keyframes anime-ttumi-reveal { 0% { opacity: 0; filter: drop-shadow(0 12px 24px rgba(4,7,17,.38)) blur(8px); transform: translate3d(25px, 8px, 0) scale(.42) rotate(-18deg); } 28% { opacity: .28; filter: drop-shadow(0 12px 24px rgba(4,7,17,.38)) blur(2px); } 46% { opacity: .9; transform: translate3d(-8px, -4px, 0) scale(1.12) rotate(8deg); } 63% { opacity: .55; transform: translate3d(2px, 0, 0) scale(.96) rotate(-4deg); } 78% { opacity: 1; filter: drop-shadow(0 12px 24px rgba(4,7,17,.38)) blur(0); transform: translate3d(-2px, -5px, 0) scale(1.04) rotate(3deg); } 100% { opacity: 1; filter: drop-shadow(0 12px 24px rgba(4,7,17,.38)) blur(0); transform: translate3d(0, 0, 0) scale(1) rotate(0); } }
 @keyframes anime-subtitle-arrive { from { opacity: 0; transform: translate3d(-50%,12px,0); } to { opacity: 1; transform: translate3d(-50%,0,0); } }
 @media (max-width: 640px) {
   .anime-opening-header { top: max(10px, env(safe-area-inset-top)); right: max(10px, env(safe-area-inset-right)); left: max(10px, env(safe-area-inset-left)); grid-template-columns: auto 1fr auto; gap: 8px; }

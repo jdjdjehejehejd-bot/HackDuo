@@ -34,6 +34,8 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
   const [act, setAct] = useState(0);
   const [isPlaying, setIsPlaying] = useState(() => !prefersReducedMotion());
   const visualAct = Math.min(act, 2);
+  const isFirstEpisode = lesson.id === "security-basics";
+  const ttumiVisible = !isFirstEpisode || act >= 5;
   const skipRef = useRef<HTMLButtonElement>(null);
   const finished = act === episodeDialogue.length - 1 && !isPlaying;
   const background = episodeArt[lesson.id] ?? episodeArt["security-basics"];
@@ -124,7 +126,7 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
         <div className="anime-opening-spark anime-opening-spark-one" />
         <div className="anime-opening-spark anime-opening-spark-two" />
         <img className={`anime-opening-character anime-opening-minji anime-opening-minji-${visualAct}`} src="/anime/minji-anime.webp" alt="" draggable={false} />
-        <img className={`anime-opening-character anime-opening-ttumi anime-opening-ttumi-${visualAct}`} src="/anime/ttumi-anime.webp" alt="" draggable={false} />
+        <img className={`anime-opening-character anime-opening-ttumi anime-opening-ttumi-${visualAct}${ttumiVisible ? " anime-opening-ttumi-visible" : " anime-opening-ttumi-hidden"}${isFirstEpisode && act === 5 ? " anime-opening-ttumi-reveal" : ""}`} src="/anime/ttumi-anime.webp" alt="" draggable={false} />
       </div>
 
       <div className="anime-opening-action-line anime-opening-action-line-visible">
