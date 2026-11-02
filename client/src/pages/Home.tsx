@@ -6,6 +6,7 @@ import {
 import { useLocation } from "wouter";
 import BrandMark from "@/components/BrandMark";
 import { lessonStages, lessons } from "@/data/lessons";
+import { storyUnits } from "@/data/storyUnits";
 import { getCurrentStreak, getLevelNumber, getLevelProgress, getRecommendedReview, getWeekStreakDates, useLearningProgress } from "@/hooks/useLearningProgress";
 
 const lessonIcons = {
@@ -159,6 +160,20 @@ export default function Home() {
                       </div>
                     </section>
                   );
+                })}
+              </div>
+            </section>
+
+            <section className="season-roadmap" aria-labelledby="season-roadmap-title">
+              <div className="section-heading course-heading"><div><span className="section-kicker">THE STORY UNIVERSE · {storyUnits.length} UNITS · 5 EPISODES EACH</span><h2 id="season-roadmap-title">하나의 큰 사건, 다섯 번의 작은 단서</h2><p>각 UNIT은 하나의 보안 사건을 끝까지 따라가고, 레슨마다 사건의 다음 조각을 발견해요.</p></div><span className="course-progress-pill"><Sparkles size={14} /> 시즌 맵</span></div>
+              <div className="season-roadmap-grid">
+                {storyUnits.map((unit) => {
+                  const active = unit.number <= 3;
+                  return <article className={`season-unit-card${active ? " season-unit-active" : ""}`} key={unit.id}>
+                    <div className="season-unit-top"><span className="season-unit-number">{String(unit.number).padStart(2, "0")}</span><span className={`season-unit-state${active ? " season-unit-state-active" : ""}`}>{active ? "현재 경로" : "다음 시즌"}</span></div>
+                    <h3>{unit.title}</h3><p>{unit.arc}</p><small>{unit.promise}</small>
+                    <div className="season-episode-list" aria-label={`${unit.title} 에피소드 5개`}>{unit.episodes.map((episode, index) => <span key={episode} className={active && index === 0 ? "season-episode-current" : ""}><i>{index + 1}</i>{episode}</span>)}</div>
+                  </article>;
                 })}
               </div>
             </section>

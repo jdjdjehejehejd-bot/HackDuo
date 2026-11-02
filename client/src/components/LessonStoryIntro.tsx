@@ -64,13 +64,31 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
     return () => window.clearTimeout(timer);
   }, [act, episodeDialogue, isPlaying, reducedMotion]);
 
+  function advanceAct() {
+    if (act >= episodeDialogue.length - 1) {
+      setIsPlaying(false);
+      onStart();
+      return;
+    }
+    setAct((current) => current + 1);
+    setIsPlaying(true);
+  }
+
+  function previousAct() {
+    if (act === 0) return;
+    setAct((current) => current - 1);
+    setIsPlaying(false);
+  }
+
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onStart();
+      if (event.key === "Escape") onExit();
+      if (event.key === "ArrowLeft") previousAct();
+      if (event.key === "ArrowRight") advanceAct();
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [onStart]);
+  }, [onExit, act, episodeDialogue.length]);
 
   function togglePlayback() {
     if (reducedMotion) {
@@ -93,12 +111,7 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
   function handleOpeningClick(event: MouseEvent<HTMLDivElement>) {
     const target = event.target as HTMLElement;
     if (target.closest("button, header, footer")) return;
-    if (act >= episodeDialogue.length - 1) {
-      setIsPlaying(false);
-      return;
-    }
-    setAct((current) => current + 1);
-    setIsPlaying(true);
+    advanceAct();
   }
 
   return (
@@ -121,13 +134,16 @@ export default function LessonStoryIntro({ lesson, lessonNumber, onStart, onExit
         <p>{lesson.episode}</p>
       </div>
 
-        <div className={`anime-opening-scene anime-opening-scene-${visualAct}`} aria-hidden="true">
+      <div className={`anime-opening-scene anime-opening-scene-${visualAct}`} aria-hidden="true">
         <div className="anime-opening-sun-glow" />
         <div className="anime-opening-spark anime-opening-spark-one" />
         <div className="anime-opening-spark anime-opening-spark-two" />
         <img className={`anime-opening-character anime-opening-minji anime-opening-minji-${visualAct}`} src="/anime/minji-anime.webp" alt="" draggable={false} />
         <img className={`anime-opening-character anime-opening-ttumi anime-opening-ttumi-${visualAct}${ttumiVisible ? " anime-opening-ttumi-visible" : " anime-opening-ttumi-hidden"}${isFirstEpisode && act === 5 ? " anime-opening-ttumi-reveal" : ""}`} src="/anime/ttumi-anime.webp" alt="" draggable={false} />
       </div>
+
+      <button className="anime-opening-nav anime-opening-nav-prev" onClick={previousAct} disabled={act === 0} aria-label="컷씬 이전 장면"><ArrowLeft size={23} /></button>
+      <button className="anime-opening-nav anime-opening-nav-next" onClick={advanceAct} aria-label={act === episodeDialogue.length - 1 ? "수업 시작" : "컷씬 다음 장면"}><ArrowRight size={23} /></button>
 
       <div className="anime-opening-action-line anime-opening-action-line-visible">
         <span>{episodeDialogue[act].label}</span>

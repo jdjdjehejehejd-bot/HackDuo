@@ -17,6 +17,7 @@ import {
   Sparkles,
   Trophy,
   Target,
+  X,
   Zap,
 } from "lucide-react";
 import { useLocation, useRoute } from "wouter";
@@ -144,7 +145,7 @@ export default function LessonPage() {
 
   return (
     <div className="lesson-shell">
-      <header className="lesson-topbar"><button className="back-button" onClick={goBack} aria-label={phase === 0 ? "피드로 돌아가기" : "이전 단계"}><ArrowLeft size={18} /><span>{phase === 0 ? "피드" : "이전"}</span></button><BrandMark /><div className="lesson-top-stats"><span><Flame size={14} fill="currentColor" /> {currentStreak}일</span><span><Zap size={14} fill="currentColor" /> {progress.xp} XP</span></div></header>
+      <header className="lesson-topbar"><button className="back-button" onClick={goBack} aria-label={phase === 0 ? "피드로 돌아가기" : "이전 단계"}><ArrowLeft size={18} /><span>{phase === 0 ? "피드" : "이전"}</span></button><BrandMark /><div className="lesson-top-stats"><span><Flame size={14} fill="currentColor" /> {currentStreak}일</span><span><Zap size={14} fill="currentColor" /> {progress.xp} XP</span><button className="lesson-exit-button" onClick={() => setLocation("/")} aria-label="레슨에서 나가기"><X size={13} /> 나가기</button></div></header>
 
       {!isComplete ? (
         <main className="lesson-main">
