@@ -13,10 +13,6 @@ export function getUnitLessons(unitId: string) {
   return lessons.slice((unitNumber - 1) * 5, unitNumber * 5);
 }
 
-function toFriendlyTone(text: string) {
-  return text.replace(/발견한다\.$/, "발견해요.").replace(/추적한다\.$/, "추적해요.").replace(/드러난다\.$/, "드러나요.").replace(/발견된다\.$/, "발견돼요.").replace(/찾는다\.$/, "찾아요.").replace(/요구한다\.$/, "요구해요.").replace(/바꾼다\.$/, "바꿔요.").replace(/배운다\.$/, "배워요.").replace(/선택해야 한다\.$/, "선택해야 해요.").replace(/재구성해야 한다\.$/, "재구성해야 해요.").replace(/된다\.$/, "돼요.").replace(/있다\.$/, "있어요.").replace(/있었다\.$/, "있었어요.").replace(/다르다\.$/, "달라요.").replace(/모인다\.$/, "모여요.").replace(/흔들린다\.$/, "흔들려요.").replace(/한다\.$/, "해요.");
-}
-
 export default function UnitPage() {
   const [, setLocation] = useLocation();
   const [, params] = useRoute("/unit/:unitId");
@@ -26,7 +22,7 @@ export default function UnitPage() {
   const completedIds = new Set(progress.completedLessonIds);
   const completedCount = unitLessons.filter((lesson) => completedIds.has(lesson.id)).length;
 
-  const unitDescription = `${toFriendlyTone(unit.arc)} 민지와 틈이는 이 사건을 따라가며 ${unit.promise.replace(/해요\.$/, "는 법을 배워요.")} 작은 이상을 그냥 지나치지 않고, 다음 단서가 가리키는 위험을 안전하게 확인해 봐요.`;
+  const unitDescription = `${unit.arc} ${unit.promise} 이 단원에서는 사건의 단서를 보안 개념과 연결하고, 위험을 확인해 대응하는 과정을 익힌다.`;
 
   return (
     <div className="app-shell">
@@ -45,7 +41,7 @@ export default function UnitPage() {
           <div>
             <span className="section-kicker">UNIT {String(unit.number).padStart(2, "0")} · STORY ARC</span>
             <h1>{unit.title}</h1>
-            <div className="unit-hero-description"><ExpandableText key={unit.id} text={unitDescription} preview={toFriendlyTone(unit.arc)} lines={2} /></div>
+            <div className="unit-hero-description"><ExpandableText key={unit.id} text={unitDescription} preview={unit.arc} lines={2} /></div>
           </div>
           <div className="unit-hero-mark"><ShieldCheck size={42} strokeWidth={1.5} /><span>{completedCount}/{unitLessons.length}</span></div>
         </section>
@@ -66,7 +62,7 @@ export default function UnitPage() {
                   <div className="unit-lesson-copy">
                     <small>EP. {String(index + 1).padStart(2, "0")} · {lesson.category}</small>
                     <h3>{lesson.shortTitle}</h3>
-                    <ExpandableText key={lesson.id} text={`${lesson.hook} ${lesson.summary} 이제 이 단서에서 무엇이 정상이고 무엇을 지켜야 하는지 직접 찾아봐요.`} preview={lesson.hook} lines={2} className="unit-lesson-desc" />
+                    <ExpandableText key={lesson.id} text={`${lesson.hook} ${lesson.summary} 이 단서가 의미하는 바와 지켜야 할 원칙을 살펴본다.`} preview={lesson.hook} lines={2} className="unit-lesson-desc" />
                     <div className="unit-lesson-meta"><span><Clock3 size={12} /> {lesson.duration}</span><span><Zap size={12} /> {lesson.xp + 5} XP</span></div>
                   </div>
                   <button className="unit-lesson-open" disabled={!unlocked} onClick={() => setLocation(`/lesson/${lesson.id}`)}>{completed ? "다시 보기" : unlocked ? "시작하기" : "잠김"}<ArrowRight size={15} /></button>
