@@ -70,9 +70,9 @@ function makeEpisode(unit: (typeof storyUnits)[number], episodeNumber: number): 
     episode: `새빛대학교 축제 · UNIT ${String(unit.number).padStart(2, "0")} · ${episodeNumber}화`,
     duration: "6분",
     xp: 30 + (unit.number > 15 ? 5 : 0),
-    summary: `${unit.arc} 이번 편에서는 현장의 단서를 통해 ${focus.concept}의 핵심 기준과 적용 맥락을 검토한다. 확인된 사실을 토대로 위험을 판단하고, 실제 업무에서 피해를 줄이는 보호 원칙을 정리한다.`,
+    summary: `이번 레슨에서는 ${focus.concept}의 핵심 기준을 익히고, 확인된 단서를 바탕으로 위험을 판단해 안전하게 대응하는 방법을 살펴본다.`,
     mission: focus.action,
-    hook: `${unit.arc} ${episodeTitle} 현장에서 민지와 틈이는 ${focus.concept}와 관련된 낯선 단서를 발견한다. 이전 기록과 현재 상황을 대조해 확인된 사실과 미확인 사항을 구분하고, 해당 원칙이 사건의 위험과 대응에 어떤 의미를 갖는지 살펴본다. 실제 피해를 만들지 않는 승인된 범위 안에서 안전한 다음 행동을 판단하는 것이 이번 학습의 핵심이다.`,
+    hook: `민지와 틈이는 ${unit.title}의 실마리를 찾기 위해 ‘${episodeTitle}’에 남은 기록을 살핀다. 과연 민지와 틈이는 ${focus.concept}와 관련된 위험을 찾아내고 피해를 막을 수 있을까?`,
     sections: sectionKinds.map((kind, index) => ({ title: `${kind}: ${titles[index]}`, scene: scenes[index], concept: focus.concept, body: bodies[index], takeaway: takeaways[index] })),
     questions: [
       { question: `${episodeTitle}에서 가장 먼저 확인할 것은 뭘까?`, choices: [correct[0], "감으로 의심되는 사람부터 공개한다", "도구를 실행하고 결과를 나중에 해석한다"], answerIndex: 0, explanation: "자산과 정상 흐름을 먼저 확인해야 관찰한 변화가 실제 이상인지 판단할 기준을 확보할 수 있다." },
