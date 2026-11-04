@@ -80,7 +80,7 @@ function makeEpisode(unit: (typeof storyUnits)[number], episodeNumber: number): 
     mission: focus.action,
     hook: [
       `${unit.arc} 민지와 틈이는 ‘${episodeTitle}’에 남은 기록을 따라간다. 단서가 가리키는 곳은 ${focus.concept}의 문제일까, 아니면 더 깊은 원인일까?`,
-      `“‘${episodeTitle}’에서 발견된 흔적이 단순한 실수라면 왜 이런 기록이 남았을까?” 민지와 틈이는 현장과 기록을 대조한다. ${unit.arc} 확인되지 않은 단서만으로 결론을 내려도 될까?`,
+      `“‘${episodeTitle}’라는 흔적, 그냥 실수라고 보기엔 좀 이상하지 않아?” 민지와 틈이는 현장과 기록을 대조한다. ${unit.arc} 확인되지 않은 단서만으로 결론을 내려도 될까?`,
       `문제의 시작은 ‘${episodeTitle}’에서 발견된 작은 흔적이었다. ${unit.arc} 민지와 틈이는 그 흔적이 ${focus.concept}와 어떻게 이어지는지 추적한다. 가장 먼저 확인해야 할 사실은 무엇일까?`,
       `축제 준비는 평소처럼 진행되는 듯했지만 ‘${episodeTitle}’에서 예상하지 못한 단서가 나타난다. ${unit.arc} 피해가 번지기 전에 무엇을 확인해야 할까?`,
       `“${episodeTitle}의 의미를 놓치면 안 돼.” 민지와 틈이는 서로 다른 기록을 맞춰 본다. ${unit.arc} 그 안에 숨은 ${focus.concept}의 위험을 어떻게 밝혀낼까?`,
